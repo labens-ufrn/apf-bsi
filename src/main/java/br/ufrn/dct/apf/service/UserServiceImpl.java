@@ -15,6 +15,11 @@ import br.ufrn.dct.apf.repository.UserRepository;
 @Service("userService")
 public class UserServiceImpl implements UserService {
 
+    /**
+     * Regra para definir permissões de usuários do sistema.
+     */
+    private final String USER_ROLE = "USER";
+
     @Autowired
     private UserRepository userRepository;
 
@@ -33,7 +38,7 @@ public class UserServiceImpl implements UserService {
     public void saveUser(User user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         user.setActive(1);
-        Role userRole = roleRepository.findByRole("ADMIN");
+        Role userRole = roleRepository.findByRole(USER_ROLE);
         user.setRoles(new HashSet<Role>(Arrays.asList(userRole)));
         userRepository.save(user);
     }
