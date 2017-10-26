@@ -1,6 +1,6 @@
 package br.ufrn.dct.apf;
 
-import br.ufrn.dct.apf.model.Projeto;
+import br.ufrn.dct.apf.model.Project;
 import br.ufrn.dct.apf.model.User;
 import br.ufrn.dct.apf.model.UserStory;
 
@@ -10,7 +10,7 @@ public class ProvaDeConceito {
 
         User proprietario = new User();
 
-        Projeto p1 = new Projeto();
+        Project p1 = new Project();
 
         p1.setNome("Sistema APF");
         p1.setDescricao("Sistema para auxilio na contagem por Pontos de Função");
