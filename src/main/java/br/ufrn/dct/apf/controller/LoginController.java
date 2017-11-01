@@ -1,5 +1,7 @@
 package br.ufrn.dct.apf.controller;
 
+import java.util.Set;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import br.ufrn.dct.apf.model.Role;
 import br.ufrn.dct.apf.model.User;
 import br.ufrn.dct.apf.service.UserService;
 
@@ -63,9 +66,24 @@ public class LoginController {
         ModelAndView modelAndView = new ModelAndView();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByEmail(auth.getName());
-        modelAndView.addObject("userName", "Welcome " + user.getName() + " " + user.getLastName() + " (" + user.getEmail() + ")");
+        modelAndView.addObject("userName", user.getName() + " " + user.getLastName() + " (" + user.getEmail() + ")");
+        modelAndView.addObject("authorities", getRoles(user));
         modelAndView.addObject("adminMessage","Content Available Only for Users with Admin Role");
         modelAndView.setViewName("admin/home");
         return modelAndView;
+    }
+
+    private String getRoles(User user) {
+        Set<Role> roles = user.getRoles();
+        String str = "[";
+        int size = roles.size();
+        int i = 1;
+        for (Role role : roles) {
+            str += role.getRole();
+            if (i > 1 && i < size) {
+                str += ", ";
+            }
+        }
+        return str + "]";
     }
 }
