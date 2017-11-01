@@ -1,1 +1,7 @@
 Taciano de Morais Silva
+
+https://bootsnipp.com/snippets/BDWlD
+
+https://domineospring.wordpress.com/2015/07/13/spring-security-urls-e-roles-dinamicas/
+
+https://github.com/kolorobot/spring-boot-thymeleaf/blob/master/src/main/resources/templates/layouts/layout.html
