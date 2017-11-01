@@ -1,0 +1,38 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:th="http://www.thymeleaf.org"
+    xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <div th:fragment="footer-login">
+
+        <div class="container">
+
+            <footer>
+                <!-- this is footer -->
+                © 2017 APF - BSI
+            </footer>
+        </div>
+    </div>
+
+    <div th:fragment="footer-authenticated">
+
+        <div class="container">
+
+            <footer>
+                <!-- this is footer
+                © 2017 APF - BSI <span sec:authorize="isAuthenticated()"> |
+                    Logged user: <span sec:authentication="name"></span> | Roles: <span
+                    sec:authentication="principal.authorities"></span> | <a
+                    th:href="@{/logout}">Sign Out</a>
+                </span> -->
+
+                © 2017 APF - BSI | Logged user: <span th:utext="${userName}"></span> | Roles: <span
+                    th:utext="${authorities}"></span> | <span><a
+                    th:href="@{/logout}">Sign Out</a></span>
+            </footer>
+        </div>
+    </div>
+</body>
+</html>
