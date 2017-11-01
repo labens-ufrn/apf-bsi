@@ -1,5 +1,7 @@
 package br.ufrn.dct.apf.controller;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,27 +25,28 @@ public class ProjectController {
         public ModelAndView findAll() {
 
             ModelAndView mv = new ModelAndView("project/list");
+            List<Project> projetos = service.findAll();
             mv.addObject("projects", service.findAll());
 
             return mv;
         }
 
-        @GetMapping("/add")
+        @GetMapping("/project/add")
         public ModelAndView add(Project project) {
 
-            ModelAndView mv = new ModelAndView("/postAdd");
+            ModelAndView mv = new ModelAndView("project/add");
             mv.addObject("project", project);
 
             return mv;
         }
 
-        @GetMapping("/edit/{id}")
+        @GetMapping("/project/edit/{id}")
         public ModelAndView edit(@PathVariable("id") Long id) {
 
             return add(service.findOne(id));
         }
 
-        @GetMapping("/delete/{id}")
+        @GetMapping("/project/delete/{id}")
         public ModelAndView delete(@PathVariable("id") Long id) {
 
             service.delete(id);
@@ -51,7 +54,7 @@ public class ProjectController {
             return findAll();
         }
 
-        @PostMapping("/save")
+        @PostMapping("/project/save")
         public ModelAndView save(@Valid Project project, BindingResult result) {
 
             if(result.hasErrors()) {
