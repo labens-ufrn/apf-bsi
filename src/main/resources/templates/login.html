@@ -11,11 +11,33 @@
 </head>
 
 <body>
+
+    <div th:replace="fragments/header :: header">
+      <!-- ============================================================================ -->
+      <!-- This content is only used for static prototyping purposes (natural templates)-->
+      <!-- and is therefore entirely optional, as this markup fragment will be included -->
+      <!-- from "fragments/header.html" at runtime.                                     -->
+      <!-- ============================================================================ -->
+      <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+          <div class="navbar-header">
+            <a class="navbar-brand" href="#">Static header</a>
+          </div>
+          <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+              <li class="active"><a href="#">Home</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+
     <form th:action="@{/registration}" method="get">
         <button class="btn btn-md btn-warning btn-block" type="Submit">Go To Registration Page</button>
     </form>
 
-    <div class="container">
         <img th:src="@{/images/login.jpg}" class="img-responsive center-block" width="300" height="300" alt="Logo" />
         <form th:action="@{/login}" method="POST" class="form-signin">
             <h3 class="form-signin-heading" th:text="Welcome"></h3>
@@ -31,6 +53,7 @@
             </div>
             <button class="btn btn-lg btn-primary btn-block" name="Submit" value="Login" type="Submit" th:text="Login"></button>
         </form>
+        <div align="center" th:include="fragments/footer :: footer-login"></div>
     </div>
 </body>
 </html>
