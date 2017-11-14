@@ -2,6 +2,7 @@ package br.ufrn.dct.apf.service;
 
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -41,5 +42,13 @@ public class UserServiceImpl implements UserService {
         Role userRole = roleRepository.findByRole(USER_ROLE);
         user.setRoles(new HashSet<Role>(Arrays.asList(userRole)));
         userRepository.save(user);
+    }
+
+    public List<User> findAll() {
+        return userRepository.findAll();
+    }
+
+    public User findOne(Long id) {
+        return userRepository.findOne(id);
     }
 }
