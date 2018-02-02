@@ -12,8 +12,8 @@ public class ProvaDeConceito {
 
         Project p1 = new Project();
 
-        p1.setNome("Sistema APF");
-        p1.setDescricao("Sistema para auxilio na contagem por Pontos de Função");
+        p1.setName("Sistema APF");
+        p1.setDescrition("Sistema para auxilio na contagem por Pontos de Função");
         //p1.setProprietario(proprietario);
 
         //Equipe e1 = p1.getEquipe();

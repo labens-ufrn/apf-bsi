@@ -58,15 +58,15 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr th:each="projeto : ${projects}">
-                            <td th:text="${projeto.id}"></td>
-                            <td th:text="${projeto.nome}"></td>
-                            <td th:text="${projeto.descricao}"></td>
-                            <td th:text="${#dates.format(projeto.data, 'dd/MM/yyyy')}"></td>
+                        <tr th:each="project : ${projects}">
+                            <td th:text="${project.id}"></td>
+                            <td th:text="${project.name}"></td>
+                            <td th:text="${project.descrition}"></td>
+                            <td th:text="${#dates.format(project.created, 'dd/MM/yyyy')}"></td>
                             <td>
                                 <div class="btn-group pull-right">
-                                    <a class="btn btn-sm btn-primary" th:href="@{/edit/{id}(id=${projeto.id})}" >Editar</a>
-                                    <a class="delete btn btn-sm btn-danger" th:href="@{/delete/{id}(id=${projeto.id})}">Excluir</a>
+                                    <a class="btn btn-sm btn-primary" th:href="@{/edit/{id}(id=${project.id})}" >Editar</a>
+                                    <a class="delete btn btn-sm btn-danger" th:href="@{/delete/{id}(id=${project.id})}">Excluir</a>
                                </div>
                             </td>
                         </tr>
