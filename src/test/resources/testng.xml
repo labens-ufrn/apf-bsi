@@ -1,0 +1,10 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="TestNGSpringIntegration Suite" verbose="5">
+
+    <test name="TestNGSpringIntegration">
+        <classes>
+            <class name="br.ufrn.dct.apf.service.ProjectServiceTest" />
+        </classes>
+    </test>
+
+</suite>
