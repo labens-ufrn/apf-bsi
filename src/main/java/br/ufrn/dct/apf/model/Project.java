@@ -24,15 +24,15 @@ public class Project implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "project_id")
-    private int id;
+    private Long id;
 
     @Column(name = "name")
     @NotEmpty(message = "Especifique um nome para o projeto")
     private String name;
 
-    @Column(name = "descrition")
+    @Column(name = "description")
     @NotEmpty(message = "Escreva uma descrição para o projeto")
-    private String descrition;
+    private String description;
 
     @Column(nullable = false)
     @Temporal(TemporalType.DATE)
@@ -43,11 +43,11 @@ public class Project implements Serializable {
     @Column(name = "active")
     private int active;
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -59,12 +59,12 @@ public class Project implements Serializable {
         this.name = name;
     }
 
-    public String getDescrition() {
-        return descrition;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDescrition(String desc) {
-        this.descrition = desc;
+    public void setDescription(String desc) {
+        this.description = desc;
     }
 
     public int getActive() {
