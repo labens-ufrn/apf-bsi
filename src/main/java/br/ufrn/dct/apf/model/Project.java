@@ -36,7 +36,7 @@ public class Project implements Serializable {
 
     @Column(nullable = false)
     @Temporal(TemporalType.DATE)
-    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     //@NotEmpty(message = "Data é uma informação obrigatória.")
     private Date created;
 
