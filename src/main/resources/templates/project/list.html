@@ -31,6 +31,12 @@
                     <a th:href="@{/project}">Project</a>
                 </li>
                 <li>
+                    <a th:href="@{/user}">User</a>
+                </li>
+                <li>
+                    <a th:href="@{/admin/home}">Admin</a>
+                </li>
+                <li>
                     <a href="#">Contact</a>
                 </li>
             </ul>
@@ -61,7 +67,7 @@
                         <tr th:each="project : ${projects}">
                             <td th:text="${project.id}"></td>
                             <td th:text="${project.name}"></td>
-                            <td th:text="${project.descrition}"></td>
+                            <td th:text="${project.description}"></td>
                             <td th:text="${#dates.format(project.created, 'dd/MM/yyyy')}"></td>
                             <td>
                                 <div class="btn-group pull-right">
