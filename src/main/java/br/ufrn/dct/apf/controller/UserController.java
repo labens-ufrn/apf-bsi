@@ -1,5 +1,7 @@
 package br.ufrn.dct.apf.controller;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +12,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import br.ufrn.dct.apf.model.Role;
 import br.ufrn.dct.apf.model.User;
+import br.ufrn.dct.apf.repository.RoleRepository;
 import br.ufrn.dct.apf.service.UserService;
 
 @Controller
@@ -18,6 +22,9 @@ public class UserController extends AbstractController {
 
         @Autowired
         private UserService service;
+        
+        @Autowired
+        private RoleRepository roleRepository;
 
         @GetMapping("/admin/user")
         public ModelAndView findAll() {
@@ -33,8 +40,11 @@ public class UserController extends AbstractController {
 
         @GetMapping("/admin/user/add")
         public ModelAndView add(User user) {
+            
+            List<Role> regras = roleRepository.findAll();
 
             ModelAndView mv = new ModelAndView("admin/user/add");
+            mv.addObject("regras", regras);
             mv.addObject("user", user);
 
             return mv;
@@ -56,12 +66,21 @@ public class UserController extends AbstractController {
 
         @PostMapping("/admin/user/save")
         public ModelAndView save(@Valid User user, BindingResult result) {
-
-            if(result.hasErrors()) {
-                return add(user);
+            ModelAndView modelAndView = new ModelAndView();
+            User userExists = service.findUserByEmail(user.getEmail());
+            if (userExists != null) {
+                result.rejectValue("email", "error.user",
+                        "There is already a user registered with the email provided");
             }
-
-            //service.save(user);
+            if (result.hasErrors()) {
+                System.err.println(result.hasErrors());
+                System.err.println(result);
+                findAll();
+            } else {
+                service.saveUser(user);
+                modelAndView.addObject("successMessage", "User has been registered successfully");
+                modelAndView.addObject("user", new User());
+            }
 
             return findAll();
         }

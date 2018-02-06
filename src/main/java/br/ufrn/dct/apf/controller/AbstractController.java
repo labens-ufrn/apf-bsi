@@ -23,15 +23,16 @@ public class AbstractController {
         modelAndView.addObject("authorities", getRoles(user));
     }
 
-    private String getRoles(User user) {
+    protected String getRoles(User user) {
         Set<Role> roles = user.getRoles();
         String str = "[";
         int size = roles.size();
         int i = 1;
         for (Role role : roles) {
             str += role.getRole();
-            if (i > 1 && i < size) {
+            if (i > 0 && i < size) {
                 str += ", ";
+                i += 1;
             }
         }
         return str + "]";

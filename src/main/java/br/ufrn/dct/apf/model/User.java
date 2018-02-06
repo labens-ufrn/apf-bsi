@@ -1,5 +1,6 @@
 package br.ufrn.dct.apf.model;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -52,6 +53,9 @@ public class User {
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
+    
+    @Transient
+    transient private Role newRole;
 
     public int getId() {
         return id;
@@ -107,5 +111,23 @@ public class User {
 
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
+    }
+    
+    public Role getNewRole() {
+        return this.newRole;
+    }
+    
+    public void setNewRole(Role role) {
+        this.newRole = role;
+        
+        Set<Role> regras = getRoles();
+        
+        if(regras == null) {
+            roles = new HashSet<>();
+        }
+        
+        if (!roles.contains(role)) {
+            roles.add(role);
+        }
     }
 }

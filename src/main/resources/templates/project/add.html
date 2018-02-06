@@ -30,21 +30,21 @@
                             </div>
                          </div>
                         <div class="form-group row">
-                            <div class="col-md-4" th:classappend="${#fields.hasErrors('nome')}? 'has-error'">
+                            <div class="col-md-4" th:classappend="${#fields.hasErrors('name')}? 'has-error'">
                                 <label>Nome</label>
-                                <input type="text" class="form-control input-sm" th:field="*{nome}" autofocus="autofocus" placeholder="Informe o nome" maxlength="50"/>
+                                <input type="text" class="form-control input-sm" th:field="*{name}" autofocus="autofocus" placeholder="Informe o nome" maxlength="50"/>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <div class="col-md-4" th:classappend="${#fields.hasErrors('descricao')}? 'has-error'">
+                            <div class="col-md-4" th:classappend="${#fields.hasErrors('description')}? 'has-error'">
                                 <label>Descrição</label>
-                                <input type="text" class="form-control input-sm" th:field="*{descricao}" maxlength="150" placeholder="Informe a descrição"/>
+                                <input type="text" class="form-control input-sm" th:field="*{description}" maxlength="150" placeholder="Informe a descrição"/>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <div class="col-md-2" th:classappend="${#fields.hasErrors('data')}? 'has-error'">
+                            <div class="col-md-2" th:classappend="${#fields.hasErrors('created')}? 'has-error'">
                                 <label>Data</label>
-                                <input type="date" class="form-control input-sm" th:field="*{data}"/>
+                                <input type="date" class="form-control input-sm" th:field="*{created}"/>
                             </div>
                         </div>
                     </fieldset>
