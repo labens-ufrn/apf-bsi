@@ -6,6 +6,7 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -50,12 +51,9 @@ public class User {
     @Column(name = "active")
     private int active;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.DETACH)
     @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
-    
-    @Transient
-    transient private Role newRole;
 
     public int getId() {
         return id;
@@ -113,17 +111,10 @@ public class User {
         this.roles = roles;
     }
     
-    public Role getNewRole() {
-        return this.newRole;
-    }
-    
     public void setNewRole(Role role) {
-        this.newRole = role;
         
-        Set<Role> regras = getRoles();
-        
-        if(regras == null) {
-            roles = new HashSet<>();
+        if(roles == null) {
+            roles = new HashSet<>(0);
         }
         
         if (!roles.contains(role)) {

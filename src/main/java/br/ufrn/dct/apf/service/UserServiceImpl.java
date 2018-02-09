@@ -1,7 +1,5 @@
 package br.ufrn.dct.apf.service;
 
-import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,9 +15,11 @@ import br.ufrn.dct.apf.repository.UserRepository;
 public class UserServiceImpl implements UserService {
 
     /**
-     * Regra para definir permissões de usuários do sistema.
+     * Regra para definir permissões padrão de usuários do sistema.
      */
     private final String USER_ROLE = "USER";
+    
+    private final int ACTIVE = 1;
 
     @Autowired
     private UserRepository userRepository;
@@ -35,12 +35,19 @@ public class UserServiceImpl implements UserService {
         return userRepository.findByEmail(email);
     }
 
+    /**
+     * @param user A new user with default role (USER_ROLE).
+     * @see br.ufrn.dct.apf.service.UserService#saveUser(br.ufrn.dct.apf.model.User)
+     */
     @Override
     public void saveUser(User user) {
-        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        user.setActive(1);
+        //TODO Implementar a criação das Roles básicas (ADMIN e USER) na configuração do spring
         Role userRole = roleRepository.findByRole(USER_ROLE);
-        user.setRoles(new HashSet<Role>(Arrays.asList(userRole)));
+
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        user.setActive(ACTIVE);
+        
+        user.setNewRole(userRole);
         userRepository.save(user);
     }
 

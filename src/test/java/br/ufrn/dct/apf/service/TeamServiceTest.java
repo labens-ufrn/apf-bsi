@@ -1,7 +1,8 @@
 package br.ufrn.dct.apf.service;
 
 import java.util.GregorianCalendar;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -12,20 +13,35 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
+import br.ufrn.dct.apf.model.Function;
 import br.ufrn.dct.apf.model.Project;
+import br.ufrn.dct.apf.model.Role;
+import br.ufrn.dct.apf.model.Team;
+import br.ufrn.dct.apf.model.User;
+import br.ufrn.dct.apf.repository.RoleRepository;
 
 @ContextConfiguration("/spring-test-beans.xml")
 @DataJpaTest
-// @EnableJpaRepositories
-// @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class ProjectServiceTest extends AbstractTestNGSpringContextTests {
+public class TeamServiceTest extends AbstractTestNGSpringContextTests {
 
     private SoftAssert softAssert;
-
-    @Autowired
-    private ProjectService service;
     
+    @Autowired
+    private ProjectService projectService;
+    
+    @Autowired
+    private RoleRepository roleService;
+    
+    @Autowired
+    private UserService userService;
+    
+    @Autowired
+    private TeamService teamService;
+    
+    private Team t1;
     private Project p1;
+    private User analista, desenvolvedor;
+    private Role projectOwner, projectDev, ROLE_USER, ROLE_ADMIN;
 
     @BeforeMethod
     public void startTest() {
@@ -37,17 +53,43 @@ public class ProjectServiceTest extends AbstractTestNGSpringContextTests {
         p1.setDescription("Analisador de Pontos por Função");
         p1.setCreated(GregorianCalendar.getInstance().getTime());
         
-        service.save(p1);
+        analista = new User();
+        analista.setName("Taciano");
+        analista.setLastName("Morais Silva");
+        analista.setEmail("tacianosilva@gmai.com");
+        analista.setPassword("12345");
+        
+        desenvolvedor = new User();
+        desenvolvedor.setName("Zé");
+        desenvolvedor.setLastName("Silva");
+        desenvolvedor.setEmail("zesilva@gmai.com");
+        desenvolvedor.setPassword("12345");
+        
+        ROLE_ADMIN = new Role();
+        ROLE_ADMIN.setRole("ADMIN");
+        
+        ROLE_USER = new Role();
+        ROLE_USER.setRole("USER");
+        
+        roleService.save(ROLE_ADMIN);
+        roleService.save(ROLE_USER);
+        
+        projectOwner = new Role();
+        projectOwner.setRole("Project Owner");
+        
+        projectDev = new Role();
+        projectDev.setRole("Project Dev");
     }
     
     @AfterMethod
     public void endTest() {
         softAssert = null;
-        service.delete(p1.getId());
+        teamService.delete(t1.getId());
+        projectService.delete(p1.getId());
         p1 = null;
     }
 
-    @Test
+/*    //@Test
     public void findAll() {
         List<Project> projetos = service.findAll();
         
@@ -56,8 +98,8 @@ public class ProjectServiceTest extends AbstractTestNGSpringContextTests {
         
         softAssert.assertAll();
     }
-
-    @Test
+*/
+/*    //@Test
     public void findOne() {
         Long id = p1.getId();
         
@@ -73,43 +115,52 @@ public class ProjectServiceTest extends AbstractTestNGSpringContextTests {
         softAssert.assertEquals(found.getActive(), p1.getActive(), "T07 - Equals:");
         
         softAssert.assertAll();
-    }
+    }*/
 
     @Test
     public void save() {
-        Project p2 = new Project();
+
+        roleService.save(projectOwner);
+        roleService.save(projectDev);
         
-        p2.setName("Test Project");
-        p2.setDescription("TestNG Project");
-        p2.setCreated(GregorianCalendar.getInstance().getTime());
-        p2.setActive(1);
+        analista.setNewRole(ROLE_ADMIN);
+        //analista.setNewRole(ROLE_USER);
+        analista.setNewRole(projectOwner);
         
-        service.save(p2);
+        //desenvolvedor.setNewRole(ROLE_USER);
+        desenvolvedor.setNewRole(projectDev);
         
-        Long id2 = p2.getId();
+        userService.saveUser(analista);
+        userService.saveUser(desenvolvedor);
         
-        Project found = service.findOne(id2);
-        List<Project> projetos = service.findAll();
+        projectService.save(p1);
         
-        softAssert.assertNotNull(id2, "T01 - NotNull:");
-        softAssert.assertNotNull(found, "T02 - NotNull:");
+        t1 = new Team(p1);
         
-        softAssert.assertNotNull(projetos, "T03 - NotNull:");
-        softAssert.assertEquals(projetos.size(), 2, "T04 - Equals:");
+        Function f1 = new Function();
+        f1.setUser(analista);
+        f1.setRole(projectOwner);
+        f1.setTeam(t1);
         
-        softAssert.assertEquals(found.getName(), p2.getName(), "T05 - Equals:");
-        softAssert.assertEquals(found.getDescription(), p2.getDescription(), "T06 - Equals:");
+        Function f2 = new Function();
+        f2.setUser(desenvolvedor);
+        f2.setRole(projectDev);
+        f2.setTeam(t1);
         
-        softAssert.assertNotNull(found.getCreated(), "T07 - NotNull:");
-        softAssert.assertNotNull(found.getActive(), "T08 - NotNull:");
-        softAssert.assertEquals(found.getActive(), p2.getActive(), "T08 - Equals:");
+        Set<Function> functions = new HashSet<>();
+        functions.add(f1);
+        functions.add(f2);
         
-        service.delete(id2);
+        t1.setFunctions(functions);
         
+        teamService.save(t1);
+        
+        //Long id = t1.getId();
+
         softAssert.assertAll();
     }
     
-    @Test
+/*    //@Test
     public void update() {
         Long id = p1.getId();
         
@@ -131,7 +182,7 @@ public class ProjectServiceTest extends AbstractTestNGSpringContextTests {
         softAssert.assertAll();
     }
     
-    @Test
+    //@Test
     public void delete() {
         Project p2 = new Project();
         
@@ -142,20 +193,20 @@ public class ProjectServiceTest extends AbstractTestNGSpringContextTests {
         
         service.save(p2);
         
-        Long id2 = p2.getId();
+        Long id = p2.getId();
         
-        Project found = service.findOne(id2);
+        Project found = service.findOne(id);
         List<Project> projetos = service.findAll();
         
-        softAssert.assertNotNull(id2, "T01 - NotNull:");
+        softAssert.assertNotNull(id, "T01 - NotNull:");
         softAssert.assertNotNull(found, "T02 - NotNull:");
         
         softAssert.assertNotNull(projetos, "T03 - NotNull:");
         softAssert.assertEquals(projetos.size(), 2, "T04 - Equals:");
         
-        service.delete(id2);
+        service.delete(id);
         
-        found = service.findOne(id2);
+        found = service.findOne(id);
         projetos = service.findAll();
         
         softAssert.assertNull(found, "T05 - NotNull:");
@@ -164,5 +215,5 @@ public class ProjectServiceTest extends AbstractTestNGSpringContextTests {
         softAssert.assertEquals(projetos.size(), 1, "T07 - Equals:");
         
         softAssert.assertAll();
-    }
+    }*/
 }
