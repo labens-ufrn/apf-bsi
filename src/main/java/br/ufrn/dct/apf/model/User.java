@@ -1,5 +1,6 @@
 package br.ufrn.dct.apf.model;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -22,9 +23,14 @@ import org.springframework.data.annotation.Transient;
 
 @Entity
 @Table(name = "user")
-public class User {
+public class User implements Serializable {
 
-    @Id
+   /**
+     * 
+     */
+    private static final long serialVersionUID = 1L;
+
+ @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "user_id")
     private int id;
