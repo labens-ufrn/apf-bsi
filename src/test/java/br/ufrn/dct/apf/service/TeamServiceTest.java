@@ -2,6 +2,7 @@ package br.ufrn.dct.apf.service;
 
 import java.util.GregorianCalendar;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 import br.ufrn.dct.apf.model.Function;
+import br.ufrn.dct.apf.model.Member;
 import br.ufrn.dct.apf.model.Project;
 import br.ufrn.dct.apf.model.Role;
 import br.ufrn.dct.apf.model.Team;
@@ -36,11 +38,11 @@ public class TeamServiceTest extends AbstractTestNGSpringContextTests {
     private UserService userService;
     
     @Autowired
-    private TeamService teamService;
-    
-    private Team t1;
+    private MemberService memberService;
+
     private Project p1;
     private User analista, desenvolvedor;
+    private Member m1, m2;
     private Role projectOwner, projectDev, ROLE_USER, ROLE_ADMIN;
 
     @BeforeMethod
@@ -84,7 +86,8 @@ public class TeamServiceTest extends AbstractTestNGSpringContextTests {
     @AfterMethod
     public void endTest() {
         softAssert = null;
-        teamService.delete(t1.getId());
+        memberService.delete(m1.getId());
+        memberService.delete(m2.getId());
         projectService.delete(p1.getId());
         p1 = null;
     }
@@ -135,27 +138,30 @@ public class TeamServiceTest extends AbstractTestNGSpringContextTests {
         
         projectService.save(p1);
         
-        t1 = new Team(p1);
+        m1 = new Member();
+        m1.setUser(analista);
+        m1.setProject(p1);
+        m1.setCreated_on(GregorianCalendar.getInstance().getTime());
         
-        Function f1 = new Function();
-        f1.setUser(analista);
-        f1.setRole(projectOwner);
-        f1.setTeam(t1);
+        m2 = new Member();
+        m2.setUser(desenvolvedor);
+        m2.setProject(p1);
+        m2.setCreated_on(GregorianCalendar.getInstance().getTime());
         
-        Function f2 = new Function();
-        f2.setUser(desenvolvedor);
-        f2.setRole(projectDev);
-        f2.setTeam(t1);
+        memberService.save(m1);
+        memberService.save(m2);
         
-        Set<Function> functions = new HashSet<>();
-        functions.add(f1);
-        functions.add(f2);
+        Project p2 = projectService.findOne(p1.getId());
+        Set<Member> team = p2.getTeam();
+        for (Member member : team) {
+            System.out.println(member.getUser().getName());
+            System.out.println(member.getProject().getName());
+        }
         
-        t1.setFunctions(functions);
-        
-        teamService.save(t1);
-        
-        //Long id = t1.getId();
+        List<Project> projectByAnalista = projectService.findByUserId(analista.getId());
+        for (Project project : projectByAnalista) {
+            System.out.println("Project by Analista: " + project.getName());
+        }
 
         softAssert.assertAll();
     }

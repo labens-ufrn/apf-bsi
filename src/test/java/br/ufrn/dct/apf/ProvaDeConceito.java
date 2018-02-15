@@ -10,7 +10,7 @@ import br.ufrn.dct.apf.model.Team;
 import br.ufrn.dct.apf.model.User;
 import br.ufrn.dct.apf.model.UserStory;
 import br.ufrn.dct.apf.service.UserService;
-import br.ufrn.dct.apf.service.UserServiceImpl;
+import br.ufrn.dct.apf.service.UserService;
 
 public class ProvaDeConceito {
 
@@ -23,7 +23,7 @@ public class ProvaDeConceito {
         analista.setEmail("tacianosilva@gmai.com");
         analista.setPassword("12345");
         
-        UserService userService = new UserServiceImpl();
+        UserService userService = new UserService();
         
         userService.saveUser(analista);
         
