@@ -11,8 +11,8 @@ import br.ufrn.dct.apf.model.User;
 import br.ufrn.dct.apf.repository.RoleRepository;
 import br.ufrn.dct.apf.repository.UserRepository;
 
-@Service("userService")
-public class UserServiceImpl implements UserService {
+@Service
+public class UserService {
 
     /**
      * Regra para definir permissões padrão de usuários do sistema.
@@ -30,7 +30,6 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    @Override
     public User findUserByEmail(String email) {
         return userRepository.findByEmail(email);
     }
@@ -39,7 +38,6 @@ public class UserServiceImpl implements UserService {
      * @param user A new user with default role (USER_ROLE).
      * @see br.ufrn.dct.apf.service.UserService#saveUser(br.ufrn.dct.apf.model.User)
      */
-    @Override
     public void saveUser(User user) {
         //TODO Implementar a criação das Roles básicas (ADMIN e USER) na configuração do spring
         Role userRole = roleRepository.findByRole(USER_ROLE);

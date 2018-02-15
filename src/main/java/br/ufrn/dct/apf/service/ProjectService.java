@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.ufrn.dct.apf.model.Project;
+import br.ufrn.dct.apf.model.User;
 import br.ufrn.dct.apf.repository.ProjectRepository;
 
 @Service
@@ -16,6 +17,10 @@ public class ProjectService {
 
     public List<Project> findAll() {
         return repository.findAll();
+    }
+    
+    public List<Project> findByUserId(Long user) {
+        return repository.findByUserId(user);
     }
 
     public Project findOne(Long id) {
