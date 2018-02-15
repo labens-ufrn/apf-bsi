@@ -27,7 +27,7 @@ public class Team implements Serializable {
     @Column(name = "team_id")
     private Long id;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(cascade=CascadeType.DETACH)
     @JoinColumn(name = "project_id")
     private Project project;
 

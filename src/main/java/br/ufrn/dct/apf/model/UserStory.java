@@ -32,6 +32,9 @@ public class UserStory implements Serializable {
     @Column(name = "descricao")
     @NotEmpty(message = "*Escreva uma descrição para o user story")
     private String descricao;
+    
+    public UserStory() {
+    }
 
     public UserStory(String nome, String descricao) {
         this.nome = nome;
