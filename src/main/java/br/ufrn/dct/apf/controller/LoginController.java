@@ -21,8 +21,6 @@ public class LoginController extends AbstractController {
 
     @Autowired
     private UserService userService;
-
-    private User overridenCurrentUser;
     
     private final String LOGIN_VIEW = "login";
     
@@ -83,42 +81,11 @@ public class LoginController extends AbstractController {
     public ModelAndView home() {
         ModelAndView modelAndView = new ModelAndView();
 
-        SecurityContext context = SecurityContextHolder.getContext();
-        Authentication auth = context.getAuthentication();
-
-        User user = userService.findUserByEmail(auth.getName());
+        User user = getCurrentUser();
         modelAndView.addObject("userName", user.getName() + " " + user.getLastName() + " (" + user.getEmail() + ")");
         modelAndView.addObject("authorities", getRoles(user));
         modelAndView.addObject("userMessage", "Content Available for Users");
         modelAndView.setViewName("home");
         return modelAndView;
-    }
-
-    public String getUsername() {
-        SecurityContext context = SecurityContextHolder.getContext();
-        Authentication authentication = context.getAuthentication();
-
-        if (authentication == null)
-            return null;
-
-        Object principal = authentication.getPrincipal();
-        if (principal instanceof UserDetails) {
-            return ((UserDetails) principal).getUsername();
-        } else {
-            return principal.toString();
-        }
-    }
-
-    public User getCurrentUser() {
-        if (overridenCurrentUser != null) {
-            return overridenCurrentUser;
-        }
-
-        SecurityContext context = SecurityContextHolder.getContext();
-        Authentication auth = context.getAuthentication();
-
-        User user = userService.findUserByEmail(auth.getName());
-
-        return user;
     }
 }

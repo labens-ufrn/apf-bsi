@@ -25,7 +25,6 @@ public class ProjectController {
         public ModelAndView findAll() {
 
             ModelAndView mv = new ModelAndView("project/list");
-            List<Project> projetos = service.findAll();
             mv.addObject("projects", service.findAll());
 
             return mv;
