@@ -1,11 +1,13 @@
 package br.ufrn.dct.apf.model;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -21,12 +23,17 @@ import org.springframework.data.annotation.Transient;
 
 @Entity
 @Table(name = "user")
-public class User {
+public class User implements Serializable {
+
+   /**
+     * 
+     */
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "user_id")
-    private int id;
+    private Long id;
 
     @Column(name = "email")
     @Email(message = "*Please provide a valid Email")
@@ -50,18 +57,15 @@ public class User {
     @Column(name = "active")
     private int active;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.DETACH)
     @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
-    
-    @Transient
-    transient private Role newRole;
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -113,17 +117,10 @@ public class User {
         this.roles = roles;
     }
     
-    public Role getNewRole() {
-        return this.newRole;
-    }
-    
     public void setNewRole(Role role) {
-        this.newRole = role;
         
-        Set<Role> regras = getRoles();
-        
-        if(regras == null) {
-            roles = new HashSet<>();
+        if(roles == null) {
+            roles = new HashSet<>(0);
         }
         
         if (!roles.contains(role)) {

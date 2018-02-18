@@ -4,6 +4,7 @@
     <test name="TestNGSpringIntegration">
         <classes>
             <class name="br.ufrn.dct.apf.service.ProjectServiceTest" />
+            <class name="br.ufrn.dct.apf.service.TeamServiceTest" />
         </classes>
     </test>
 
