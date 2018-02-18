@@ -178,6 +178,11 @@
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jxr-plugin</artifactId>
+                <version>2.5</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-pmd-plugin</artifactId>
                 <version>3.9.0</version>
             </plugin>
@@ -213,14 +218,8 @@
                     <dependencyDetailsEnabled>true</dependencyDetailsEnabled>
                     <dependencyLocationsEnabled>false</dependencyLocationsEnabled>
                 </configuration>
-                <!-- <reportSets>
-                    <reportSet>
-                        <reports>
-                            <report>dependencies</report>
-                            <report>scm</report>
-                        </reports>
-                    </reportSet>
-                </reportSets> -->
+                <!-- <reportSets> <reportSet> <reports> <report>dependencies</report> 
+                    <report>scm</report> </reports> </reportSet> </reportSets> -->
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -234,8 +233,16 @@
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jxr-plugin</artifactId>
+                <version>2.5</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-pmd-plugin</artifactId>
                 <version>3.9.0</version>
+                <configuration>
+                    <linkXref>true</linkXref>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.jacoco</groupId>
