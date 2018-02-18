@@ -21,9 +21,9 @@ public class LoginController extends AbstractController {
 
     @Autowired
     private UserService userService;
-    
+
     private final String LOGIN_VIEW = "login";
-    
+
     private final String REGISTRATION_VIEW = "registration";
 
     @RequestMapping(value = { "/", "/login" }, method = RequestMethod.GET)
@@ -76,7 +76,7 @@ public class LoginController extends AbstractController {
         modelAndView.setViewName("admin/home");
         return modelAndView;
     }
-    
+
     @RequestMapping(value = "/home", method = RequestMethod.GET)
     public ModelAndView home() {
         ModelAndView modelAndView = new ModelAndView();
@@ -87,5 +87,24 @@ public class LoginController extends AbstractController {
         modelAndView.addObject("userMessage", "Content Available for Users");
         modelAndView.setViewName("home");
         return modelAndView;
+    }
+
+    // for 403 access denied page
+    @RequestMapping(value = "/access-denied", method = RequestMethod.GET)
+    public ModelAndView accesssDenied() {
+
+        ModelAndView model = new ModelAndView();
+
+        User user = getCurrentUser();
+
+        if (user != null) {
+            model.addObject("msg", "Hi " + user.getName() + ", you do not have permission to access this page!");
+        } else {
+            model.addObject("msg", "You do not have permission to access this page!");
+        }
+
+        model.setViewName("access-denied");
+        return model;
+
     }
 }
