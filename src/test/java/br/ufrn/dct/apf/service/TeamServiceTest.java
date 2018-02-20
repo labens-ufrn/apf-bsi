@@ -1,7 +1,6 @@
 package br.ufrn.dct.apf.service;
 
 import java.util.GregorianCalendar;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -14,11 +13,9 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
-import br.ufrn.dct.apf.model.Function;
 import br.ufrn.dct.apf.model.Member;
 import br.ufrn.dct.apf.model.Project;
 import br.ufrn.dct.apf.model.Role;
-import br.ufrn.dct.apf.model.Team;
 import br.ufrn.dct.apf.model.User;
 import br.ufrn.dct.apf.repository.RoleRepository;
 
@@ -89,6 +86,12 @@ public class TeamServiceTest extends AbstractTestNGSpringContextTests {
         memberService.delete(m1.getId());
         memberService.delete(m2.getId());
         projectService.delete(p1.getId());
+        userService.delete(analista.getId());
+        userService.delete(desenvolvedor.getId());
+        roleService.delete(ROLE_ADMIN.getId());
+        roleService.delete(ROLE_USER.getId());
+        roleService.delete(projectOwner.getId());
+        roleService.delete(projectDev.getId());
         p1 = null;
     }
 
@@ -133,8 +136,8 @@ public class TeamServiceTest extends AbstractTestNGSpringContextTests {
         //desenvolvedor.setNewRole(ROLE_USER);
         desenvolvedor.setNewRole(projectDev);
         
-        userService.saveUser(analista);
-        userService.saveUser(desenvolvedor);
+        userService.save(analista);
+        userService.save(desenvolvedor);
         
         projectService.save(p1);
         

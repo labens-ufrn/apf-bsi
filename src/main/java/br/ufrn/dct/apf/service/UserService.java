@@ -36,9 +36,8 @@ public class UserService {
 
     /**
      * @param user A new user with default role (USER_ROLE).
-     * @see br.ufrn.dct.apf.service.UserService#saveUser(br.ufrn.dct.apf.model.User)
      */
-    public void saveUser(User user) {
+    public void save(User user) {
         //TODO Implementar a criação das Roles básicas (ADMIN e USER) na configuração do spring
         Role userRole = roleRepository.findByRole(USER_ROLE);
 
@@ -55,5 +54,9 @@ public class UserService {
 
     public User findOne(Long id) {
         return userRepository.findOne(id);
+    }
+    
+    public void delete(Long id) {
+        userRepository.delete(id);
     }
 }

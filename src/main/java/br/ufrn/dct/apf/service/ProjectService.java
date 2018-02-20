@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.ufrn.dct.apf.model.Project;
-import br.ufrn.dct.apf.model.User;
 import br.ufrn.dct.apf.repository.ProjectRepository;
 
 @Service

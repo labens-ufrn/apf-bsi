@@ -77,7 +77,7 @@ public class UserController extends AbstractController {
                 System.err.println(result);
                 findAll();
             } else {
-                service.saveUser(user);
+                service.save(user);
                 modelAndView.addObject("successMessage", "User has been registered successfully");
                 modelAndView.addObject("user", new User());
             }

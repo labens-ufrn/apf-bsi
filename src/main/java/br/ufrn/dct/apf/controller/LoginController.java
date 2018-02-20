@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -53,7 +52,7 @@ public class LoginController extends AbstractController {
         if (bindingResult.hasErrors()) {
             modelAndView.setViewName(REGISTRATION_VIEW);
         } else {
-            userService.saveUser(user);
+            userService.save(user);
             modelAndView.addObject("successMessage", "User has been registered successfully");
             modelAndView.addObject("user", new User());
             modelAndView.setViewName(REGISTRATION_VIEW);

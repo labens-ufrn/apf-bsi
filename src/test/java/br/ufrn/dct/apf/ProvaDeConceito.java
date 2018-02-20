@@ -3,18 +3,33 @@ package br.ufrn.dct.apf;
 import java.util.Set;
 import java.util.TreeSet;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
+
 import br.ufrn.dct.apf.model.Function;
 import br.ufrn.dct.apf.model.Project;
 import br.ufrn.dct.apf.model.Role;
 import br.ufrn.dct.apf.model.Team;
 import br.ufrn.dct.apf.model.User;
 import br.ufrn.dct.apf.model.UserStory;
-import br.ufrn.dct.apf.service.UserService;
+import br.ufrn.dct.apf.repository.RoleRepository;
 import br.ufrn.dct.apf.service.UserService;
 
-public class ProvaDeConceito {
+public class ProvaDeConceito extends AbstractTestNGSpringContextTests {
+    
+    @Autowired
+    private static RoleRepository roleService;
+    
+    private static Role ROLE_USER;
 
     public static void main(String[] args) {
+        
+        System.out.println("Criando role ...");
+        
+        ROLE_USER = new Role();
+        ROLE_USER.setRole("USER");
+        
+        roleService.save(ROLE_USER);
         
         System.out.println("Criando usuário ...");
         
@@ -25,7 +40,7 @@ public class ProvaDeConceito {
         
         UserService userService = new UserService();
         
-        userService.saveUser(analista);
+        userService.save(analista);
         
         System.out.println("Usuário salvo!");
         
