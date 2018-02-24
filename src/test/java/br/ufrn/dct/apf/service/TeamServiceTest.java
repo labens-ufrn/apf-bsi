@@ -40,7 +40,7 @@ public class TeamServiceTest extends AbstractTestNGSpringContextTests {
     private Project p1;
     private User analista, desenvolvedor;
     private Member m1, m2;
-    private Role projectOwner, projectDev, ROLE_USER, ROLE_ADMIN;
+    private Role projectOwner, projectDev;
 
     @BeforeMethod
     public void startTest() {
@@ -63,16 +63,7 @@ public class TeamServiceTest extends AbstractTestNGSpringContextTests {
         desenvolvedor.setLastName("Silva");
         desenvolvedor.setEmail("zesilva@gmai.com");
         desenvolvedor.setPassword("12345");
-        
-        ROLE_ADMIN = new Role();
-        ROLE_ADMIN.setRole("ADMIN");
-        
-        ROLE_USER = new Role();
-        ROLE_USER.setRole("USER");
-        
-        roleService.save(ROLE_ADMIN);
-        roleService.save(ROLE_USER);
-        
+
         projectOwner = new Role();
         projectOwner.setRole("Project Owner");
         
@@ -88,8 +79,6 @@ public class TeamServiceTest extends AbstractTestNGSpringContextTests {
         projectService.delete(p1.getId());
         userService.delete(analista.getId());
         userService.delete(desenvolvedor.getId());
-        roleService.delete(ROLE_ADMIN.getId());
-        roleService.delete(ROLE_USER.getId());
         roleService.delete(projectOwner.getId());
         roleService.delete(projectDev.getId());
         p1 = null;
@@ -128,12 +117,9 @@ public class TeamServiceTest extends AbstractTestNGSpringContextTests {
 
         roleService.save(projectOwner);
         roleService.save(projectDev);
-        
-        analista.setNewRole(ROLE_ADMIN);
-        //analista.setNewRole(ROLE_USER);
+
         analista.setNewRole(projectOwner);
-        
-        //desenvolvedor.setNewRole(ROLE_USER);
+
         desenvolvedor.setNewRole(projectDev);
         
         userService.save(analista);

@@ -20,26 +20,16 @@ import br.ufrn.dct.apf.repository.RoleRepository;
 public class UserServiceTest extends AbstractTestNGSpringContextTests {
 
     private SoftAssert softAssert;
-    
-    @Autowired
-    private RoleRepository roleService;
 
     @Autowired
     private UserService service;
     
     private User user1;
-    
-    private Role ROLE_USER;
 
     @BeforeMethod
     public void startTest() {
         softAssert = new SoftAssert();
-        
-        ROLE_USER = new Role();
-        ROLE_USER.setRole("USER");
-        
-        roleService.save(ROLE_USER);
-        
+
         user1 = new User();
         
         user1.setName("Taciano Silva");
@@ -55,7 +45,6 @@ public class UserServiceTest extends AbstractTestNGSpringContextTests {
     public void endTest() {
         softAssert = null;
         service.delete(user1.getId());
-        roleService.delete(ROLE_USER.getId());
         user1 = null;
     }
 
