@@ -5,25 +5,25 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.ufrn.dct.apf.model.Team;
-import br.ufrn.dct.apf.repository.TeamRepository;
+import br.ufrn.dct.apf.model.UserStory;
+import br.ufrn.dct.apf.repository.UserStoryRepository;
 
 @Service
-public class TeamService {
+public class UserStoryService {
 
     @Autowired
-    private TeamRepository repository;
+    private UserStoryRepository repository;
 
-    public List<Team> findAll() {
+    public List<UserStory> findAll() {
         return repository.findAll();
     }
 
-    public Team findOne(Long id) {
+    public UserStory findOne(Long id) {
         return repository.findOne(id);
     }
 
-    public Team save(Team team) {
-        return repository.saveAndFlush(team);
+    public UserStory save(UserStory userStory) {
+        return repository.saveAndFlush(userStory);
     }
 
     public void delete(Long id) {

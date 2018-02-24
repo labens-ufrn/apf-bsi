@@ -4,9 +4,12 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.hibernate.validator.constraints.NotEmpty;
@@ -23,7 +26,7 @@ public class UserStory implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "user_story_id")
-    private int id;
+    private Long id;
 
     @Column(name = "nome")
     @NotEmpty(message = "*Especifique um nome para o user story")
@@ -33,6 +36,10 @@ public class UserStory implements Serializable {
     @NotEmpty(message = "*Escreva uma descrição para o user story")
     private String descricao;
     
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "project_id", nullable = false)
+    private Project project;
+    
     public UserStory() {
     }
 
@@ -41,11 +48,11 @@ public class UserStory implements Serializable {
         this.descricao = descricao;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -63,5 +70,13 @@ public class UserStory implements Serializable {
 
     public void setDescricao(String descricao) {
         this.descricao = descricao;
+    }
+    
+    public Project getProject() {
+        return project;
+    }
+
+    public void setProject(Project project) {
+        this.project = project;
     }
 }

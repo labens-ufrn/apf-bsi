@@ -39,7 +39,7 @@ public class Member implements Serializable {
     @Column(nullable = false)
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date created_on;
+    private Date createdOn;
 
     public Long getId() {
         return id;
@@ -65,11 +65,11 @@ public class Member implements Serializable {
         this.project = project;
     }
 
-    public Date getCreated_on() {
-        return created_on;
+    public Date getCreatedOn() {
+        return createdOn;
     }
 
-    public void setCreated_on(Date created_on) {
-        this.created_on = created_on;
+    public void setCreatedOn(Date createdOn) {
+        this.createdOn = createdOn;
     }
 }

@@ -13,13 +13,8 @@ import br.ufrn.dct.apf.repository.UserRepository;
 
 @Service
 public class UserService {
-
-    /**
-     * Regra para definir permissões padrão de usuários do sistema.
-     */
-    private final String USER_ROLE = "USER";
     
-    private final int ACTIVE = 1;
+    private static final int ACTIVE = 1;
 
     @Autowired
     private UserRepository userRepository;
@@ -39,7 +34,7 @@ public class UserService {
      */
     public void save(User user) {
         //TODO Implementar a criação das Roles básicas (ADMIN e USER) na configuração do spring
-        Role userRole = roleRepository.findByRole(USER_ROLE);
+        Role userRole = roleRepository.findByRole(Role.USER_ROLE);
 
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         user.setActive(ACTIVE);

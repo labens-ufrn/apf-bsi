@@ -49,3 +49,4 @@ nbdist/
 /mvnw.cmd
 /.mvn/
 /test-output/
+/.externalToolBuilders/

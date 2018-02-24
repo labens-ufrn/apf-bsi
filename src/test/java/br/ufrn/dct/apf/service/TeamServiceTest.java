@@ -130,12 +130,12 @@ public class TeamServiceTest extends AbstractTestNGSpringContextTests {
         m1 = new Member();
         m1.setUser(analista);
         m1.setProject(p1);
-        m1.setCreated_on(GregorianCalendar.getInstance().getTime());
+        m1.setCreatedOn(GregorianCalendar.getInstance().getTime());
         
         m2 = new Member();
         m2.setUser(desenvolvedor);
         m2.setProject(p1);
-        m2.setCreated_on(GregorianCalendar.getInstance().getTime());
+        m2.setCreatedOn(GregorianCalendar.getInstance().getTime());
         
         memberService.save(m1);
         memberService.save(m2);

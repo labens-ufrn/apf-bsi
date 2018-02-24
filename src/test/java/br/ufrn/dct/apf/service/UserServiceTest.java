@@ -11,9 +11,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
-import br.ufrn.dct.apf.model.Role;
 import br.ufrn.dct.apf.model.User;
-import br.ufrn.dct.apf.repository.RoleRepository;
 
 @ContextConfiguration("/spring-test-beans.xml")
 @DataJpaTest

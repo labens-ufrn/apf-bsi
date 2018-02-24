@@ -2,6 +2,7 @@ package br.ufrn.dct.apf.model;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -48,7 +49,10 @@ public class Project implements Serializable {
     private int active;
     
     @OneToMany(mappedBy = "project", targetEntity = Member.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private Set<Member> team;
+    private Set<Member> team = new HashSet<>();
+    
+    @OneToMany(mappedBy = "project", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<UserStory> userStories = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -96,5 +100,16 @@ public class Project implements Serializable {
 
     public void setTeam(Set<Member> team) {
         this.team = team;
+    }
+    
+    public void setOwner(Member owner) {
+        
+        if(team == null) {
+            team = new HashSet<>(0);
+        }
+        
+        if (!team.contains(owner)) {
+            team.add(owner);
+        }
     }
 }
