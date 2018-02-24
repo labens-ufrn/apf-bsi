@@ -11,8 +11,9 @@ Esse projeto faz uso do framework spring-boot que encapsula todas as dependênci
 3. Go to the target folder
 4. java -jar apf-bsi-0.0.1-SNAPSHOT.jar
 
-- http://localhost:8080/registration
-- http://localhost:8080/login
+- http://localhost:8080/apf/
+- http://localhost:8080/apf/login
+- http://localhost:8080/apf/registration
 
 ## Referências
 Desenvolvido a partir do tutorial e do código linkado abaixo:
