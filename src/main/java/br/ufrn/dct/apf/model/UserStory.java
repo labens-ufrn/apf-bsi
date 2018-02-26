@@ -28,13 +28,13 @@ public class UserStory implements Serializable {
     @Column(name = "user_story_id")
     private Long id;
 
-    @Column(name = "nome")
+    @Column(name = "name")
     @NotEmpty(message = "*Especifique um nome para o user story")
-    private String nome;
+    private String name;
 
-    @Column(name = "descricao")
+    @Column(name = "description")
     @NotEmpty(message = "*Escreva uma descrição para o user story")
-    private String descricao;
+    private String description;
     
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "project_id", nullable = false)
@@ -43,9 +43,9 @@ public class UserStory implements Serializable {
     public UserStory() {
     }
 
-    public UserStory(String nome, String descricao) {
-        this.nome = nome;
-        this.descricao = descricao;
+    public UserStory(String name, String description) {
+        this.name = name;
+        this.description = description;
     }
 
     public Long getId() {
@@ -56,20 +56,20 @@ public class UserStory implements Serializable {
         this.id = id;
     }
 
-    public String getNome() {
-        return nome;
+    public String getName() {
+        return name;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setNome(String name) {
+        this.name = name;
     }
 
-    public String getDescricao() {
-        return descricao;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
+    public void setDescription(String description) {
+        this.description = description;
     }
     
     public Project getProject() {

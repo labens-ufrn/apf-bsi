@@ -51,7 +51,7 @@ public class Project implements Serializable {
     @OneToMany(mappedBy = "project", targetEntity = Member.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<Member> team = new HashSet<>();
     
-    @OneToMany(mappedBy = "project", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "project", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<UserStory> userStories = new HashSet<>();
 
     public Long getId() {
@@ -111,5 +111,13 @@ public class Project implements Serializable {
         if (!team.contains(owner)) {
             team.add(owner);
         }
+    }
+
+    public Set<UserStory> getUserStories() {
+        return userStories;
+    }
+
+    public void setUserStories(Set<UserStory> userStories) {
+        this.userStories = userStories;
     }
 }
