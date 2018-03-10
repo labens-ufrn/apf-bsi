@@ -42,6 +42,21 @@ public class UserService {
         user.setNewRole(userRole);
         userRepository.save(user);
     }
+    
+    public void edit(User user) {
+        
+        User oldUser = findOne(user.getId());
+        
+        if (user.getPassword() == null || user.getPassword().equals("")) {
+            user.setPassword(oldUser.getPassword());
+        } else {
+            user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        }
+        user.setActive(ACTIVE);
+        user.setRoles(oldUser.getRoles());
+        
+        userRepository.saveAndFlush(user);
+    }
 
     public List<User> findAll() {
         return userRepository.findAll();

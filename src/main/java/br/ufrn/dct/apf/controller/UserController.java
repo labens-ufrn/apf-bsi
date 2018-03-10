@@ -5,6 +5,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,6 +26,50 @@ public class UserController extends AbstractController {
         
         @Autowired
         private RoleRepository roleRepository;
+        
+        @Autowired
+        private BCryptPasswordEncoder bCryptPasswordEncoder;
+        
+        @GetMapping("/user")
+        public ModelAndView profile() {
+
+            ModelAndView mv = new ModelAndView("user/profile");
+            
+            User current = getCurrentUser();
+
+            setUserAuth(mv);
+
+            mv.addObject("user", service.findOne(current.getId()));
+
+            return mv;
+        }
+        
+        @GetMapping("/user/edit/{id}")
+        public ModelAndView editProfile(@PathVariable("id") Long id) {
+
+            return update(service.findOne(id));
+        }
+        
+        @GetMapping("/user/update")
+        public ModelAndView update(User user) {
+            ModelAndView mv = new ModelAndView("user/edit");
+
+            mv.addObject("user", user);
+
+            return mv;
+        }
+        
+        @PostMapping("/user/save")
+        public ModelAndView saveProfile(@Valid User user, BindingResult result) {
+            ModelAndView modelAndView = new ModelAndView();
+            
+            service.edit(user);
+            
+            modelAndView.addObject("successMessage", "User has been registered successfully");
+            modelAndView.addObject("user", new User());
+            
+            return profile();
+        }
 
         @GetMapping("/admin/user")
         public ModelAndView findAll() {
