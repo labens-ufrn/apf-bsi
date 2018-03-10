@@ -19,3 +19,9 @@ http://www.baeldung.com/spring-boot-testing
 https://imasters.com.br/artigo/13807/desenvolvimento/testes-unitarios-na-pratica-com-spring-testng-mockito-e-maven-2-parte-02?trace=1519021197&source=single
 
 https://examples.javacodegeeks.com/enterprise-java/testng/testng-spring-integration-example/
+
+Contagem de Pontos de Função
+
+https://nesma.org/themes/sizing/function-point-analysis/early-function-point-counting/
+https://www.devmedia.com.br/analise-de-pontos-de-funcao/9146
+http://fattocs.com/pt/contagem-antecipada
