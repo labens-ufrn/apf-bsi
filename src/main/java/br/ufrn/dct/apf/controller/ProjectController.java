@@ -14,7 +14,7 @@ import br.ufrn.dct.apf.model.Project;
 import br.ufrn.dct.apf.service.ProjectService;
 
 @Controller
-public class ProjectController {
+public class ProjectController extends AbstractController {
 
         @Autowired
         private ProjectService service;
@@ -23,6 +23,9 @@ public class ProjectController {
         public ModelAndView findAll() {
 
             ModelAndView mv = new ModelAndView("project/list");
+            
+            setUserAuth(mv);
+            
             mv.addObject("projects", service.findAll());
 
             return mv;
