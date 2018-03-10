@@ -21,7 +21,7 @@ public class UserServiceTest extends AbstractTestNGSpringContextTests {
 
     @Autowired
     private UserService service;
-    
+
     private User user1;
 
     @BeforeMethod
@@ -73,6 +73,23 @@ public class UserServiceTest extends AbstractTestNGSpringContextTests {
         
         softAssert.assertAll();
     }
+    
+    @Test
+    public void findUserByEmail() {
+        String email = user1.getEmail();
+        
+        User found = service.findUserByEmail(email);
+        
+        softAssert.assertNotNull(found, "T01 - NotNull:");
+        
+        softAssert.assertEquals(found.getName(), user1.getName(), "T03 - Equals:");
+        softAssert.assertEquals(found.getLastName(), user1.getLastName(), "T04 - Equals:");
+        softAssert.assertEquals(found.getEmail(), user1.getEmail(), "T05 - Equals:");
+        softAssert.assertNotNull(found.getActive(), "T06 - NotNull:");
+        softAssert.assertEquals(found.getActive(), user1.getActive(), "T07 - Equals:");
+        
+        softAssert.assertAll();
+    }
 
     @Test
     public void save() {
@@ -118,20 +135,43 @@ public class UserServiceTest extends AbstractTestNGSpringContextTests {
         update.setName("Marcos");
         update.setLastName("Morais");
         update.setEmail("marcosmorais@gmail.com");
+        //Simular o não preenchimento da senha
+        update.setPassword("");
         
-        service.save(update);
+        service.edit(update);
         
         User found = service.findOne(id);
         
         softAssert.assertNotNull(found, "T01 - NotNull:");
-        
         softAssert.assertEquals(found.getName(), "Marcos", "T02 - Equals:");
         softAssert.assertNotEquals(found.getName(), "Taciano", "T03 - Equals:");
         softAssert.assertEquals(found.getLastName(), "Morais", "T04 - Equals:");
         softAssert.assertNotEquals(found.getLastName(), "Silva", "T05 - Equals:");
+        softAssert.assertEquals(found.getEmail(), "marcosmorais@gmail.com", "T06 - Equals:");
+        softAssert.assertEquals(found.getActive(), 1, "T07 - Equals:");
         
-        softAssert.assertEquals(found.getEmail(), "marcosmorais@gmail.com", "T03 - Equals:");
-        softAssert.assertEquals(found.getActive(), 1, "T04 - Equals:");
+        softAssert.assertEquals(found.getPassword(), user1.getPassword(), "T08 - Equals:");
+        
+        User old = service.findOne(id);
+        String oldPassword = old.getPassword();
+        //Simular o preenchimento da senha
+        old.setPassword("123456");
+        
+        service.edit(old);
+        
+        User found2 = service.findOne(id);
+        
+        softAssert.assertNotNull(found2, "T09 - NotNull:");
+        softAssert.assertEquals(found2.getName(), "Marcos", "T10 - Equals:");
+        softAssert.assertEquals(found2.getLastName(), "Morais", "T11 - Equals:");
+        softAssert.assertEquals(found2.getEmail(), "marcosmorais@gmail.com", "T12 - Equals:");
+        softAssert.assertEquals(found2.getActive(), 1, "T13 - Equals:");
+        
+        softAssert.assertNotEquals(found2.getPassword(), oldPassword, "T14 - Equals:");
+
+        //softAssert.assertEquals(found2.getPassword(), bCryptPasswordEncoder.encode("123456"), "T15 - Equals:");
+        
+        //softAssert.assertEquals(bCryptPasswordEncoder.encode("123456"), bCryptPasswordEncoder.encode("123456"), "T16 - Equals:");
 
         softAssert.assertAll();
     }
