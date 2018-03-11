@@ -1,4 +1,4 @@
-# Analisador de Pontos por Função
+# Analisador de Pontos de Função
 
 Sistema para facilitar a contagem na análise por pontos de função (APF) desenvolvido para ser utilizado nas disciplinas de Engenharia de Software do curso de Bacharelado em Sistemas de Informação do CERES/UFRN.
 
@@ -16,6 +16,7 @@ Esse projeto faz uso do framework spring-boot que encapsula todas as dependênci
 - http://localhost:8080/apf/registration
 
 ## Referências
+
 Desenvolvido a partir do tutorial e do código linkado abaixo:
 
 - https://medium.com/@gustavo.ponce.ch/spring-boot-spring-mvc-spring-security-mysql-a5d8545d837d
