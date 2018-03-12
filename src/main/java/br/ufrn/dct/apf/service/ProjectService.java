@@ -38,7 +38,7 @@ public class ProjectService {
         Member m1 = new Member();
         m1.setProject(project);
         m1.setUser(owner);
-        m1.setCreatedOn(project.getCreated());
+        m1.setCreatedOn(project.getCreatedOn());
         
         //TODO Colocar ou não uma nova regra para User
         Role projectManager = roleRepository.findByRole(Role.PROJECT_MANAGER_ROLE);

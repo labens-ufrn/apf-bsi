@@ -68,7 +68,7 @@
                             <td th:text="${project.id}"></td>
                             <td th:text="${project.name}"></td>
                             <td th:text="${project.description}"></td>
-                            <td th:text="${#dates.format(project.created, 'dd/MM/yyyy')}"></td>
+                            <td th:text="${#dates.format(project.createdOn, 'dd/MM/yyyy')}"></td>
                             <td>
                                 <div class="btn-group pull-right">
                                     <a class="btn btn-sm btn-primary" th:href="@{/edit/{id}(id=${project.id})}" >Editar</a>

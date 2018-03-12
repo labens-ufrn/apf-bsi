@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import br.ufrn.dct.apf.model.Project;
+import br.ufrn.dct.apf.model.User;
 import br.ufrn.dct.apf.service.ProjectService;
 
 @Controller
@@ -23,10 +24,11 @@ public class ProjectController extends AbstractController {
         public ModelAndView findAll() {
 
             ModelAndView mv = new ModelAndView("project/list");
-            
             setUserAuth(mv);
             
-            mv.addObject("projects", service.findAll());
+            User current = getCurrentUser();
+            
+            mv.addObject("projects", service.findByUserId(current.getId()));
 
             return mv;
         }
@@ -35,6 +37,17 @@ public class ProjectController extends AbstractController {
         public ModelAndView add(Project project) {
 
             ModelAndView mv = new ModelAndView("project/add");
+            mv.addObject("project", project);
+
+            return mv;
+        }
+        
+        @GetMapping("/project/view/{id}")
+        public ModelAndView view(@PathVariable("id") Long id) {
+            ModelAndView mv = new ModelAndView("project/details");
+            setUserAuth(mv);
+            
+            Project project = service.findOne(id);
             mv.addObject("project", project);
 
             return mv;
@@ -60,8 +73,9 @@ public class ProjectController extends AbstractController {
             if(result.hasErrors()) {
                 return add(project);
             }
-
-            service.save(project);
+            
+            User owner = getCurrentUser();
+            service.save(project, owner);
 
             return findAll();
         }

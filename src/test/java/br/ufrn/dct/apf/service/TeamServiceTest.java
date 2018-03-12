@@ -50,7 +50,7 @@ public class TeamServiceTest extends AbstractTestNGSpringContextTests {
         
         p1.setName("APF Project");
         p1.setDescription("Analisador de Pontos por Função");
-        p1.setCreated(GregorianCalendar.getInstance().getTime());
+        p1.setCreatedOn(GregorianCalendar.getInstance().getTime());
         
         analista = new User();
         analista.setName("Taciano");

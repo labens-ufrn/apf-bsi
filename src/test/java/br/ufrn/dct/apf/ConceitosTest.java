@@ -69,10 +69,18 @@ public class ConceitosTest extends AbstractTestNGSpringContextTests {
         developer.setPassword("12345");
         developer.setActive(1);
         
+        User developerMaria = new User();
+        developerMaria.setName("Maria");
+        developerMaria.setLastName("Silva");
+        developerMaria.setEmail("mariasilva@gmai.com");
+        developerMaria.setPassword("12345");
+        developerMaria.setActive(1);
+        
         System.out.println("Salvando os usuários ...");
         
         userService.save(analista);
         userService.save(developer);
+        userService.save(developerMaria);
         
         softAssert.assertNotNull(analista, "T01 - NotNull:");
         softAssert.assertNotNull(analista.getId(), "T02 - NotNull:");
@@ -80,20 +88,21 @@ public class ConceitosTest extends AbstractTestNGSpringContextTests {
         softAssert.assertNotNull(developer, "T03 - NotNull:");
         softAssert.assertNotNull(developer.getId(), "T04 - NotNull:");
         
-        System.out.println("Usuário salvo! ID = "+ analista.getId() );
-        System.out.println("Usuário salvo! ID = "+ developer.getId() );
+        System.out.println("Usuário salvo! ID = " + analista.getId());
+        System.out.println("Usuário salvo! ID = " + developer.getId());
+        System.out.println("Usuário salvo! ID = " + developerMaria.getId());
 
         Project p1 = new Project();
 
         p1.setName("Sistema APF");
         p1.setDescription("Sistema para auxilio na contagem por Pontos de Função");
-        p1.setCreated(GregorianCalendar.getInstance().getTime());
+        p1.setCreatedOn(GregorianCalendar.getInstance().getTime());
         
         System.out.println("Salvando o Projeto ...");
-        //TODO Adicionar o membro da equipe fora do salvar de projeto???
+
         projectService.save(p1, analista);
         
-        System.out.println("Adicionar novo membro ao Projeto ...");
+        System.out.println("Adicionar novo membro ao Projeto ID = " + p1.getId());
         
         Member m1 = new Member();
         m1.setProject(p1);
@@ -103,7 +112,32 @@ public class ConceitosTest extends AbstractTestNGSpringContextTests {
         p1.getTeam().add(m1);
         
         projectService.save(p1);
+        
+        Project p2 = new Project();
 
+        p2.setName("Sistema do Developer");
+        p2.setDescription("Sistema para Teste");
+        p2.setCreatedOn(GregorianCalendar.getInstance().getTime());
+        
+        projectService.save(p2, developerMaria);
+        System.out.println("Salvando o Projeto ID = " + p2.getId());
+        
+        System.out.println("Projetos por Usuário ...");
+        List<Project> projAnalista = projectService.findByUserId(analista.getId());
+        for (Project proj : projAnalista) {
+            System.out.println("User = " + analista + "ID = " + analista.getId() + " Projeto ID = " + proj.getId());
+        }
+        
+        List<Project> projDev = projectService.findByUserId(developer.getId());
+        for (Project proj : projDev) {
+            System.out.println("User = " + developer + "ID = " + developer.getId() + " Projeto ID = " + proj.getId());
+        }
+        
+        List<Project> projMaria = projectService.findByUserId(developerMaria.getId());
+        for (Project proj : projMaria) {
+            System.out.println("User = " + developerMaria + "ID = " + developerMaria.getId() + " Projeto ID = " + proj.getId());
+        }
+        
         System.out.println("Criando o User Stories ...");
         
         UserStory us1 = new UserStory("US01", "Manter Projeto");
@@ -146,12 +180,13 @@ public class ConceitosTest extends AbstractTestNGSpringContextTests {
         
         System.out.println("Apagando o projeto ...");
         projectService.delete(p1.getId());
+        projectService.delete(p2.getId());
         
         System.out.println("Apagando o usuário ...");
         userService.delete(analista.getId());
         userService.delete(developer.getId());
+        userService.delete(developerMaria.getId());
         
         softAssert.assertAll();
-
     }
 }

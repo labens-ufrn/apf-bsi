@@ -39,11 +39,11 @@ public class Project implements Serializable {
     @NotEmpty(message = "Escreva uma descrição para o projeto")
     private String description;
 
-    @Column(nullable = false)
+    @Column(name = "created_on", nullable = false)
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     //@NotEmpty(message = "Data é uma informação obrigatória.")
-    private Date created;
+    private Date createdOn;
 
     @Column(name = "active")
     private int active;
@@ -86,12 +86,12 @@ public class Project implements Serializable {
         this.active = active;
     }
 
-    public Date getCreated() {
-        return created;
+    public Date getCreatedOn() {
+        return createdOn;
     }
 
-    public void setCreated(Date created) {
-        this.created = created;
+    public void setCreatedOn(Date createdOn) {
+        this.createdOn = createdOn;
     }
 
     public Set<Member> getTeam() {

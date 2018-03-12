@@ -42,9 +42,9 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <div class="col-md-2" th:classappend="${#fields.hasErrors('created')}? 'has-error'">
+                            <div class="col-md-2" th:classappend="${#fields.hasErrors('createdOn')}? 'has-error'">
                                 <label>Data</label>
-                                <input type="date" class="form-control input-sm" th:field="*{created}"/>
+                                <input type="date" class="form-control input-sm" th:field="*{createdOn}"/>
                             </div>
                         </div>
                     </fieldset>

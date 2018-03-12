@@ -35,7 +35,7 @@ public class ProjectServiceTest extends AbstractTestNGSpringContextTests {
         
         p1.setName("APF Project");
         p1.setDescription("Analisador de Pontos por Função");
-        p1.setCreated(GregorianCalendar.getInstance().getTime());
+        p1.setCreatedOn(GregorianCalendar.getInstance().getTime());
         
         service.save(p1);
     }
@@ -68,7 +68,7 @@ public class ProjectServiceTest extends AbstractTestNGSpringContextTests {
         softAssert.assertEquals(found.getName(), p1.getName(), "T03 - Equals:");
         softAssert.assertEquals(found.getDescription(), p1.getDescription(), "T04 - Equals:");
         
-        softAssert.assertNotNull(found.getCreated(), "T05 - NotNull:");
+        softAssert.assertNotNull(found.getCreatedOn(), "T05 - NotNull:");
         softAssert.assertNotNull(found.getActive(), "T06 - NotNull:");
         softAssert.assertEquals(found.getActive(), p1.getActive(), "T07 - Equals:");
         
@@ -81,7 +81,7 @@ public class ProjectServiceTest extends AbstractTestNGSpringContextTests {
         
         p2.setName("Test Project");
         p2.setDescription("TestNG Project");
-        p2.setCreated(GregorianCalendar.getInstance().getTime());
+        p2.setCreatedOn(GregorianCalendar.getInstance().getTime());
         p2.setActive(1);
         
         service.save(p2);
@@ -100,7 +100,7 @@ public class ProjectServiceTest extends AbstractTestNGSpringContextTests {
         softAssert.assertEquals(found.getName(), p2.getName(), "T05 - Equals:");
         softAssert.assertEquals(found.getDescription(), p2.getDescription(), "T06 - Equals:");
         
-        softAssert.assertNotNull(found.getCreated(), "T07 - NotNull:");
+        softAssert.assertNotNull(found.getCreatedOn(), "T07 - NotNull:");
         softAssert.assertNotNull(found.getActive(), "T08 - NotNull:");
         softAssert.assertEquals(found.getActive(), p2.getActive(), "T08 - Equals:");
         
@@ -137,7 +137,7 @@ public class ProjectServiceTest extends AbstractTestNGSpringContextTests {
         
         p2.setName("Test Project");
         p2.setDescription("TestNG Project");
-        p2.setCreated(GregorianCalendar.getInstance().getTime());
+        p2.setCreatedOn(GregorianCalendar.getInstance().getTime());
         p2.setActive(1);
         
         service.save(p2);
