@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Projects List</title>
+    <meta charset="UTF-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+
+    <link rel="stylesheet" type="text/css" th:href="@{/css/home.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/css/simple-sidebar.css}" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.bundle.min.js"></script>
+</head>
+<body>
+    <div th:replace="fragments/header :: header"></div>
+    <div id="wrapper" class="wrapper.toggled toggled" style="margin-top:50px">
+        <!-- Sidebar -->
+        <div id="sidebar-wrapper">
+            <ul class="sidebar-nav">
+                <li class="sidebar-brand">
+                    <a href="#">
+                        Start Bootstrap
+                    </a>
+                </li>
+                <li>
+                    <a href="#">Dashboard</a>
+                </li>
+                <li>
+                    <a th:href="@{/project}">Project</a>
+                </li>
+                <li>
+                    <a th:href="@{/user}">User</a>
+                </li>
+                <li>
+                    <a th:href="@{/admin/home}">Home Admin</a>
+                </li>
+                <li>
+                    <a href="#">Contact</a>
+                </li>
+            </ul>
+        </div>
+        <!-- /#sidebar-wrapper -->
+
+        <!-- Page Content -->
+        <div id="page-content-wrapper">
+            <div class="container-fluid">
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <strong>Detalhes do Projeto</strong>
+        </div>
+        <div class="panel-body">
+            <div>
+                <div class="form-group row">
+                    <div class="col-md-5">
+                        <label>Id:</label>
+                        <span th:text="${project.id}">Id</span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-md-4">
+                         <label>Nome:</label>
+                         <span th:text="${project.name}">Nome</span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-md-4">
+                       <label>Descrição:</label>
+                       <p class="content" th:utext="${project.description}">Description</p>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-md-2">
+                        <label>Data de Criação:</label>
+                        <span th:text="${#dates.format(project.createdOn, 'dd-MMM-yyyy')}">22-May-2016</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <strong>User Stories</strong>
+                </div>
+                <div class="panel-body">
+                <div class="table-responsive">
+                    <table class="table table-sm table-striped table-hover table-bordered">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nome</th>
+                                <th>Descrição</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="userstory : ${project.userStories}">
+                                <td th:text="${userstory.id}"></td>
+                                <td th:text="${userstory.name}"></td>
+                                <td th:text="${userstory.description}"></td>
+                                <td>
+                                    <div class="btn-group pull-right">
+                                        <a class="btn btn-sm btn-primary" th:href="@{/edit/{id}(id=${userstory.id})}" >Editar</a>
+                                        <a class="delete btn btn-sm btn-danger" th:href="@{/delete/{id}(id=${userstory.id})}">Excluir</a>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                </div>
+                <div class="panel-footer">
+                    <a class="btn btn-sm btn-success" th:href="@{/userstory/add/}" >Add User Story</a>
+                </div>
+            </div>
+            
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <strong>Equipe</strong>
+                </div>
+                <div class="panel-body">
+                <div class="table-responsive">
+                    <table class="table table-sm table-striped table-hover table-bordered">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nome</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="member : ${project.team}">
+                                <td th:text="${member.user.id}"></td>
+                                <td th:text="${member.user.name}"></td>
+                                <td>
+                                    <div class="btn-group pull-right">
+                                        <a class="btn btn-sm btn-primary" th:href="@{/edit/{id}(id=${member.id})}" >Editar</a>
+                                        <a class="delete btn btn-sm btn-danger" th:href="@{/delete/{id}(id=${member.id})}">Excluir</a>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                </div>
+                <div class="panel-footer">
+                    <a class="btn btn-sm btn-success" th:href="@{/member/add/}" >Add Member</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+        <!-- /#page-content-wrapper -->
+        <div th:include="fragments/footer :: footer-authenticated" align="center"></div>
+    </div>
+    </div>
+</body>
+</html>

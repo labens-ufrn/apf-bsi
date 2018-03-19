@@ -44,7 +44,7 @@ public class ProjectController extends AbstractController {
         
         @GetMapping("/project/view/{id}")
         public ModelAndView view(@PathVariable("id") Long id) {
-            ModelAndView mv = new ModelAndView("project/details");
+            ModelAndView mv = new ModelAndView("project/view");
             setUserAuth(mv);
             
             Project project = service.findOne(id);
