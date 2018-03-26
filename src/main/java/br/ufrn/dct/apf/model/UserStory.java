@@ -1,7 +1,10 @@
 package br.ufrn.dct.apf.model;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -10,6 +13,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.validator.constraints.NotEmpty;
@@ -40,6 +44,9 @@ public class UserStory implements Serializable {
     @JoinColumn(name = "project_id", nullable = false)
     private Project project;
     
+    @OneToMany(mappedBy = "userStory", targetEntity = DataFunction.class , fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private Set<DataFunction> dataFunction = new HashSet<>();
+    
     public UserStory() {
     }
 
@@ -60,7 +67,7 @@ public class UserStory implements Serializable {
         return name;
     }
 
-    public void setNome(String name) {
+    public void setName(String name) {
         this.name = name;
     }
 
@@ -78,5 +85,23 @@ public class UserStory implements Serializable {
 
     public void setProject(Project project) {
         this.project = project;
+    }
+    
+    public Set<DataFunction> getDataFunction() {
+        return dataFunction;
+    }
+
+    public void setDataFunction(Set<DataFunction> datas) {
+        this.dataFunction = datas;
+    }
+    
+    public void addData(DataFunction data) {
+        if (data != null) {
+            data.setUserStory(this);
+        }
+
+        if (!dataFunction.contains(data)) {
+            dataFunction.add(data);
+        }
     }
 }
