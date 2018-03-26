@@ -13,9 +13,9 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
+import br.ufrn.dct.apf.model.ILF;
 import br.ufrn.dct.apf.model.Member;
 import br.ufrn.dct.apf.model.Project;
-import br.ufrn.dct.apf.model.Role;
 import br.ufrn.dct.apf.model.User;
 import br.ufrn.dct.apf.model.UserStory;
 import br.ufrn.dct.apf.service.ProjectService;
@@ -31,9 +31,6 @@ public class ConceitosTest extends AbstractTestNGSpringContextTests {
     
     @Autowired
     private ProjectService projectService;
-    
-    @Autowired
-    private ProjectService memberService;
     
     @Autowired
     private UserStoryService userStoryService;
@@ -142,8 +139,19 @@ public class ConceitosTest extends AbstractTestNGSpringContextTests {
         
         UserStory us1 = new UserStory("US01", "Manter Projeto");
         us1.setProject(p1);
+        
         UserStory us2 = new UserStory("US02", "Manter UserStory");
         us2.setProject(p1);
+        
+        System.out.println("Adicionando ALI ...");
+        ILF aliUS = new ILF("ALI UserStory");
+        // Colocar 1 Record Element Types (RET): UserStory
+        aliUS.setRecordElementTypes(1L);
+        // numero de Data Element Types (DET): 7
+        aliUS.setDataElementTypes(5L);
+        
+        us1.addData(aliUS);
+        
         UserStory us3 = new UserStory("US03", "Manter User");
         us3.setProject(p1);
         
@@ -152,6 +160,17 @@ public class ConceitosTest extends AbstractTestNGSpringContextTests {
         userStoryService.save(us1);
         userStoryService.save(us2);
         userStoryService.save(us3);
+        
+        System.out.println("Adicionando ALI ...");
+        ILF aliProject = new ILF("ALI Projeto");
+        // Colocar 2 Record Element Types (RET): Project e Member
+        aliProject.setRecordElementTypes(2L);
+        // Somar os Data Element Types (DET): 7 + 4.
+        aliProject.setDataElementTypes(11L);
+        
+        us1.addData(aliProject);
+        
+        userStoryService.save(us1);
         
         System.out.println("Recarregar Projeto ID = " + p1.getId());
         
