@@ -33,3 +33,7 @@ http://www.baeldung.com/spring-boot-internationalization
 CRUD
 
 http://www.nakov.com/blog/2016/08/05/creating-a-blog-system-with-spring-mvc-thymeleaf-jpa-and-mysql/
+
+Auto completar
+
+https://github.com/lowrin/spring-boot-input-autocomplete-example
