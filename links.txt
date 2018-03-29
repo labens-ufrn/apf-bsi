@@ -25,6 +25,7 @@ Contagem de Pontos de Função
 https://nesma.org/themes/sizing/function-point-analysis/early-function-point-counting/
 https://www.devmedia.com.br/analise-de-pontos-de-funcao/9146
 http://fattocs.com/pt/contagem-antecipada
+http://www.softwaremetrics.com/fpafund.htm
 
 Internacionalização
 
