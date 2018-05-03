@@ -19,5 +19,6 @@ Esse projeto faz uso do framework spring-boot que encapsula todas as dependênci
 
 Desenvolvido a partir do tutorial e do código linkado abaixo:
 
-- https://medium.com/@gustavo.ponce.ch/spring-boot-spring-mvc-spring-security-mysql-a5d8545d837d
-- https://github.com/gustavoponce7/SpringSecurityLoginTutorial
+* https://medium.com/@gustavo.ponce.ch/spring-boot-spring-mvc-spring-security-mysql-a5d8545d837d
+* https://github.com/gustavoponce7/SpringSecurityLoginTutorial
+* https://franckaragao.wordpress.com/2016/08/23/integracao-continua-com-o-travis-ci-em-projetos-java-usando-o-maven/
