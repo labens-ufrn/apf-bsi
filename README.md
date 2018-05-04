@@ -2,6 +2,13 @@
 
 Sistema para facilitar a contagem na análise por pontos de função (APF) desenvolvido para ser utilizado nas disciplinas de Engenharia de Software do curso de Bacharelado em Sistemas de Informação do CERES/UFRN.
 
+## Padrões de Codificação
+
+* Insert spaces for tabs
+* Tab policy para Spaces only
+* Indentation size: 4
+* Tab size: 4
+
 ## Execução
 
 Esse projeto faz uso do framework spring-boot que encapsula todas as dependências no arquivo jar.
