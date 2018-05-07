@@ -7,11 +7,25 @@
     <title>User Story Addiction</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"></link>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script>
+      $(document).ready(function() {
+        $('#autocomplete-input').devbridgeAutocomplete({
+          serviceUrl: '/suggestion',
+          paramName: 'searchstr',
+          minChars: 1,
+          autoSelectFirst: true,
+        });
+      });
+    </script>
 </head>
 <body>
     <div class="panel panel-default">
         <div class="panel-heading">
             <strong>Adicionar User Story</strong>
+        </div>
+        <div class="input-field col s12">
+            <label for="autocomplete-input">Projeto</label>
+            <input type="text" id="autocomplete-input" class="autocomplete">
         </div>
         <div class="panel-body">
             <form class="form-horizontal" th:object="${userstory}" th:action="@{/us/save}" method="POST" style="margin: 10px">
