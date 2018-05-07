@@ -69,13 +69,13 @@
                     </div>
                 </div>
                 <div class="form-group row">
-                    <div class="col-md-4">
+                    <div class="col-md-10">
                        <label>Descrição:</label>
-                       <p class="content" th:utext="${project.description}">Description</p>
+                       <span class="content" th:utext="${project.description}">Description</span>
                     </div>
                 </div>
                 <div class="form-group row">
-                    <div class="col-md-2">
+                    <div class="col-md-4">
                         <label>Data de Criação:</label>
                         <span th:text="${#dates.format(project.createdOn, 'dd-MMM-yyyy')}">22-May-2016</span>
                     </div>
