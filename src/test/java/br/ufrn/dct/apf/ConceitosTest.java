@@ -148,7 +148,7 @@ public class ConceitosTest extends AbstractTestNGSpringContextTests {
         // Colocar 1 Record Element Types (RET): UserStory
         aliUS.setRecordElementTypes(1L);
         // numero de Data Element Types (DET): 7
-        aliUS.setDataElementTypes(5L);
+        aliUS.setDataElementTypes(7L);
         
         us1.addData(aliUS);
         
