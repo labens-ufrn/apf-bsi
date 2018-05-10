@@ -42,16 +42,16 @@ public class Project implements Serializable {
     @Column(name = "created_on", nullable = false)
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    //@NotEmpty(message = "Data é uma informação obrigatória.")
+    // @NotEmpty(message = "Data é uma informação obrigatória.")
     private Date createdOn;
 
     @Column(name = "active")
     private int active;
-    
+
     @OneToMany(mappedBy = "project", targetEntity = Member.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<Member> team = new HashSet<>();
-    
-    @OneToMany(mappedBy = "project", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+
+    @OneToMany(mappedBy = "project", fetch = FetchType.EAGER, cascade = CascadeType.DETACH)
     private Set<UserStory> userStories = new HashSet<>();
 
     public Long getId() {
@@ -101,13 +101,13 @@ public class Project implements Serializable {
     public void setTeam(Set<Member> team) {
         this.team = team;
     }
-    
+
     public void setOwner(Member owner) {
-        
-        if(team == null) {
+
+        if (team == null) {
             team = new HashSet<>(0);
         }
-        
+
         if (!team.contains(owner)) {
             team.add(owner);
         }

@@ -44,7 +44,7 @@ public class DataFunction implements Serializable {
     @Column(name = "det")
     private Long dataElementTypes;
     
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_story_id", nullable = false)
     private UserStory userStory;
 

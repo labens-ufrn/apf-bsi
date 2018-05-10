@@ -23,7 +23,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 public class UserStory implements Serializable {
 
     /**
-     * 
+     *
      */
     private static final long serialVersionUID = 1L;
 
@@ -39,14 +39,14 @@ public class UserStory implements Serializable {
     @Column(name = "description")
     @NotEmpty(message = "*Escreva uma descrição para o user story")
     private String description;
-    
-    @ManyToOne(fetch = FetchType.LAZY)
+
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "project_id", nullable = false)
     private Project project;
-    
-    @OneToMany(mappedBy = "userStory", targetEntity = DataFunction.class , fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+
+    @OneToMany(mappedBy = "userStory", targetEntity = DataFunction.class, fetch = FetchType.EAGER, cascade = CascadeType.DETACH)
     private Set<DataFunction> dataFunction = new HashSet<>();
-    
+
     public UserStory() {
     }
 
@@ -78,7 +78,7 @@ public class UserStory implements Serializable {
     public void setDescription(String description) {
         this.description = description;
     }
-    
+
     public Project getProject() {
         return project;
     }
@@ -86,7 +86,7 @@ public class UserStory implements Serializable {
     public void setProject(Project project) {
         this.project = project;
     }
-    
+
     public Set<DataFunction> getDataFunction() {
         return dataFunction;
     }
@@ -94,7 +94,7 @@ public class UserStory implements Serializable {
     public void setDataFunction(Set<DataFunction> datas) {
         this.dataFunction = datas;
     }
-    
+
     public void addData(DataFunction data) {
         if (data != null) {
             data.setUserStory(this);
