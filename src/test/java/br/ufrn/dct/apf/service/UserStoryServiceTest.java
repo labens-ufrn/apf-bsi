@@ -23,36 +23,36 @@ public class UserStoryServiceTest extends AbstractTestNGSpringContextTests {
 
     @Autowired
     private ProjectService service;
-    
+
     @Autowired
     private UserStoryService userStoryService;
-    
+
     private Project p1;
-    
+
     private UserStory us1, us2;
 
     @BeforeMethod
     public void startTest() {
         softAssert = new SoftAssert();
-        
+
         p1 = new Project();
-        
+
         p1.setName("APF Project");
         p1.setDescription("Analisador de Pontos por Função");
         p1.setCreatedOn(GregorianCalendar.getInstance().getTime());
-        
+
         service.save(p1);
-        
-        UserStory us1 = new UserStory("US01", "Manter Projeto");
+
+        us1 = new UserStory("US01", "Manter Projeto");
         us1.setProject(p1);
-        
-        UserStory us2 = new UserStory("US02", "Manter UserStory");
+
+        us2 = new UserStory("US02", "Manter UserStory");
         us2.setProject(p1);
-        
+
         userStoryService.save(us1);
         userStoryService.save(us2);
     }
-    
+
     @AfterMethod
     public void endTest() {
         softAssert = null;
@@ -67,25 +67,25 @@ public class UserStoryServiceTest extends AbstractTestNGSpringContextTests {
     @Test
     public void findAll() {
         List<UserStory> uss = userStoryService.findAll();
-        
+
         softAssert.assertNotNull(uss, "T01 - NotNull:");
         softAssert.assertEquals(uss.size(), 2, "T02 - Equals:");
-        
+
         softAssert.assertAll();
     }
 
     @Test
     public void findOne() {
         Long id = us1.getId();
-        
+
         UserStory found = userStoryService.findOne(id);
-        
+
         softAssert.assertNotNull(found, "T01 - NotNull:");
-        
+
         softAssert.assertEquals(found.getName(), us1.getName(), "T03 - Equals:");
         softAssert.assertEquals(found.getDescription(), us1.getDescription(), "T04 - Equals:");
-        softAssert.assertEquals(found.getProject(), us1.getProject(), "T04 - Equals:");
-        
+        softAssert.assertEquals(found.getProject().getId(), us1.getProject().getId(), "T04 - Equals:");
+
         softAssert.assertAll();
     }
 
@@ -95,77 +95,77 @@ public class UserStoryServiceTest extends AbstractTestNGSpringContextTests {
         us3.setProject(p1);
 
         userStoryService.save(us3);
-  
+
         Long id3 = us3.getId();
-        
+
         UserStory found = userStoryService.findOne(id3);
         List<UserStory> uss = userStoryService.findAll();
-        
+
         softAssert.assertNotNull(id3, "T01 - NotNull:");
         softAssert.assertNotNull(found, "T02 - NotNull:");
-        
+
         softAssert.assertNotNull(uss, "T03 - NotNull:");
         softAssert.assertEquals(uss.size(), 3, "T04 - Equals:");
-        
+
         softAssert.assertEquals(found.getName(), us3.getName(), "T05 - Equals:");
         softAssert.assertEquals(found.getDescription(), us3.getDescription(), "T06 - Equals:");
-        softAssert.assertEquals(found.getProject(), us3.getProject(), "T07 - Equals:");
-    
+        softAssert.assertEquals(found.getProject().getId(), us3.getProject().getId(), "T07 - Equals:");
+
         userStoryService.delete(id3);
-        
+
         softAssert.assertAll();
     }
-    
+
     @Test
     public void update() {
         Long id = us1.getId();
-        
+
         UserStory update = userStoryService.findOne(id);
 
         update.setName("Novo User Story");
         update.setDescription("Novo user story para teste de update");
-        
+
         userStoryService.save(update);
-        
+
         UserStory found = userStoryService.findOne(id);
-        
+
         softAssert.assertNotNull(found, "T01 - NotNull:");
-        
+
         softAssert.assertEquals(found.getName(), "Novo User Story", "T02 - Equals:");
         softAssert.assertEquals(found.getDescription(), "Novo user story para teste de update", "T03 - Equals:");
-        softAssert.assertEquals(found.getProject(), us1.getProject(), "T04 - Equals:");
+        softAssert.assertEquals(found.getProject().getId(), us1.getProject().getId(), "T04 - Equals:");
 
         softAssert.assertAll();
     }
-    
+
     @Test
     public void delete() {
         UserStory us4 = new UserStory("US04", "Testando o delete de UserStory");
         us4.setProject(p1);
 
         userStoryService.save(us4);
-        
+
         Long id4 = us4.getId();
-        
+
         UserStory found = userStoryService.findOne(id4);
         List<UserStory> uss = userStoryService.findAll();
-        
+
         softAssert.assertNotNull(id4, "T01 - NotNull:");
         softAssert.assertNotNull(found, "T02 - NotNull:");
-        
+
         softAssert.assertNotNull(uss, "T03 - NotNull:");
         softAssert.assertEquals(uss.size(), 3, "T04 - Equals:");
-        
+
         userStoryService.delete(id4);
-        
+
         found = userStoryService.findOne(id4);
         uss = userStoryService.findAll();
-        
+
         softAssert.assertNull(found, "T05 - isNull:");
-        
+
         softAssert.assertNotNull(uss, "T06 - NotNull:");
         softAssert.assertEquals(uss.size(), 2, "T07 - Equals:");
-        
+
         softAssert.assertAll();
     }
 }
