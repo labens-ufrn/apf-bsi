@@ -50,24 +50,24 @@ public class AbstractController {
         SecurityContext context = SecurityContextHolder.getContext();
         Authentication auth = context.getAuthentication();
 
-        User user = userService.findUserByEmail(auth.getName());
-
-        return user;
+        return userService.findUserByEmail(auth.getName());
     }
 
     protected String getRoles(User user) {
         Set<Role> roles = user.getRoles();
-        String str = "[";
+        
+        StringBuilder bld = new StringBuilder();
+        bld.append("[");
         int size = roles.size();
         int i = 1;
         for (Role role : roles) {
-            str += role.getRole();
+            bld.append(role.getRole());
             if (i > 0 && i < size) {
-                str += ", ";
+                bld.append(", ");
                 i += 1;
             }
         }
-        return str + "]";
+        bld.append("]");
+        return bld.toString();   
     }
-
 }
