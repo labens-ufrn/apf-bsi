@@ -65,10 +65,10 @@ public class TeamServiceTest extends AbstractTestNGSpringContextTests {
         desenvolvedor.setPassword("12345");
 
         projectOwner = new Role();
-        projectOwner.setRole("Project Owner");
+        projectOwner.setRoleName("Project Owner");
         
         projectDev = new Role();
-        projectDev.setRole("Project Dev");
+        projectDev.setRoleName("Project Dev");
     }
     
     @AfterMethod

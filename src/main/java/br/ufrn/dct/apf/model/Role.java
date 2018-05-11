@@ -32,8 +32,8 @@ public class Role implements Serializable {
     @Column(name = "role_id")
     private int id;
 
-    @Column(name = "role")
-    private String role;
+    @Column(name = "role_name")
+    private String roleName;
 
     public int getId() {
         return id;
@@ -43,15 +43,15 @@ public class Role implements Serializable {
         this.id = id;
     }
 
-    public String getRole() {
-        return role;
+    public String getRoleName() {
+        return roleName;
     }
 
-    public void setRole(String role) {
-        this.role = role;
+    public void setRoleName(String roleName) {
+        this.roleName = roleName;
     }
 
     public String toString() {
-        return this.role;
+        return this.roleName;
     }
 }

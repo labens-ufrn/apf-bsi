@@ -61,7 +61,7 @@ public class AbstractController {
         int size = roles.size();
         int i = 1;
         for (Role role : roles) {
-            bld.append(role.getRole());
+            bld.append(role.getRoleName());
             if (i > 0 && i < size) {
                 bld.append(", ");
                 i += 1;

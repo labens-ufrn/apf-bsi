@@ -18,7 +18,7 @@ import br.ufrn.dct.apf.model.User;
 public class UserServiceTest extends AbstractTestNGSpringContextTests {
 
     private SoftAssert softAssert;
-
+ 
     @Autowired
     private UserService service;
 

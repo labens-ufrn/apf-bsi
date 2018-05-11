@@ -34,7 +34,7 @@ public class UserService {
      */
     public void save(User user) {
         //TODO Implementar a criação das Roles básicas (ADMIN e USER) na configuração do spring
-        Role userRole = roleRepository.findByRole(Role.USER_ROLE);
+        Role userRole = roleRepository.findByRoleName(Role.USER_ROLE);
 
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         user.setActive(ACTIVE);
