@@ -5,7 +5,6 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,8 +26,8 @@ public class UserController extends AbstractController {
         @Autowired
         private RoleRepository roleRepository;
         
-        @Autowired
-        private BCryptPasswordEncoder bCryptPasswordEncoder;
+        //@Autowired
+        //private BCryptPasswordEncoder bCryptPasswordEncoder;
         
         @GetMapping("/user")
         public ModelAndView profile() {
@@ -85,7 +84,6 @@ public class UserController extends AbstractController {
 
         @GetMapping("/admin/user/add")
         public ModelAndView add(User user) {
-            
             List<Role> regras = roleRepository.findAll();
 
             ModelAndView mv = new ModelAndView("admin/user/add");
@@ -97,15 +95,12 @@ public class UserController extends AbstractController {
 
         @GetMapping("/admin/user/edit/{id}")
         public ModelAndView edit(@PathVariable("id") Long id) {
-
             return add(service.findOne(id));
         }
 
         @GetMapping("/admin/user/delete/{id}")
         public ModelAndView delete(@PathVariable("id") Long id) {
-
-            //service.delete(id);
-
+            service.delete(id);
             return findAll();
         }
 
@@ -118,8 +113,7 @@ public class UserController extends AbstractController {
                         "There is already a user registered with the email provided");
             }
             if (result.hasErrors()) {
-                System.err.println(result.hasErrors());
-                System.err.println(result);
+                result.reject("erro!", result.getAllErrors().toArray(), "Erro ao salvar usuário");
                 findAll();
             } else {
                 service.save(user);
