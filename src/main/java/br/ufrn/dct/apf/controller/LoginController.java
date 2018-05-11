@@ -21,9 +21,9 @@ public class LoginController extends AbstractController {
     @Autowired
     private UserService userService;
 
-    private final String LOGIN_VIEW = "login";
+    private static final String LOGIN_VIEW = "login";
 
-    private final String REGISTRATION_VIEW = "registration";
+    private static final String REGISTRATION_VIEW = "registration";
 
     @RequestMapping(value = { "/", "/login" }, method = RequestMethod.GET)
     public ModelAndView login() {
