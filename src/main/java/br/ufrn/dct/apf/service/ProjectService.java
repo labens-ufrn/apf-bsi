@@ -40,9 +40,8 @@ public class ProjectService {
         m1.setUser(owner);
         m1.setCreatedOn(project.getCreatedOn());
         
-        //TODO Colocar ou não uma nova regra para User
         Role projectManager = roleRepository.findByRoleName(Role.PROJECT_MANAGER_ROLE);
-        //owner.setNewRole(projectManager);
+        owner.setNewRole(projectManager);
         
         project.setOwner(m1);
         
