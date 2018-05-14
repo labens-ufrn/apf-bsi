@@ -2,17 +2,15 @@ package br.ufrn.dct.apf.controller;
 
 import java.util.List;
 
-import br.ufrn.dct.apf.model.Project;
-
 public class ProjectSuggestionWrapper {
     
-    List<Project> suggestions;
+    List<ProjectSuggestion> suggestions;
 
-    public List<Project> getSuggestions() {
+    public List<ProjectSuggestion> getSuggestions() {
       return suggestions;
     }
 
-    public void setSuggestions(List<Project> suggestions) {
+    public void setSuggestions(List<ProjectSuggestion> suggestions) {
       this.suggestions = suggestions;
   }
 
