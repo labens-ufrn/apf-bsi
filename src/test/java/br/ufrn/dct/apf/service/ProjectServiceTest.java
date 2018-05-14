@@ -126,7 +126,7 @@ public class ProjectServiceTest extends AbstractTestNGSpringContextTests {
 
         softAssert.assertEquals(found.getName(), "Novo Projeto", "T02 - Equals:");
         softAssert.assertEquals(found.getDescription(), "Novo projeto para teste de update", "T03 - Equals:");
-        softAssert.assertEquals(found.getActive(), 0, "T04 - Equals:");
+        softAssert.assertEquals(found.getActive(), 1, "T04 - Equals:");
 
         softAssert.assertAll();
     }
