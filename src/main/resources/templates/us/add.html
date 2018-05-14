@@ -5,12 +5,23 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta name="viewport" content="width=device-width" />
     <title>User Story Addiction</title>
+    <!-- JQuery -->
+    <script type="text/javascript" th:src="@{/js/jquery-3.2.0.min.js}"></script>
+    <!--Import https://www.devbridge.com/sourcery/components/jquery-autocomplete/#-->
+    <script type="text/javascript" th:src="@{/js/jquery.autocomplete.js}"></script>
+    <!-- Compiled and minified JavaScript -->
+    <script type="text/javascript" th:src="@{/js/materialize.min.js}"></script>
+
+    <!--Import materialize.css-->
+    <link type="text/css" rel="stylesheet" th:href="@{/css/materialize.min.css}" media="screen,projection"/>
+    <!--Import Google Icon Font-->
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"></link>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script>
       $(document).ready(function() {
         $('#autocomplete-input').devbridgeAutocomplete({
-          serviceUrl: '/suggestion',
+          serviceUrl: '/apf/project/suggestion',
           paramName: 'searchstr',
           minChars: 1,
           autoSelectFirst: true,
@@ -22,10 +33,6 @@
     <div class="panel panel-default">
         <div class="panel-heading">
             <strong>Adicionar User Story</strong>
-        </div>
-        <div class="input-field col s12">
-            <label for="autocomplete-input">Projeto</label>
-            <input type="text" id="autocomplete-input" class="autocomplete">
         </div>
         <div class="panel-body">
             <form class="form-horizontal" th:object="${userstory}" th:action="@{/us/save}" method="POST" style="margin: 10px">
@@ -39,10 +46,14 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <div class="col-md-1">
-                                <input type="text" class="form-control input-sm" id="id" th:field="*{id}" readOnly="readonly"/>
+                            <div class="col-md-4" th:classappend="${#fields.hasErrors('project.name')}? 'has-error'">
+                                <div class="input-field col s12">
+                                <i class="material-icons prefix">textsms</i>
+                                <label for="autocomplete-input">Projeto</label>
+                                <input type="text" id="autocomplete-input" class="autocomplete" th:field="*{project.name}">
+                                </div>
                             </div>
-                         </div>
+                        </div>
                         <div class="form-group row">
                             <div class="col-md-4" th:classappend="${#fields.hasErrors('name')}? 'has-error'">
                                 <label>Nome</label>
