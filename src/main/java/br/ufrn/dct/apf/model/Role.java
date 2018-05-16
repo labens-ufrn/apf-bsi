@@ -25,7 +25,7 @@ public class Role implements Serializable {
     
     public static final String ADMIN_ROLE = "ADMIN";
     
-    public static final String PROJECT_MANAGER_ROLE = "PROJECT_MANAGER";
+    public static final String PROJECT_MANAGER_ROLE = "PROJECT MANAGER";
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
