@@ -2,7 +2,10 @@ package br.ufrn.dct.apf.service;
 
 import java.util.List;
 
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import br.ufrn.dct.apf.model.Member;
@@ -14,7 +17,12 @@ import br.ufrn.dct.apf.repository.ProjectRepository;
 import br.ufrn.dct.apf.repository.RoleRepository;
 
 @Service
-public class ProjectService {
+public class ProjectService extends AbstractService {
+    
+    /**
+     * Logger.
+     */
+    private static final Logger LOGGER = Logger.getLogger(ProjectService.class.getName());
 
     @Autowired
     private ProjectRepository repository;
@@ -41,43 +49,72 @@ public class ProjectService {
         return repository.findOne(id);
     }
     
-    public Project save(Project project, User owner) {
+    public Project save(Project project) throws BusinessRuleException {
+        checkMember(project, null);
+        project.setActive(ACTIVE);
+        return repository.saveAndFlush(project);
+    }
+    
+    public Project addMember(Project project, User newMember, User owner) throws BusinessRuleException {
+        addMember(project, newMember);
+        return save(project, owner);
+    }
+    
+    public Project save(Project project, User owner) throws BusinessRuleException {
+        LOGGER.log(Level.INFO, project);
+        checkProjectNull(project);
+        checkMemberNull(owner);
 
-        addMember(project, owner);
+        if (project.getId() == null) {
+            addMember(project, owner);
+        } else if (project.getId() != null) {
+            checkMember(project, owner);
+        }
 
-
-        project.setActive(1);
+        project.setActive(ACTIVE);
         
         return repository.saveAndFlush(project);
     }
     
-    private void addMember(Project project, User owner) {
-        Member m1 = new Member();
-        m1.setProject(project);
-        m1.setUser(owner);
-        m1.setCreatedOn(project.getCreatedOn());
-        
-        if (project != null && project.getId() == null) {
-            Role projectManager = roleRepository.findByRoleName(Role.PROJECT_MANAGER_ROLE);
-            owner.setNewRole(projectManager);
-            project.setOwner(m1);
-        } else if (project != null && project.getId() != null && !containsMember(m1)) {
-            Role projectMember = roleRepository.findByRoleName(Role.USER_ROLE);
-            owner.setNewRole(projectMember);
+    private void addMember(Project project, User user) throws BusinessRuleException {
+        Role projectManager = roleRepository.findByRoleName(Role.PROJECT_MANAGER_ROLE);
+        user.setNewRole(projectManager);
+        Member manager = createMember(project, user);
+        project.setOwner(manager);
+    }
+    
+    private void checkMember(Project project, User user) throws BusinessRuleException {
+        LOGGER.log(Level.INFO, "ProjectService.checkMember");
+        if (!containsMemberInTeam(project, user)) {
+            throw new BusinessRuleException("error.project.service.member.not.exists");
         }
     }
     
-    private boolean containsMember(Member m) {
-        List<Member> team = memberRepository.findByProjectIdAndUserId(m.getProject().getId(), m.getUser().getId());
-        return team.contains(m);
+    private boolean containsMemberInTeam(Project project, User user) {
+        if (project.getId() != null && user != null && user.getId() != null) {
+            List<Member> team = memberRepository.findByProjectIdAndUserId(project.getId(), user.getId());
+            return team.size() == 1;
+        } else if (project.getTeam() != null) {
+            return project.getTeam().size() >= 1;
+        }
+        return false;
     }
 
-    public Project save(Project project) {
-        project.setActive(1);
-        return repository.saveAndFlush(project);
-    }
-
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public void delete(Long id) {
+        LOGGER.log(Level.INFO, "ProjectService.delete.id = "+ id);
         repository.delete(id);
+    }
+    
+    private void checkProjectNull(Object obj) throws BusinessRuleException {
+        if (checkNull(obj)) {
+            throw new BusinessRuleException("error.project.service.project.is.null");
+        }
+    }
+    
+    private void checkMemberNull(Object obj) throws BusinessRuleException {
+        if (checkNull(obj)) {
+            throw new BusinessRuleException("error.project.service.member.is.null");
+        }
     }
 }

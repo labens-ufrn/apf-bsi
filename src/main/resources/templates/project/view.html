@@ -129,6 +129,7 @@
                             <tr>
                                 <th>ID</th>
                                 <th>Nome</th>
+                                <th>Role</th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -136,6 +137,7 @@
                             <tr th:each="member : ${project.team}">
                                 <td th:text="${member.user.id}"></td>
                                 <td th:text="${member.user.name}"></td>
+                                <td th:text="${member.user.roles}"></td>
                                 <td>
                                     <div class="btn-group pull-right">
                                         <a class="btn btn-sm btn-primary" th:href="@{/edit/{id}(id=${member.id})}" >Editar</a>

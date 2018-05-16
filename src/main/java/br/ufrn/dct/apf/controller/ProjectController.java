@@ -19,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import br.ufrn.dct.apf.model.Project;
 import br.ufrn.dct.apf.model.User;
+import br.ufrn.dct.apf.service.BusinessRuleException;
 import br.ufrn.dct.apf.service.ProjectService;
 
 @Controller
@@ -81,8 +82,13 @@ public class ProjectController extends AbstractController {
                 return add(project);
             }
             
-            User owner = getCurrentUser();
-            service.save(project, owner);
+            User user = getCurrentUser();
+            try {
+                service.save(project, user);
+            } catch (BusinessRuleException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
 
             return findAll();
         }

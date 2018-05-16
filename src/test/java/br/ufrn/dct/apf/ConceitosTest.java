@@ -18,6 +18,7 @@ import br.ufrn.dct.apf.model.Member;
 import br.ufrn.dct.apf.model.Project;
 import br.ufrn.dct.apf.model.User;
 import br.ufrn.dct.apf.model.UserStory;
+import br.ufrn.dct.apf.service.BusinessRuleException;
 import br.ufrn.dct.apf.service.ProjectService;
 import br.ufrn.dct.apf.service.UserService;
 import br.ufrn.dct.apf.service.UserStoryService;
@@ -48,7 +49,7 @@ public class ConceitosTest extends AbstractTestNGSpringContextTests {
     }
 
     @Test
-    public void conceitos() {
+    public void conceitos() throws BusinessRuleException {
         
         System.out.println("Criando o usuário ...");
         
@@ -101,14 +102,7 @@ public class ConceitosTest extends AbstractTestNGSpringContextTests {
         
         System.out.println("Adicionar novo membro ao Projeto ID = " + p1.getId());
         
-        Member m1 = new Member();
-        m1.setProject(p1);
-        m1.setUser(developer);
-        m1.setCreatedOn(GregorianCalendar.getInstance().getTime());
-        
-        p1.getTeam().add(m1);
-        
-        projectService.save(p1);
+        projectService.addMember(p1, developer, analista);
         
         Project p2 = new Project();
 

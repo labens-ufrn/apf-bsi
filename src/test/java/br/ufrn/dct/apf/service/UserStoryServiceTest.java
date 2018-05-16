@@ -13,7 +13,9 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 import br.ufrn.dct.apf.model.Project;
+import br.ufrn.dct.apf.model.User;
 import br.ufrn.dct.apf.model.UserStory;
+import br.ufrn.dct.apf.repository.UserRepository;
 
 @ContextConfiguration("/spring-test-beans.xml")
 @DataJpaTest
@@ -23,6 +25,9 @@ public class UserStoryServiceTest extends AbstractTestNGSpringContextTests {
 
     @Autowired
     private ProjectService service;
+    
+    @Autowired
+    private UserRepository userRepository;
 
     @Autowired
     private UserStoryService userStoryService;
@@ -30,9 +35,11 @@ public class UserStoryServiceTest extends AbstractTestNGSpringContextTests {
     private Project p1;
 
     private UserStory us1, us2;
+    
+    private User manager;
 
     @BeforeMethod
-    public void startTest() {
+    public void startTest() throws BusinessRuleException {
         softAssert = new SoftAssert();
 
         p1 = new Project();
@@ -40,8 +47,10 @@ public class UserStoryServiceTest extends AbstractTestNGSpringContextTests {
         p1.setName("APF Project");
         p1.setDescription("Analisador de Pontos por Função");
         p1.setCreatedOn(GregorianCalendar.getInstance().getTime());
+        
+        manager = createUser();
 
-        service.save(p1);
+        service.save(p1, manager);
 
         us1 = new UserStory("US01", "Manter Projeto");
         us1.setProject(p1);
@@ -59,9 +68,11 @@ public class UserStoryServiceTest extends AbstractTestNGSpringContextTests {
         userStoryService.delete(us1.getId());
         userStoryService.delete(us2.getId());
         service.delete(p1.getId());
+        userRepository.delete(manager.getId());
         p1 = null;
         us1 = null;
         us2 = null;
+        manager = null;
     }
 
     @Test
@@ -167,5 +178,17 @@ public class UserStoryServiceTest extends AbstractTestNGSpringContextTests {
         softAssert.assertEquals(uss.size(), 2, "T07 - Equals:");
 
         softAssert.assertAll();
+    }
+    
+    private User createUser() {
+        User user = new User();
+
+        user.setName("Taciano Silva");
+        user.setLastName("Silva");
+        user.setEmail("tacianosilva@gmail.com");
+        user.setPassword("12345");
+        user.setActive(1);
+
+        return userRepository.save(user);
     }
 }

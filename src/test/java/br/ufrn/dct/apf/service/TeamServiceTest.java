@@ -113,7 +113,7 @@ public class TeamServiceTest extends AbstractTestNGSpringContextTests {
     }*/
 
     @Test
-    public void save() {
+    public void save() throws BusinessRuleException {
 
         roleService.save(projectOwner);
         roleService.save(projectDev);
@@ -125,8 +125,6 @@ public class TeamServiceTest extends AbstractTestNGSpringContextTests {
         userService.save(analista);
         userService.save(desenvolvedor);
         
-        projectService.save(p1);
-        
         m1 = new Member();
         m1.setUser(analista);
         m1.setProject(p1);
@@ -137,8 +135,10 @@ public class TeamServiceTest extends AbstractTestNGSpringContextTests {
         m2.setProject(p1);
         m2.setCreatedOn(GregorianCalendar.getInstance().getTime());
         
-        memberService.save(m1);
-        memberService.save(m2);
+        p1.setOwner(m1);
+        p1.setOwner(m2);
+        
+        projectService.save(p1);
         
         Project p2 = projectService.findOne(p1.getId());
         Set<Member> team = p2.getTeam();
