@@ -2,6 +2,7 @@ package br.ufrn.dct.apf.service;
 
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -12,6 +13,8 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
+import br.ufrn.dct.apf.model.DataFunction;
+import br.ufrn.dct.apf.model.ILF;
 import br.ufrn.dct.apf.model.Project;
 import br.ufrn.dct.apf.model.User;
 import br.ufrn.dct.apf.model.UserStory;
@@ -25,7 +28,7 @@ public class UserStoryServiceTest extends AbstractTestNGSpringContextTests {
 
     @Autowired
     private ProjectService service;
-    
+
     @Autowired
     private UserRepository userRepository;
 
@@ -35,7 +38,7 @@ public class UserStoryServiceTest extends AbstractTestNGSpringContextTests {
     private Project p1;
 
     private UserStory us1, us2;
-    
+
     private User manager;
 
     @BeforeMethod
@@ -47,7 +50,7 @@ public class UserStoryServiceTest extends AbstractTestNGSpringContextTests {
         p1.setName("APF Project");
         p1.setDescription("Analisador de Pontos por Função");
         p1.setCreatedOn(GregorianCalendar.getInstance().getTime());
-        
+
         manager = createUser();
 
         service.save(p1, manager);
@@ -128,6 +131,24 @@ public class UserStoryServiceTest extends AbstractTestNGSpringContextTests {
     }
 
     @Test
+    public void saveWithDataFunction() {
+
+        ILF aliProject = new ILF("ALI Projeto");
+        // Colocar 2 Record Element Types (RET): Project e Member
+        aliProject.setRecordElementTypes(2L);
+        // Somar os Data Element Types (DET): 7 + 4.
+        aliProject.setDataElementTypes(11L);
+
+        us1.addData(aliProject);
+        
+        userStoryService.save(us1);
+        
+        Set<DataFunction> dados = us1.getDataFunction();
+        
+        softAssert.assertTrue(dados.contains(aliProject), "T01 - contains");
+    }
+
+    @Test
     public void update() {
         Long id = us1.getId();
 
@@ -179,7 +200,7 @@ public class UserStoryServiceTest extends AbstractTestNGSpringContextTests {
 
         softAssert.assertAll();
     }
-    
+
     private User createUser() {
         User user = new User();
 

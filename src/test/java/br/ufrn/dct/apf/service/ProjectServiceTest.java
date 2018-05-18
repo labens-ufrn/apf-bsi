@@ -291,6 +291,6 @@ public class ProjectServiceTest extends AbstractTestNGSpringContextTests {
         user.setPassword("12345");
         user.setActive(1);
 
-        return userRepository.save(user);
+        return user;
     }
 }
