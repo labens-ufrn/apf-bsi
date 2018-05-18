@@ -115,7 +115,7 @@ public class ProjectController extends AbstractController {
           for (Project project : projects) {
               ProjectSuggestion ps = new ProjectSuggestion(project.getName());
               ps.setData(project.getId().toString());
-                suggestions.add(ps);
+              suggestions.add(ps);
           }
 
           // truncate the list to the first n, max 20 elements
