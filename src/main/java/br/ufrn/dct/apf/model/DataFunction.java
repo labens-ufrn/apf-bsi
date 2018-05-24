@@ -2,6 +2,7 @@ package br.ufrn.dct.apf.model;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -44,7 +45,7 @@ public class DataFunction implements Serializable {
     @Column(name = "det")
     private Long dataElementTypes;
     
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "user_story_id", nullable = false)
     private UserStory userStory;
 
