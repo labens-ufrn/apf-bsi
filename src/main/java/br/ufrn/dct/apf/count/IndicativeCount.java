@@ -3,11 +3,24 @@ package br.ufrn.dct.apf.count;
 import java.util.Set;
 
 import br.ufrn.dct.apf.model.DataFunction;
-import br.ufrn.dct.apf.model.EIF;
-import br.ufrn.dct.apf.model.ILF;
+import br.ufrn.dct.apf.model.Project;
 import br.ufrn.dct.apf.model.UserStory;
 
-public class IndicativeCount {
+public class IndicativeCount extends AbstractFunctionPointCount {
+    
+    private static final int functionPointILF = 35;
+    
+    private static final int functionPointEIF = 15;
+    
+    public int calculeFunctionPoint(Project project) {
+        Set<UserStory> userStories = project.getUserStories();
+        
+        int i = 0;
+        for (UserStory us : userStories) {
+            i += calculeFunctionPoint(us);
+        }
+        return i;
+    }
     
     public int calculeFunctionPoint(UserStory us) {
         Set<DataFunction> df = us.getDataFunction();
@@ -20,16 +33,8 @@ public class IndicativeCount {
     }
     
     public int calculeFunctionPoint(DataFunction df) {
-        if (df.getType().equals("ILF")) return calculeFunctionPoint((ILF)df);
-        if (df.getType().equals("EIF")) return calculeFunctionPoint((EIF)df);
+        if (df.getType().equals("ILF")) return functionPointILF;
+        if (df.getType().equals("EIF")) return functionPointEIF;
         return 0;
-    }
-    
-    public int calculeFunctionPoint(ILF df) {
-        return 35;
-    }
-    
-    public int calculeFunctionPoint(EIF df) {
-        return 15;
     }
 }
