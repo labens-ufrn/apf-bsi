@@ -13,7 +13,7 @@ import br.ufrn.dct.apf.model.Role;
 import br.ufrn.dct.apf.model.User;
 import br.ufrn.dct.apf.service.UserService;
 
-public class AbstractController {
+public abstract class AbstractController {
     
     private User overridenCurrentUser;
 
