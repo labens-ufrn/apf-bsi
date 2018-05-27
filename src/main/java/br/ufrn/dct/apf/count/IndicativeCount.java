@@ -8,9 +8,9 @@ import br.ufrn.dct.apf.model.UserStory;
 
 public class IndicativeCount extends AbstractFunctionPointCount {
     
-    private static final int functionPointILF = 35;
+    private static final int FUNCTION_POINT_ILF = 35;
     
-    private static final int functionPointEIF = 15;
+    private static final int FUNCTION_POINT_EIF = 15;
     
     public int calculeFunctionPoint(Project project) {
         Set<UserStory> userStories = project.getUserStories();
@@ -33,8 +33,8 @@ public class IndicativeCount extends AbstractFunctionPointCount {
     }
     
     public int calculeFunctionPoint(DataFunction df) {
-        if (df.getType().equals("ILF")) return functionPointILF;
-        if (df.getType().equals("EIF")) return functionPointEIF;
+        if (df.getType().equals(TYPE_ILF)) return FUNCTION_POINT_ILF;
+        if (df.getType().equals(TYPE_EIF)) return FUNCTION_POINT_EIF;
         return 0;
     }
 }

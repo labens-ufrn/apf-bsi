@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -19,6 +20,11 @@ import br.ufrn.dct.apf.service.UserStoryService;
 
 @Controller
 public class UserStoryController extends AbstractController {
+    
+    /**
+     * Logger.
+     */
+    private static final Logger LOGGER = Logger.getLogger(UserStoryController.class.getName());
 
     @Autowired
     private UserStoryService service;
@@ -39,7 +45,7 @@ public class UserStoryController extends AbstractController {
     public ModelAndView save(@Valid UserStory us, BindingResult result) {
 
         if (result.hasErrors()) {
-            System.err.println(result.getAllErrors());
+            LOGGER.error("error.us.controller.save");
             return add(us);
         }
         

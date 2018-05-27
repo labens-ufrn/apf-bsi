@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -109,14 +110,11 @@ public class ProjectController extends AbstractController {
     @RequestMapping(value = "/project/suggestion", method = RequestMethod.GET, produces = "application/json")
     @ResponseBody
     public ProjectSuggestionWrapper autocompleteSuggestions(@RequestParam("searchstr") String searchstr) {
-        System.out.println("searchstr: " + searchstr);
+        LOGGER.log(Level.INFO, "searchstr = "+ searchstr);
 
-        List<Project> projects = new ArrayList<>();
         List<ProjectSuggestion> suggestions = new ArrayList<>();
-
         User current = getCurrentUser();
-
-        projects = service.findByName(current.getId(), searchstr);
+        List<Project> projects = service.findByName(current.getId(), searchstr);
 
         for (Project project : projects) {
             ProjectSuggestion ps = new ProjectSuggestion(project.getName());
@@ -132,5 +130,4 @@ public class ProjectController extends AbstractController {
         sw.setSuggestions(sulb);
         return sw;
     }
-
 }
