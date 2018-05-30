@@ -26,9 +26,6 @@ public class UserController extends AbstractController {
         @Autowired
         private RoleRepository roleRepository;
         
-        //@Autowired
-        //private BCryptPasswordEncoder bCryptPasswordEncoder;
-        
         @GetMapping("/user")
         public ModelAndView profile() {
 

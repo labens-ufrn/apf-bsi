@@ -17,14 +17,16 @@ public class BusinessRuleException extends Exception {
     /**
      * Parameters for error messages.
      */
-    private String[] parameters;
+    private final String[] parameters;
 
     public BusinessRuleException(String message, Exception ex) {
         super(message, ex);
+        this.parameters = null;
     }
 
     public BusinessRuleException(String message) {
         super(message);
+        this.parameters = null;
     }
 
     public BusinessRuleException(String message, String[] parameters) {
@@ -34,9 +36,5 @@ public class BusinessRuleException extends Exception {
 
     public String[] getParameters() {
         return parameters;
-    }
-
-    public void setParameters(String[] parameters) {
-        this.parameters = parameters;
     }
 }

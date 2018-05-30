@@ -76,7 +76,7 @@ public class ProjectService extends AbstractService {
         return repository.saveAndFlush(project);
     }
     
-    private void addMember(Project project, User user) throws BusinessRuleException {
+    private void addMember(Project project, User user) {
         Role projectManager = roleRepository.findByRoleName(Role.PROJECT_MANAGER_ROLE);
         user.setNewRole(projectManager);
         Member manager = createMember(project, user);
@@ -95,7 +95,7 @@ public class ProjectService extends AbstractService {
             List<Member> team = memberRepository.findByProjectIdAndUserId(project.getId(), user.getId());
             return team.size() == 1;
         } else if (project.getTeam() != null) {
-            return project.getTeam().size() >= 1;
+            return project.getTeam().isEmpty();
         }
         return false;
     }

@@ -26,10 +26,7 @@ public class AbstractService {
      * @return True if the passed object is null.
      */
     protected boolean checkNull(Object obj) {
-        if (obj == null) {
-            return true;
-        }
-        return false;
+        return obj == null;
 }
     
     protected Member createMember(Project project, User user) {
