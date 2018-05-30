@@ -43,7 +43,7 @@ public class TeamServiceTest extends AbstractTestNGSpringContextTests {
     private Role projectOwner, projectDev;
 
     @BeforeMethod
-    public void startTest() {
+    public void startTest() throws BusinessRuleException {
         softAssert = new SoftAssert();
         
         p1 = new Project();
@@ -51,6 +51,8 @@ public class TeamServiceTest extends AbstractTestNGSpringContextTests {
         p1.setName("APF Project");
         p1.setDescription("Analisador de Pontos por Função");
         p1.setCreatedOn(GregorianCalendar.getInstance().getTime());
+        
+        projectService.save(p1);
         
         analista = new User();
         analista.setName("Taciano");
@@ -125,6 +127,11 @@ public class TeamServiceTest extends AbstractTestNGSpringContextTests {
         userService.save(analista);
         userService.save(desenvolvedor);
         
+        Set<Role> roles = analista.getRoles();
+        for (Role role : roles) {
+            System.out.println("User: " + analista.getName() + ", Role " + role.getId() + " - " + role.getRoleName());
+        }
+        
         m1 = new Member();
         m1.setUser(analista);
         m1.setProject(p1);
@@ -135,10 +142,13 @@ public class TeamServiceTest extends AbstractTestNGSpringContextTests {
         m2.setProject(p1);
         m2.setCreatedOn(GregorianCalendar.getInstance().getTime());
         
+        memberService.save(m1);
+        memberService.save(m2);
+        
         p1.setOwner(m1);
         p1.setOwner(m2);
         
-        projectService.save(p1);
+        projectService.save(p1, analista);
         
         Project p2 = projectService.findOne(p1.getId());
         Set<Member> team = p2.getTeam();

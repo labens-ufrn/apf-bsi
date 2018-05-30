@@ -133,7 +133,7 @@ public class ProjectServiceTest extends AbstractTestNGSpringContextTests {
         m1.setCreatedOn(GregorianCalendar.getInstance().getTime());
         p2.setOwner(m1);
 
-        service.save(p2);
+        service.save(p2, user2);
 
         Long id2 = p2.getId();
 
@@ -206,7 +206,7 @@ public class ProjectServiceTest extends AbstractTestNGSpringContextTests {
         update.setName("Novo Projeto");
         update.setDescription("Novo projeto para teste de update");
 
-        service.save(update);
+        service.save(update, user2);
 
         Project found = service.findOne(id);
 
@@ -218,8 +218,8 @@ public class ProjectServiceTest extends AbstractTestNGSpringContextTests {
 
         softAssert.assertAll();
     }
-    
-    @Test
+
+    @Test(expectedExceptions = BusinessRuleException.class, expectedExceptionsMessageRegExp = "error.project.service.member.not.exists")
     public void updateByAnotherUser() throws BusinessRuleException {
         Long id = p1.getId();
 
@@ -228,7 +228,7 @@ public class ProjectServiceTest extends AbstractTestNGSpringContextTests {
         update.setName("Novo Projeto");
         update.setDescription("Novo projeto para teste de update");
 
-        service.save(update);
+        service.save(update, user3);
 
         Project found = service.findOne(id);
 
@@ -256,7 +256,7 @@ public class ProjectServiceTest extends AbstractTestNGSpringContextTests {
         m1.setCreatedOn(GregorianCalendar.getInstance().getTime());
         p2.setOwner(m1);
 
-        service.save(p2);
+        service.save(p2, user2);
 
         Long id2 = p2.getId();
 
