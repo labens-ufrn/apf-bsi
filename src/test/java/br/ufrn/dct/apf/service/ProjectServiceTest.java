@@ -10,6 +10,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
@@ -131,7 +132,7 @@ public class ProjectServiceTest extends AbstractTestNGSpringContextTests {
         m1.setUser(user1);
         m1.setProject(p2);
         m1.setCreatedOn(GregorianCalendar.getInstance().getTime());
-        p2.setOwner(m1);
+        p2.addMember(m1);
 
         service.save(p2, user2);
 
@@ -196,6 +197,22 @@ public class ProjectServiceTest extends AbstractTestNGSpringContextTests {
 
         service.save(p3, null);
     }
+    
+    @Test
+    @Ignore
+    public void saveTeamEmpty() throws BusinessRuleException {
+        Project p3 = new Project();
+
+        p3.setName("Project 3");
+        p3.setDescription("Projeto de Teste");
+        p3.setCreatedOn(GregorianCalendar.getInstance().getTime());
+
+        service.save(p3, user1);
+        
+        service.save(p3, user2);
+        
+        service.delete(p3.getId());
+    }
 
     @Test
     public void update() throws BusinessRuleException {
@@ -254,7 +271,7 @@ public class ProjectServiceTest extends AbstractTestNGSpringContextTests {
         m1.setUser(user1);
         m1.setProject(p2);
         m1.setCreatedOn(GregorianCalendar.getInstance().getTime());
-        p2.setOwner(m1);
+        p2.addMember(m1);
 
         service.save(p2, user2);
 

@@ -46,14 +46,6 @@ public class TeamServiceTest extends AbstractTestNGSpringContextTests {
     public void startTest() throws BusinessRuleException {
         softAssert = new SoftAssert();
         
-        p1 = new Project();
-        
-        p1.setName("APF Project");
-        p1.setDescription("Analisador de Pontos por Função");
-        p1.setCreatedOn(GregorianCalendar.getInstance().getTime());
-        
-        projectService.save(p1);
-        
         analista = new User();
         analista.setName("Taciano");
         analista.setLastName("Morais Silva");
@@ -71,13 +63,31 @@ public class TeamServiceTest extends AbstractTestNGSpringContextTests {
         
         projectDev = new Role();
         projectDev.setRoleName("Project Dev");
+        
+        roleService.save(projectOwner);
+        roleService.save(projectDev);
+
+        analista.setNewRole(projectOwner);
+
+        desenvolvedor.setNewRole(projectDev);
+        
+        userService.save(analista);
+        userService.save(desenvolvedor);
+        
+        p1 = new Project();
+        
+        p1.setName("APF Project");
+        p1.setDescription("Analisador de Pontos por Função");
+        p1.setCreatedOn(GregorianCalendar.getInstance().getTime());
+        
+        projectService.save(p1, analista);
     }
     
     @AfterMethod
     public void endTest() {
         softAssert = null;
-        memberService.delete(m1.getId());
-        memberService.delete(m2.getId());
+        //memberService.delete(m1.getId());
+        //memberService.delete(m2.getId());
         projectService.delete(p1.getId());
         userService.delete(analista.getId());
         userService.delete(desenvolvedor.getId());
@@ -116,21 +126,6 @@ public class TeamServiceTest extends AbstractTestNGSpringContextTests {
 
     @Test
     public void save() throws BusinessRuleException {
-
-        roleService.save(projectOwner);
-        roleService.save(projectDev);
-
-        analista.setNewRole(projectOwner);
-
-        desenvolvedor.setNewRole(projectDev);
-        
-        userService.save(analista);
-        userService.save(desenvolvedor);
-        
-        Set<Role> roles = analista.getRoles();
-        for (Role role : roles) {
-            System.out.println("User: " + analista.getName() + ", Role " + role.getId() + " - " + role.getRoleName());
-        }
         
         m1 = new Member();
         m1.setUser(analista);
@@ -142,16 +137,32 @@ public class TeamServiceTest extends AbstractTestNGSpringContextTests {
         m2.setProject(p1);
         m2.setCreatedOn(GregorianCalendar.getInstance().getTime());
         
-        memberService.save(m1);
-        memberService.save(m2);
+        //m1 = memberService.save(m1);
+        //m2 = memberService.save(m2);
         
-        p1.setOwner(m1);
-        p1.setOwner(m2);
+        p1 = projectService.findOne(p1.getId());
+        Set<Member> team1 = p1.getTeam();
+        for (Member member : team1) {
+            System.out.println(member.getUser().getName());
+            System.out.println(member.getProject().getName());
+        }
+        System.out.println("Team 1 contais m1: " + team1.contains(m1));
+        System.out.println("Team 1 contais m2: " + team1.contains(m2));
+        
+        for (Member member : team1) {
+            System.out.println(member.equals(m1));
+            System.out.println(member.hashCode() ==  m1.hashCode());
+        }
+        
+        //p1.addMember(m1);
+        p1.addMember(m2);
         
         projectService.save(p1, analista);
         
         Project p2 = projectService.findOne(p1.getId());
         Set<Member> team = p2.getTeam();
+        System.out.println("Team contais m1: " + team.contains(m1));
+        System.out.println("Team contais m2: " + team.contains(m2));
         for (Member member : team) {
             System.out.println(member.getUser().getName());
             System.out.println(member.getProject().getName());

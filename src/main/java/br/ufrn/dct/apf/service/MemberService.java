@@ -9,7 +9,7 @@ import br.ufrn.dct.apf.model.Member;
 import br.ufrn.dct.apf.repository.MemberRepository;
 
 @Service
-public class MemberService {
+public class MemberService extends AbstractService {
 
     @Autowired
     private MemberRepository repository;
@@ -22,11 +22,31 @@ public class MemberService {
         return repository.findOne(id);
     }
 
-    public Member save(Member member) {
-        return repository.saveAndFlush(member);
+    public Member save(Member member) throws BusinessRuleException {
+        checkMemberNull(member);
+        Member memberDB = getMember(member); 
+        if (memberDB == null) {
+            return repository.saveAndFlush(member);
+        }
+        return memberDB;
+    }
+    
+    private Member getMember(Member member) {
+        List<Member> team = repository.findByProjectIdAndUserId(
+                    member.getProject().getId(), member.getUser().getId());
+        if (team.isEmpty()) {
+            return null;
+        }
+        return team.get(0);
     }
 
     public void delete(Long id) {
         repository.delete(id);
+    }
+    
+    private void checkMemberNull(Member member) throws BusinessRuleException {
+        if (checkNull(member) || checkNull(member.getProject()) || checkNull(member.getUser())) {
+            throw new BusinessRuleException("error.member.service.member.is.null");
+        }
     }
 }

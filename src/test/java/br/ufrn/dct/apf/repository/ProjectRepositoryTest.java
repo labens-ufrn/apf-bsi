@@ -49,7 +49,7 @@ public class ProjectRepositoryTest extends AbstractTestNGSpringContextTests {
         owner.setUser(manager);
         owner.setCreatedOn(GregorianCalendar.getInstance().getTime());
         
-        p1.setOwner(owner);
+        p1.addMember(owner);
 
         repository.save(p1);
     }

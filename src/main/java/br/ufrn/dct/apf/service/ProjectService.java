@@ -50,7 +50,7 @@ public class ProjectService extends AbstractService {
     }
     
     public Project save(Project project) throws BusinessRuleException {
-        checkMember(project, null);
+        checkOwnerMember(project, null);
         project.setActive(ACTIVE);
         return repository.saveAndFlush(project);
     }
@@ -61,14 +61,14 @@ public class ProjectService extends AbstractService {
     }
     
     public Project save(Project project, User owner) throws BusinessRuleException {
-        LOGGER.log(Level.INFO, project);
+        LOGGER.log(Level.INFO, "save " + project);
         checkProjectNull(project);
         checkMemberNull(owner);
 
         if (project.getId() == null) {
             addMember(project, owner);
         } else if (project.getId() != null) {
-            checkMember(project, owner);
+            checkOwnerMember(project, owner);
         }
 
         project.setActive(ACTIVE);
@@ -80,22 +80,20 @@ public class ProjectService extends AbstractService {
         Role projectManager = roleRepository.findByRoleName(Role.PROJECT_MANAGER_ROLE);
         user.setNewRole(projectManager);
         Member manager = createMember(project, user);
-        project.setOwner(manager);
+        project.addMember(manager);
     }
     
-    private void checkMember(Project project, User user) throws BusinessRuleException {
-        LOGGER.log(Level.INFO, "ProjectService.checkMember");
-        if (!containsMemberInTeam(project, user)) {
+    private void checkOwnerMember(Project project, User user) throws BusinessRuleException {
+        LOGGER.log(Level.INFO, "checkMember " + project + " - " + user);
+        if (!isOwnerMember(project, user)) {
             throw new BusinessRuleException("error.project.service.member.not.exists");
         }
     }
     
-    private boolean containsMemberInTeam(Project project, User user) {
+    private boolean isOwnerMember(Project project, User user) {
         if (project.getId() != null && user != null && user.getId() != null) {
             List<Member> team = memberRepository.findByProjectIdAndUserId(project.getId(), user.getId());
             return team.size() == 1;
-        } else if (project.getTeam() != null) {
-            return project.getTeam().isEmpty();
         }
         return false;
     }
