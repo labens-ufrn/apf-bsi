@@ -39,6 +39,10 @@ public class MemberService extends AbstractService {
         }
         return team.get(0);
     }
+    
+    public List<Member> findByProjectIdAndUserId(Long projectId, Long userId) {
+        return repository.findByProjectIdAndUserId(projectId, userId);
+    }
 
     public void delete(Long id) {
         repository.delete(id);

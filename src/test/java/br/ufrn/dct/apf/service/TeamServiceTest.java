@@ -108,7 +108,10 @@ public class TeamServiceTest extends AbstractTestNGSpringContextTests {
 
     @Test
     public void findOne() {
-        Long id = 2L;
+        
+        List<Member> members = memberService.findByProjectIdAndUserId(p1.getId(), analista.getId());
+        
+        Long id = members.get(0).getId();
 
         Member found = memberService.findOne(id);
         
