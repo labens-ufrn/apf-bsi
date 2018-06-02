@@ -96,33 +96,31 @@ public class TeamServiceTest extends AbstractTestNGSpringContextTests {
         p1 = null;
     }
 
-/*    //@Test
+    @Test
     public void findAll() {
-        List<Project> projetos = service.findAll();
+        List<Member> membros = memberService.findAll();
         
-        softAssert.assertNotNull(projetos, "T01 - NotNull:");
-        softAssert.assertEquals(projetos.size(), 1, "T02 - Equals:");
+        softAssert.assertNotNull(membros, "T01 - NotNull:");
+        softAssert.assertEquals(membros.size(), 1, "T02 - Equals:");
         
         softAssert.assertAll();
     }
-*/
-/*    //@Test
+
+    @Test
     public void findOne() {
-        Long id = p1.getId();
-        
-        Project found = service.findOne(id);
+        Long id = 2L;
+
+        Member found = memberService.findOne(id);
         
         softAssert.assertNotNull(found, "T01 - NotNull:");
         
-        softAssert.assertEquals(found.getName(), p1.getName(), "T03 - Equals:");
-        softAssert.assertEquals(found.getDescription(), p1.getDescription(), "T04 - Equals:");
+        softAssert.assertEquals(found.getProject().getId(), p1.getId(), "T03 - Equals:");
+        softAssert.assertEquals(found.getUser().getId(), analista.getId(), "T04 - Equals:");
         
-        softAssert.assertNotNull(found.getCreated(), "T05 - NotNull:");
-        softAssert.assertNotNull(found.getActive(), "T06 - NotNull:");
-        softAssert.assertEquals(found.getActive(), p1.getActive(), "T07 - Equals:");
+        softAssert.assertNotNull(found.getCreatedOn(), "T05 - NotNull:");
         
         softAssert.assertAll();
-    }*/
+    }
 
     @Test
     public void save() throws BusinessRuleException {
