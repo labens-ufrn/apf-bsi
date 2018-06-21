@@ -26,9 +26,9 @@
     </licenses>
 
     <scm>
-        <url>https://github.com/tacianosilva/apf-bsi</url>
-        <connection>scm:git:git://github.com/tacianosilva/apf-bsi.git</connection>
-        <developerConnection>scm:git:git@github.com:tacianosilva/apf-bsi.git</developerConnection>
+        <url>https://github.com/labens-ufrn/apf-bsi</url>
+        <connection>scm:git:git://github.com/labens-ufrn/apf-bsi.git</connection>
+        <developerConnection>scm:git:git@github.com:labens-ufrn/apf-bsi.git</developerConnection>
     </scm>
 
     <developers>
@@ -44,8 +44,6 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
-<!--         <sonar.login>b567a72daa2b81a4be322e2f9514071588415d29</sonar.login> -->
-<!--         <sonar.host.url>http://10.142.16.205:9000/sonar</sonar.host.url> -->
         <sonar.organization>tacianosilva-github</sonar.organization>
         <sonar.language>java</sonar.language>
         <sonar.exclusions>**/*.properties,**/*.xml</sonar.exclusions>
