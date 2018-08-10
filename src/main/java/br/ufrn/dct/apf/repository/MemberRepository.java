@@ -9,9 +9,9 @@ import br.ufrn.dct.apf.model.Member;
 
 @Repository("memberRepository")
 public interface MemberRepository extends JpaRepository<Member, Long> {
-    
+
     public List<Member> findByProjectId(Long projectId);
-    
+
     public List<Member> findByProjectIdAndUserId(Long projectId, Long userId);
 
 }

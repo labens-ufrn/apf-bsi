@@ -8,18 +8,18 @@ import br.ufrn.dct.apf.model.User;
 
 /**
  * Abstract business class containing helper method for the business layer of the APF system.
- * 
+ *
  * @author Taciano Morais Silva
  * @version v-1.0
  * @since 15/05/2018, 19h27m
  */
 public class AbstractService {
-    
+
     protected static final int ACTIVE = 1;
-    
+
     protected AbstractService() {
     }
-    
+
     /**
      * Checks whether the object passed as a parameter is null.
      * @param obj An object.
@@ -28,7 +28,7 @@ public class AbstractService {
     protected boolean checkNull(Object obj) {
         return obj == null;
 }
-    
+
     protected Member createMember(Project project, User user) {
         Member member = new Member();
         member.setProject(project);

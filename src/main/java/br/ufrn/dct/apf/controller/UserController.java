@@ -22,15 +22,15 @@ public class UserController extends AbstractController {
 
         @Autowired
         private UserService service;
-        
+
         @Autowired
         private RoleRepository roleRepository;
-        
+
         @GetMapping("/user")
         public ModelAndView profile() {
 
             ModelAndView mv = new ModelAndView("user/profile");
-            
+
             User current = getCurrentUser();
 
             setUserAuth(mv);
@@ -39,13 +39,13 @@ public class UserController extends AbstractController {
 
             return mv;
         }
-        
+
         @GetMapping("/user/edit/{id}")
         public ModelAndView editProfile(@PathVariable("id") Long id) {
 
             return update(service.findOne(id));
         }
-        
+
         @GetMapping("/user/update")
         public ModelAndView update(User user) {
             ModelAndView mv = new ModelAndView("user/edit");
@@ -54,16 +54,16 @@ public class UserController extends AbstractController {
 
             return mv;
         }
-        
+
         @PostMapping("/user/save")
         public ModelAndView saveProfile(@Valid User user, BindingResult result) {
             ModelAndView modelAndView = new ModelAndView();
-            
+
             service.edit(user);
-            
+
             modelAndView.addObject("successMessage", "User has been registered successfully");
             modelAndView.addObject("user", new User());
-            
+
             return profile();
         }
 

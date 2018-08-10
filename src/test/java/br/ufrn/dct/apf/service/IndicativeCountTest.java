@@ -19,11 +19,11 @@ import br.ufrn.dct.apf.repository.UserRepository;
 @ContextConfiguration("/spring-test-beans.xml")
 @DataJpaTest
 public class IndicativeCountTest extends AbstractTest {
-    
+
     private SoftAssert softAssert;
-    
+
     IndicativeCount count;
-    
+
     @Autowired
     private ProjectService projectService;
 
@@ -33,31 +33,31 @@ public class IndicativeCountTest extends AbstractTest {
     private Project apf;
 
     private User manager;
-    
+
     @BeforeMethod
     public void startTest() throws BusinessRuleException {
         softAssert = new SoftAssert();
-        
+
         count = new IndicativeCount();
 
         apf = createProjectAPF();
-        
+
         //Create User Manager
         manager = createUser("Taciano","Silva");
         userRepository.save(manager);
 
         //Save Project with Manager
         projectService.save(apf, manager);
-        
+
         addUserStoriesInAPF(apf);
-        
+
         //Update Project - Add User Stories
         //apf = projectService.save(apf, manager);
-        
+
         //Reload APF Project
         apf = projectService.findOne(apf.getId());
     }
-    
+
     @AfterMethod
     public void endTest() {
         softAssert = null;
@@ -71,9 +71,9 @@ public class IndicativeCountTest extends AbstractTest {
 
     @Test
     public void countUserStories() {
-        
+
         Set<UserStory> uss = apf.getUserStories();
-        
+
         for (UserStory userStory : uss) {
             int fp = count.calculeFunctionPoint(userStory);
             softAssert.assertNotNull(fp, "T01 - NotNull: " + userStory.getName());
@@ -81,10 +81,10 @@ public class IndicativeCountTest extends AbstractTest {
 
         softAssert.assertAll();
     }
-    
+
     @Test
     public void countAPF() {
-  
+
         int fp = count.calculeFunctionPoint(apf);
 
         softAssert.assertNotNull(fp, "T01 - NotNull:");
@@ -95,9 +95,9 @@ public class IndicativeCountTest extends AbstractTest {
 
     @Test
     public void countUserStoryWithILF() {
-        
+
         UserStory us = createStoryWithILF();
-  
+
         int fp = count.calculeFunctionPoint(us);
 
         softAssert.assertNotNull(fp, "T01 - NotNull:");
@@ -105,12 +105,12 @@ public class IndicativeCountTest extends AbstractTest {
 
         softAssert.assertAll();
     }
-    
+
     @Test
     public void countUserStoryWithEIF() {
-        
+
         UserStory us = createStoryWithEIF();
-  
+
         int fp = count.calculeFunctionPoint(us);
 
         softAssert.assertNotNull(fp, "T01 - NotNull:");
@@ -118,12 +118,12 @@ public class IndicativeCountTest extends AbstractTest {
 
         softAssert.assertAll();
     }
-    
+
     @Test
     public void countUserStoryWithILFandEIF() {
-        
+
         UserStory us = createStoryWithILFandEIF();
-  
+
         int fp = count.calculeFunctionPoint(us);
 
         softAssert.assertNotNull(fp, "T01 - NotNull:");

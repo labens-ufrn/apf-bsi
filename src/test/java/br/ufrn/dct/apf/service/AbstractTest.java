@@ -12,10 +12,10 @@ import br.ufrn.dct.apf.model.User;
 import br.ufrn.dct.apf.model.UserStory;
 
 public class AbstractTest extends AbstractTestNGSpringContextTests {
-    
+
     @Autowired
     private UserStoryService userStoryService;
-    
+
     protected User createUser(String name, String lastName) {
         User user = new User();
 
@@ -27,10 +27,10 @@ public class AbstractTest extends AbstractTestNGSpringContextTests {
 
         return user;
     }
-    
+
     protected Project createProjectAPF() {
         Project apf = new Project();
-        
+
         apf.setName("APF Project");
         apf.setDescription("Sistema Analisador de Pontos por Função");
         apf.setCreatedOn(GregorianCalendar.getInstance().getTime());
@@ -40,28 +40,28 @@ public class AbstractTest extends AbstractTestNGSpringContextTests {
     protected Project addUserStoriesInAPF(Project apf) {
         UserStory us1 = new UserStory("US01", "Manter Projeto");
         us1.setProject(apf);
-        
+
         ILF aliProject = createProjectILF();
         us1.addData(aliProject);
 
         UserStory us2 = new UserStory("US02", "Manter User");
         us2.setProject(apf);
-        
+
         ILF aliUser = createUserILF();
         us2.addData(aliUser);
-        
+
         UserStory us3 = new UserStory("US03", "Manter UserStory");
         us3.setProject(apf);
-        
+
         ILF aliUserStory = createUserStoryILF();
         us3.addData(aliUserStory);
-        
+
         UserStory us4 = new UserStory("US04", "Manter DataFunction");
         us4.setProject(apf);
-        
+
         ILF aliDataFunction = createDataFunctionILF();
         us4.addData(aliDataFunction);
-        
+
         userStoryService.save(us1);
         userStoryService.save(us2);
         userStoryService.save(us3);
@@ -69,7 +69,7 @@ public class AbstractTest extends AbstractTestNGSpringContextTests {
 
         return apf;
     }
-    
+
     protected ILF createProjectILF() {
         ILF aliProject = new ILF("ALI Projeto");
         // Colocar 2 Record Element Types (RET): Tabelas Project e Member
@@ -78,7 +78,7 @@ public class AbstractTest extends AbstractTestNGSpringContextTests {
         aliProject.setDataElementTypes(11L);
         return aliProject;
     }
-    
+
     protected ILF createUserILF() {
         ILF aliUser = new ILF("ALI User");
         // Colocar 2 Record Element Types (RET): Tabelas User e Role
@@ -87,7 +87,7 @@ public class AbstractTest extends AbstractTestNGSpringContextTests {
         aliUser.setDataElementTypes(11L);
         return aliUser;
     }
-    
+
     protected ILF createUserStoryILF() {
         ILF aliUserStory = new ILF("ALI UserStory");
         // Colocar 1 Record Element Types (RET): Tabela UserStory
@@ -96,7 +96,7 @@ public class AbstractTest extends AbstractTestNGSpringContextTests {
         aliUserStory.setDataElementTypes(5L);
         return aliUserStory;
     }
-    
+
     protected ILF createDataFunctionILF() {
         ILF aliDataFunction = new ILF("ALI DataFunction");
         // Colocar 1 Record Element Types (RET): Tabela DataFunction
@@ -105,7 +105,7 @@ public class AbstractTest extends AbstractTestNGSpringContextTests {
         aliDataFunction.setDataElementTypes(11L);
         return aliDataFunction;
     }
-    
+
     protected EIF createAIE() {
         EIF aieEndereco = new EIF("AIE Endereco");
         // Colocar 1 Record Element Types (RET): Tabelas Endereço
@@ -114,21 +114,21 @@ public class AbstractTest extends AbstractTestNGSpringContextTests {
         aieEndereco.setDataElementTypes(7L);
         return aieEndereco;
     }
-    
+
     protected UserStory createStoryWithILF() {
         UserStory us = new UserStory("US01", "User Story 01 with ILF");
         ILF ali = createILF();
         us.addData(ali);
         return us;
     }
-    
+
     protected UserStory createStoryWithEIF() {
         UserStory us = new UserStory("US02", "User Story 02 with EIF");
         EIF aie = createEIF();
         us.addData(aie);
         return us;
     }
-    
+
     protected UserStory createStoryWithILFandEIF() {
         UserStory us = new UserStory("US03", "User Story 03 with ILF and EIF");
         ILF ali = createILF();
@@ -137,7 +137,7 @@ public class AbstractTest extends AbstractTestNGSpringContextTests {
         us.addData(aie);
         return us;
     }
-    
+
     protected ILF createILF() {
         ILF ali = new ILF("ALI");
         //2 Record Element Types (RET): Two Table.
@@ -146,7 +146,7 @@ public class AbstractTest extends AbstractTestNGSpringContextTests {
         ali.setDataElementTypes(11L);
         return ali;
     }
-    
+
     protected EIF createEIF() {
         EIF aie = new EIF("AIE");
         //1 Record Element Types (RET): Table 1

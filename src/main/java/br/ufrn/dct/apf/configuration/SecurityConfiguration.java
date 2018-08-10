@@ -31,7 +31,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Value("${spring.queries.roles-query}")
     private String rolesQuery;
-    
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth)
             throws Exception {
@@ -42,7 +42,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .dataSource(dataSource)
                 .passwordEncoder(bCryptPasswordEncoder);
     }
-    
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         bCryptPasswordEncoder = new BCryptPasswordEncoder();

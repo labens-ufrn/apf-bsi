@@ -14,7 +14,7 @@ import br.ufrn.dct.apf.model.User;
 import br.ufrn.dct.apf.service.UserService;
 
 public abstract class AbstractController {
-    
+
     private User overridenCurrentUser;
 
     @Autowired
@@ -26,7 +26,7 @@ public abstract class AbstractController {
         modelAndView.addObject("userName", user.getName() + " " + user.getLastName() + " (" + user.getEmail() + ")");
         modelAndView.addObject("authorities", getRoles(user));
     }
-    
+
     protected String getUsername() {
         SecurityContext context = SecurityContextHolder.getContext();
         Authentication authentication = context.getAuthentication();
@@ -55,7 +55,7 @@ public abstract class AbstractController {
 
     protected String getRoles(User user) {
         Set<Role> roles = user.getRoles();
-        
+
         StringBuilder bld = new StringBuilder();
         bld.append("[");
         int size = roles.size();
@@ -68,6 +68,6 @@ public abstract class AbstractController {
             }
         }
         bld.append("]");
-        return bld.toString();   
+        return bld.toString();
     }
 }

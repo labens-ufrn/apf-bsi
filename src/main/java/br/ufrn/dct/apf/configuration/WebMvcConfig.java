@@ -9,7 +9,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 public class WebMvcConfig extends WebMvcConfigurerAdapter {
 
     @Bean
-    public BCryptPasswordEncoder passwordEncoder() { 
+    public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 

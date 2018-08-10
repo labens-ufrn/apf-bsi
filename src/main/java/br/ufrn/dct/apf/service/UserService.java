@@ -13,7 +13,7 @@ import br.ufrn.dct.apf.repository.UserRepository;
 
 @Service
 public class UserService {
-    
+
     private static final int ACTIVE = 1;
 
     @Autowired
@@ -37,15 +37,15 @@ public class UserService {
 
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         user.setActive(ACTIVE);
-        
+
         user.setNewRole(userRole);
         userRepository.save(user);
     }
-    
+
     public void edit(User user) {
-        
+
         User oldUser = findOne(user.getId());
-        
+
         if (user.getPassword() == null || user.getPassword().equals("")) {
             user.setPassword(oldUser.getPassword());
         } else {
@@ -53,7 +53,7 @@ public class UserService {
         }
         user.setActive(ACTIVE);
         user.setRoles(oldUser.getRoles());
-        
+
         userRepository.saveAndFlush(user);
     }
 
@@ -64,7 +64,7 @@ public class UserService {
     public User findOne(Long id) {
         return userRepository.findOne(id);
     }
-    
+
     public void delete(Long id) {
         userRepository.delete(id);
     }

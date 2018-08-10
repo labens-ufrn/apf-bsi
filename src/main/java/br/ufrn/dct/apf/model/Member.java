@@ -22,14 +22,14 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Entity
 @Table(name = "member")
 public class Member implements Serializable {
-    
+
     private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "member_id")
     private Long id;
-    
+
     @OneToOne(cascade=CascadeType.DETACH)
     @JoinColumn(name="user_id", nullable=false, insertable=true, updatable=true)
     private User user;
@@ -37,7 +37,7 @@ public class Member implements Serializable {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "project_id", nullable = false)
     private Project project;
-    
+
     @Column(nullable = false)
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -105,6 +105,6 @@ public class Member implements Serializable {
             return false;
         return true;
     }
-    
-    
+
+
 }

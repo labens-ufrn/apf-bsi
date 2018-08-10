@@ -14,17 +14,17 @@ import javax.persistence.Table;
 public class Role implements Serializable {
 
     /**
-     * 
+     *
      */
     private static final long serialVersionUID = 1L;
-    
+
     /**
      * Regra para definir permissões padrão de usuários do sistema.
      */
     public static final String USER_ROLE = "USER";
-    
+
     public static final String ADMIN_ROLE = "ADMIN";
-    
+
     public static final String PROJECT_MANAGER_ROLE = "PROJECT MANAGER";
 
     @Id

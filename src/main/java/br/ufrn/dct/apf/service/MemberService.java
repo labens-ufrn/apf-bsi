@@ -24,13 +24,13 @@ public class MemberService extends AbstractService {
 
     public Member save(Member member) throws BusinessRuleException {
         checkMemberNull(member);
-        Member memberDB = getMember(member); 
+        Member memberDB = getMember(member);
         if (memberDB == null) {
             return repository.saveAndFlush(member);
         }
         return memberDB;
     }
-    
+
     private Member getMember(Member member) {
         List<Member> team = repository.findByProjectIdAndUserId(
                     member.getProject().getId(), member.getUser().getId());
@@ -39,7 +39,7 @@ public class MemberService extends AbstractService {
         }
         return team.get(0);
     }
-    
+
     public List<Member> findByProjectIdAndUserId(Long projectId, Long userId) {
         return repository.findByProjectIdAndUserId(projectId, userId);
     }
@@ -47,7 +47,7 @@ public class MemberService extends AbstractService {
     public void delete(Long id) {
         repository.delete(id);
     }
-    
+
     private void checkMemberNull(Member member) throws BusinessRuleException {
         if (checkNull(member) || checkNull(member.getProject()) || checkNull(member.getUser())) {
             throw new BusinessRuleException("error.member.service.member.is.null");

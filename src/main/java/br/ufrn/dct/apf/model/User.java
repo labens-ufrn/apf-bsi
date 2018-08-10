@@ -58,10 +58,10 @@ public class User implements Serializable {
     private int active;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE})
-    @JoinTable(name = "user_role", 
+    @JoinTable(name = "user_role",
             joinColumns = {
                 @JoinColumn(name = "user_id")
-            }, 
+            },
             inverseJoinColumns = {
                     @JoinColumn(name = "role_id")
             })
@@ -122,13 +122,13 @@ public class User implements Serializable {
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }
-    
+
     public void setNewRole(Role role) {
-        
+
         if(roles == null) {
             roles = new HashSet<>(0);
         }
-        
+
         if (!roles.contains(role)) {
             roles.add(role);
         }

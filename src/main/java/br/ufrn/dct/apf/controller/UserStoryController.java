@@ -20,7 +20,7 @@ import br.ufrn.dct.apf.service.UserStoryService;
 
 @Controller
 public class UserStoryController extends AbstractController {
-    
+
     /**
      * Logger.
      */
@@ -28,7 +28,7 @@ public class UserStoryController extends AbstractController {
 
     @Autowired
     private UserStoryService service;
-    
+
     @Autowired
     private ProjectService projectService;
 
@@ -48,15 +48,15 @@ public class UserStoryController extends AbstractController {
             LOGGER.error("error.us.controller.save");
             return add(us);
         }
-        
+
         User current = getCurrentUser();
 
         List<Project> projects = projectService.findByName(current.getId(), us.getProject().getName());
-        
+
         us.setProject(projects.get(0));
-        
+
         service.save(us);
-        
+
         UserStory newUS = new UserStory();
         newUS.setProject(projects.get(0));
 

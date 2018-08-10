@@ -16,7 +16,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "dataFunction")
 public class DataFunction implements Serializable {
-    
+
     /**
      * Serial Id.
      */
@@ -29,7 +29,7 @@ public class DataFunction implements Serializable {
 
     @Column(name = "name", nullable = false)
     private String name;
-    
+
     @Column(name = "type", nullable = false)
     private String type;
 
@@ -38,25 +38,25 @@ public class DataFunction implements Serializable {
      */
     @Column(name = "ret")
     private Long recordElementTypes;
-    
+
     /**
      * number of Data Element Types (DET).
      */
     @Column(name = "det")
     private Long dataElementTypes;
-    
+
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "user_story_id", nullable = false)
     private UserStory userStory;
 
     public DataFunction() {
     }
-    
+
     public DataFunction(String name, String type) {
         this.name = name;
         this.type = type;
     }
-    
+
     public Long getId() {
         return id;
     }
@@ -72,7 +72,7 @@ public class DataFunction implements Serializable {
     public void setName(String name) {
         this.name = name;
     }
-    
+
     public String getType() {
         return type;
     }
@@ -80,7 +80,7 @@ public class DataFunction implements Serializable {
     public void setType(String type) {
         this.type = type;
     }
-    
+
     public Long getRecordElementTypes() {
         return recordElementTypes;
     }
@@ -96,11 +96,11 @@ public class DataFunction implements Serializable {
     public void setDataElementTypes(Long det) {
         this.dataElementTypes = det;
     }
-    
+
     public UserStory getUserStory() {
         return this.userStory;
     }
-    
+
     public void setUserStory(UserStory us) {
         this.userStory = us;
     }

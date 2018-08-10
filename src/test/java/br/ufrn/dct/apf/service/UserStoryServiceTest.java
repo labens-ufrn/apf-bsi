@@ -140,11 +140,11 @@ public class UserStoryServiceTest extends AbstractTestNGSpringContextTests {
         aliProject.setDataElementTypes(11L);
 
         us1.addData(aliProject);
-        
+
         userStoryService.save(us1);
-        
+
         Set<DataFunction> dados = us1.getDataFunction();
-        
+
         softAssert.assertTrue(dados.contains(aliProject), "T01 - contains");
     }
 
