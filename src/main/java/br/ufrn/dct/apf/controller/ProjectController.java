@@ -106,6 +106,8 @@ public class ProjectController extends AbstractController {
     /**
      * the rest controller which is requested by the autocomplete input field
      * instead of the countries here could also be made a DB request
+     * @param searchstr String de busca de projetos.
+     * @return A {@link ProjectSuggestionWrapper} object.
      */
     @RequestMapping(value = "/project/suggestion", method = RequestMethod.GET, produces = "application/json")
     @ResponseBody
