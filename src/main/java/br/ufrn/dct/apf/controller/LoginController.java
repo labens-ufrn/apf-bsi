@@ -8,6 +8,7 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -25,7 +26,7 @@ public class LoginController extends AbstractController {
 
     private static final String REGISTRATION_VIEW = "registration";
 
-    @RequestMapping(value = { "/", "/login" }, method = RequestMethod.GET)
+    @GetMapping(path = { "/", "/login" })
     public ModelAndView login() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName(LOGIN_VIEW);
