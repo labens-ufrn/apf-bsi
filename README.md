@@ -9,12 +9,25 @@ Sistema para facilitar a contagem na análise por pontos de função (APF) desen
 * Indentation size: 4
 * Tab size: 4
 
+## Pré-requisitos
+
+* JDK 8
+* MariaDB ou MySql
+
+### Criar Banco de Dados e Usuário
+
+    CREATE DATABASE apf_db;
+
+    CREATE USER 'apf_user'@'localhost' IDENTIFIED BY '12345';
+
+    GRANT ALL ON apf_db.* TO 'apf_user'@'localhost';
+
 ## Execução
 
 Esse projeto faz uso do framework spring-boot que encapsula todas as dependências no arquivo jar.
 
 1. mvn clean
-2. mvn clean install
+2. mvn install
 3. Go to the target folder
 4. java -jar apf-bsi-0.0.1-SNAPSHOT.jar
 
