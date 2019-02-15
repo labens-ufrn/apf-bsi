@@ -48,6 +48,8 @@
         <sonar.organization>tacianosilva-github</sonar.organization>
         <sonar.language>java</sonar.language>
         <sonar.exclusions>**/*.properties,**/*.xml</sonar.exclusions>
+        <!-- The main class to start by executing "java -jar" -->
+        <start-class>br.ufrn.dct.apf.APFApplication</start-class>
     </properties>
 
     <dependencies>
@@ -81,6 +83,7 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
             <version>1.5.10.RELEASE</version>
+            <optional>true</optional>
         </dependency>
 
         <dependency>
@@ -136,6 +139,18 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>1.5.10.RELEASE</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <executable>true</executable>
+                    <mainClass>${start-class}</mainClass>
+                    <layout>JAR</layout>
+                </configuration>
             </plugin>
         </plugins>
 
@@ -146,8 +161,8 @@
                     <artifactId>maven-site-plugin</artifactId>
                     <version>3.7.1</version>
                     <configuration>
-                        <skipDeploy>true</skipDeploy><!-- don't deploy site 
-                            with maven-site-plugin -->
+                        <!-- don't deploy site with maven-site-plugin -->
+                        <skipDeploy>true</skipDeploy>
                     </configuration>
                 </plugin>
                 <plugin>
