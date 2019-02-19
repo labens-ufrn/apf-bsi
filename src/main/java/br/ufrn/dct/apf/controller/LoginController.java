@@ -9,8 +9,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import br.ufrn.dct.apf.model.User;
@@ -33,7 +32,7 @@ public class LoginController extends AbstractController {
         return modelAndView;
     }
 
-    @RequestMapping(value = "/registration", method = RequestMethod.GET)
+    @GetMapping(path = "/registration")
     public ModelAndView registration() {
         ModelAndView modelAndView = new ModelAndView();
         User user = new User();
@@ -42,7 +41,7 @@ public class LoginController extends AbstractController {
         return modelAndView;
     }
 
-    @RequestMapping(value = "/registration", method = RequestMethod.POST)
+    @PostMapping(path = "/registration")
     public ModelAndView createNewUser(@Valid User user, BindingResult bindingResult) {
         ModelAndView modelAndView = new ModelAndView();
         User userExists = userService.findUserByEmail(user.getEmail());
@@ -62,7 +61,7 @@ public class LoginController extends AbstractController {
         return modelAndView;
     }
 
-    @RequestMapping(value = "/admin/home", method = RequestMethod.GET)
+    @GetMapping(path = "/admin/home")
     public ModelAndView homeAdmin() {
         ModelAndView modelAndView = new ModelAndView();
 
@@ -77,7 +76,7 @@ public class LoginController extends AbstractController {
         return modelAndView;
     }
 
-    @RequestMapping(value = "/home", method = RequestMethod.GET)
+    @GetMapping(path = "/home")
     public ModelAndView home() {
         ModelAndView modelAndView = new ModelAndView();
 
@@ -90,7 +89,7 @@ public class LoginController extends AbstractController {
     }
 
     // for 403 access denied page
-    @RequestMapping(value = "/access-denied", method = RequestMethod.GET)
+    @GetMapping(path = "/access-denied")
     public ModelAndView accesssDenied() {
 
         ModelAndView model = new ModelAndView();
