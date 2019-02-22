@@ -26,6 +26,8 @@ public class Role implements Serializable {
     public static final String ADMIN_ROLE = "ADMIN";
 
     public static final String PROJECT_MANAGER_ROLE = "PROJECT MANAGER";
+    
+    public static final String PROJECT_MEMBER_ROLE = "PROJECT MEMBER";
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -53,5 +55,33 @@ public class Role implements Serializable {
 
     public String toString() {
         return this.roleName;
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + id;
+        result = prime * result + ((roleName == null) ? 0 : roleName.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Role other = (Role) obj;
+        if (id != other.id)
+            return false;
+        if (roleName == null) {
+            if (other.roleName != null)
+                return false;
+        } else if (!roleName.equals(other.roleName))
+            return false;
+        return true;
     }
 }
