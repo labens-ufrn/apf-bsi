@@ -16,6 +16,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -44,6 +45,10 @@ public class Project implements Serializable {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     // @NotEmpty(message = "Data é uma informação obrigatória.")
     private Date createdOn;
+    
+    @Column(name = "isPrivate", columnDefinition = "boolean default false")
+    @NotNull
+    private Boolean isPrivate;
 
     @Column(name = "active")
     private int active;
@@ -119,6 +124,14 @@ public class Project implements Serializable {
 
     public void setUserStories(Set<UserStory> userStories) {
         this.userStories = userStories;
+    }
+
+    public Boolean getIsPrivate() {
+        return isPrivate;
+    }
+
+    public void setIsPrivate(Boolean isPrivate) {
+        this.isPrivate = isPrivate;
     }
 
     @Override
