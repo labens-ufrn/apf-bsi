@@ -24,7 +24,7 @@ Sistema para facilitar a contagem na análise por pontos de função (APF) desen
     GRANT ALL ON apf_db_test.* TO 'apf_user'@'localhost';
 ```
 * Povoar Banco de Dados
-```
+```sql
     INSERT INTO ROLE VALUES (1,'ADMIN');
     INSERT INTO ROLE VALUES (2,'USER');
     INSERT INTO ROLE VALUES (3,'PROJECT MANAGER');
