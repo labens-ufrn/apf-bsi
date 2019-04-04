@@ -13,7 +13,7 @@ Sistema para facilitar a contagem na análise por pontos de função (APF) desen
 
 * JDK 8
 * MariaDB ou MySql
-* Criar Banco de Dados (dev e test) e Usuário
+* Criação do Banco de Dados (dev e test) e Usuário
 ```sql
     CREATE DATABASE apf_db;
     CREATE DATABASE apf_db_test;
@@ -23,7 +23,7 @@ Sistema para facilitar a contagem na análise por pontos de função (APF) desen
     GRANT ALL ON apf_db.* TO 'apf_user'@'localhost';
     GRANT ALL ON apf_db_test.* TO 'apf_user'@'localhost';
 ```
-* Povoar Banco de Dados
+* Povoamento do Banco de Dados
 ```sql
     INSERT INTO ROLE VALUES (1,'ADMIN');
     INSERT INTO ROLE VALUES (2,'USER');
