@@ -40,7 +40,6 @@ public class ProjectController extends AbstractController {
 
         ModelAndView mv = new ModelAndView("project/list");
         setUserAuth(mv);
-
         User current = getCurrentUser();
 
         mv.addObject("projects", service.findByUserId(current.getId()));

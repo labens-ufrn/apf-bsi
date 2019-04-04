@@ -35,10 +35,7 @@
                 <div class="panel-group">
                     <div class="panel panel-primary">
                         <div class="panel-heading">
-                            <span th:utext="${userName}"></span>
-                        </div>
-                        <div class="panel-heading">
-                            <strong>Projetos</strong>
+                            <strong>Projetos Públicos</strong>
                         </div>
                         <div class="panel-body">
                             <div class="table-responsive">
@@ -47,12 +44,18 @@
                                         <tr>
                                             <th>ID</th>
                                             <th>Nome</th>
+                                            <th>Team</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr th:each="project : ${projects}">
                                             <td th:text="${project.id}"></td>
                                             <td th:text="${project.name}"></td>
+                                            <td>
+                                                <ul>
+                                                    <li th:each="member : ${project.team}" th:text="${member.user.name}">user name</li>
+                                                </ul>
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>

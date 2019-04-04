@@ -48,6 +48,10 @@ public class ProjectService extends AbstractService {
     public Project findOne(Long id) {
         return repository.findOne(id);
     }
+    
+    public List<Project> findByIsPrivateFalse() {
+        return repository.findByIsPrivateFalse();
+    }
 
     public Project save(Project project) throws BusinessRuleException {
         checkOwnerMember(project, null);

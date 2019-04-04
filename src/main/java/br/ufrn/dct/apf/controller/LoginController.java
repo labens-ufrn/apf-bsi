@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import br.ufrn.dct.apf.model.User;
+import br.ufrn.dct.apf.service.ProjectService;
 import br.ufrn.dct.apf.service.UserService;
 
 @Controller
@@ -20,6 +21,9 @@ public class LoginController extends AbstractController {
 
     @Autowired
     private UserService userService;
+    
+    @Autowired
+    private ProjectService service;
 
     private static final String LOGIN_VIEW = "login";
 
@@ -78,14 +82,23 @@ public class LoginController extends AbstractController {
 
     @GetMapping(path = "/home")
     public ModelAndView home() {
-        ModelAndView modelAndView = new ModelAndView();
-
+        ModelAndView mv = new ModelAndView("home");
+        setUserAuth(mv);
         User user = getCurrentUser();
-        modelAndView.addObject("userName", user.getName() + " " + user.getLastName() + " (" + user.getEmail() + ")");
-        modelAndView.addObject("authorities", getRoles(user));
-        modelAndView.addObject("userMessage", "Content Available for Users");
-        modelAndView.setViewName("home");
-        return modelAndView;
+
+        mv.addObject("projects", service.findByUserId(user.getId()));
+        
+        return mv;
+    }
+    
+    @GetMapping(path = "/dashboard")
+    public ModelAndView dashboard() {
+        ModelAndView mv = new ModelAndView("dashboard");
+        setUserAuth(mv);
+
+        mv.addObject("projects", service.findByIsPrivateFalse());
+        
+        return mv;
     }
 
     // for 403 access denied page
