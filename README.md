@@ -13,20 +13,23 @@ Sistema para facilitar a contagem na análise por pontos de função (APF) desen
 
 * JDK 8
 * MariaDB ou MySql
-* Criar Banco de Dados e Usuário
-
+* Criar Banco de Dados (dev e test) e Usuário
+```sql
     CREATE DATABASE apf_db;
+    CREATE DATABASE apf_db_test;
 
     CREATE USER 'apf_user'@'localhost' IDENTIFIED BY '12345';
 
     GRANT ALL ON apf_db.* TO 'apf_user'@'localhost';
-
+    GRANT ALL ON apf_db_test.* TO 'apf_user'@'localhost';
+```
 * Povoar Banco de Dados
-
-    INSERT INTO `role` VALUES (1,'ADMIN');
-    
-    INSERT INTO `role` VALUES (2,'USER');
-
+```
+    INSERT INTO ROLE VALUES (1,'ADMIN');
+    INSERT INTO ROLE VALUES (2,'USER');
+    INSERT INTO ROLE VALUES (3,'PROJECT MANAGER');
+    INSERT INTO ROLE VALUES (4,'PROJECT MEMBER');
+```
 ## Execução
 
 Esse projeto faz uso do framework spring-boot que encapsula todas as dependências no arquivo jar.
