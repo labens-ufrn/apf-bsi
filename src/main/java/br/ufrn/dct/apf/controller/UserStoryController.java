@@ -40,6 +40,19 @@ public class UserStoryController extends AbstractController {
 
         return mv;
     }
+    
+    @GetMapping("/us/list")
+    public ModelAndView list() {
+        ModelAndView mv = new ModelAndView("us/list");
+
+        User current = getCurrentUser();
+
+        List<Project> projects = projectService.findByUserId(current.getId());
+
+        mv.addObject("projects", projects);
+
+        return mv;
+    }
 
     @PostMapping("/us/save")
     public ModelAndView save(@Valid UserStory us, BindingResult result) {
