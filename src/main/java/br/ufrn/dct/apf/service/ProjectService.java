@@ -53,11 +53,11 @@ public class ProjectService extends AbstractService {
         return repository.findByIsPrivateFalse();
     }
 
-    public Project save(Project project) throws BusinessRuleException {
-        checkOwnerMember(project, null);
-        project.setActive(ACTIVE);
-        return repository.saveAndFlush(project);
-    }
+    /*
+     * public Project save(Project project) throws BusinessRuleException {
+     * checkOwnerMember(project, null); project.setActive(ACTIVE); return
+     * repository.saveAndFlush(project); }
+     */
 
     public Project addMember(Project project, User newMember, User owner) throws BusinessRuleException {
         addMember(project, newMember);

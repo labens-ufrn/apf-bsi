@@ -43,7 +43,6 @@ public class Project implements Serializable {
     @Column(name = "created_on", nullable = false)
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    // @NotEmpty(message = "Data é uma informação obrigatória.")
     private Date createdOn;
     
     @Column(name = "isPrivate", columnDefinition = "boolean default false")
@@ -54,10 +53,10 @@ public class Project implements Serializable {
     private int active;
 
     @OneToMany(mappedBy = "project", targetEntity = Member.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private Set<Member> team = new HashSet<Member>();
+    private Set<Member> team = new HashSet<>();
 
     @OneToMany(mappedBy = "project", targetEntity = UserStory.class, fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
-    private Set<UserStory> userStories = new HashSet<UserStory>();
+    private Set<UserStory> userStories = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -108,11 +107,6 @@ public class Project implements Serializable {
     }
 
     public void addMember(Member member) {
-
-        if (team == null) {
-            team = new HashSet<Member>();
-        }
-
         if (!team.contains(member)) {
             team.add(member);
         }
@@ -126,11 +120,11 @@ public class Project implements Serializable {
         this.userStories = userStories;
     }
 
-    public Boolean getIsPrivate() {
+    public Boolean getPrivate() {
         return isPrivate;
     }
 
-    public void setIsPrivate(Boolean isPrivate) {
+    public void setPrivate(Boolean isPrivate) {
         this.isPrivate = isPrivate;
     }
 
@@ -139,6 +133,7 @@ public class Project implements Serializable {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((id == null) ? 0 : id.hashCode());
+        result = prime * result + ((name == null) ? 0 : name.hashCode());
         return result;
     }
 
@@ -155,6 +150,11 @@ public class Project implements Serializable {
             if (other.id != null)
                 return false;
         } else if (!id.equals(other.id))
+            return false;
+        if (name == null) {
+            if (other.name != null)
+                return false;
+        } else if (!name.equals(other.name))
             return false;
         return true;
     }

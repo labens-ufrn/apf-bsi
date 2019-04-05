@@ -49,6 +49,7 @@ public class UserStoryServiceTest extends AbstractTestNGSpringContextTests {
 
         p1.setName("APF Project");
         p1.setDescription("Analisador de Pontos por Função");
+        p1.setPrivate(false);
         p1.setCreatedOn(GregorianCalendar.getInstance().getTime());
 
         manager = createUser();

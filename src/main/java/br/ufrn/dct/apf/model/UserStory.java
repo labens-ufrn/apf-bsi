@@ -23,7 +23,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 public class UserStory implements Serializable {
 
     /**
-     *
+     * Serial number.
      */
     private static final long serialVersionUID = 1L;
 

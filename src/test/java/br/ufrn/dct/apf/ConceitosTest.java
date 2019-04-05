@@ -94,6 +94,7 @@ public class ConceitosTest extends AbstractTestNGSpringContextTests {
 
         p1.setName("Sistema APF");
         p1.setDescription("Sistema para auxilio na contagem por Pontos de Função");
+        p1.setPrivate(false);
         p1.setCreatedOn(GregorianCalendar.getInstance().getTime());
 
         System.out.println("Salvando o Projeto ...");
@@ -108,6 +109,7 @@ public class ConceitosTest extends AbstractTestNGSpringContextTests {
 
         p2.setName("Sistema do Developer");
         p2.setDescription("Sistema para Teste");
+        p2.setPrivate(false);
         p2.setCreatedOn(GregorianCalendar.getInstance().getTime());
 
         projectService.save(p2, developerMaria);

@@ -33,6 +33,7 @@ public class AbstractTest extends AbstractTestNGSpringContextTests {
 
         apf.setName("APF Project");
         apf.setDescription("Sistema Analisador de Pontos por Função");
+        apf.setPrivate(false);
         apf.setCreatedOn(GregorianCalendar.getInstance().getTime());
         return apf;
     }

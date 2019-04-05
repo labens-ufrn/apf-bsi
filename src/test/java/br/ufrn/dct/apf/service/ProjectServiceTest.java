@@ -51,6 +51,7 @@ public class ProjectServiceTest extends AbstractTestNGSpringContextTests {
 
         p1.setName("APF Project");
         p1.setDescription("Analisador de Pontos por Função");
+        p1.setPrivate(false);
         p1.setCreatedOn(GregorianCalendar.getInstance().getTime());
 
         service.save(p1, user1);
@@ -59,6 +60,7 @@ public class ProjectServiceTest extends AbstractTestNGSpringContextTests {
 
         p2.setName("Sigest");
         p2.setDescription("Sistemas Gerenciador de Estágios");
+        p2.setPrivate(false);
         p2.setCreatedOn(GregorianCalendar.getInstance().getTime());
 
         service.save(p2, user2);
@@ -82,6 +84,16 @@ public class ProjectServiceTest extends AbstractTestNGSpringContextTests {
     @Test
     public void findAll() {
         List<Project> projetos = service.findAll();
+
+        softAssert.assertNotNull(projetos, "T01 - NotNull:");
+        softAssert.assertEquals(projetos.size(), 2, "T02 - Equals:");
+
+        softAssert.assertAll();
+    }
+    
+    @Test
+    public void findByIsPrivate() {
+        List<Project> projetos = service.findByIsPrivateFalse();
 
         softAssert.assertNotNull(projetos, "T01 - NotNull:");
         softAssert.assertEquals(projetos.size(), 2, "T02 - Equals:");
@@ -125,6 +137,7 @@ public class ProjectServiceTest extends AbstractTestNGSpringContextTests {
 
         p2.setName("Test Project");
         p2.setDescription("TestNG Project");
+        p2.setPrivate(false);
         p2.setCreatedOn(GregorianCalendar.getInstance().getTime());
         p2.setActive(1);
 
@@ -153,6 +166,7 @@ public class ProjectServiceTest extends AbstractTestNGSpringContextTests {
         softAssert.assertNotNull(found.getCreatedOn(), "T07 - NotNull:");
         softAssert.assertNotNull(found.getActive(), "T08 - NotNull:");
         softAssert.assertEquals(found.getActive(), p2.getActive(), "T08 - Equals:");
+        softAssert.assertEquals(found.getPrivate(), p2.getPrivate(), "T08 - Equals:");
 
         service.delete(id2);
 
@@ -264,6 +278,7 @@ public class ProjectServiceTest extends AbstractTestNGSpringContextTests {
 
         p2.setName("Test Project");
         p2.setDescription("TestNG Project");
+        p2.setPrivate(false);
         p2.setCreatedOn(GregorianCalendar.getInstance().getTime());
         p2.setActive(1);
 
