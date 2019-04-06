@@ -11,6 +11,7 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 import br.ufrn.dct.apf.count.IndicativeCount;
+import br.ufrn.dct.apf.model.DataFunction;
 import br.ufrn.dct.apf.model.Project;
 import br.ufrn.dct.apf.model.User;
 import br.ufrn.dct.apf.model.UserStory;
@@ -70,31 +71,40 @@ public class IndicativeCountTest extends AbstractTest {
     }
 
     @Test
-    public void countUserStories() {
+    public void countUserStories() throws BusinessRuleException {
 
         Set<UserStory> uss = apf.getUserStories();
 
         for (UserStory userStory : uss) {
             int fp = count.calculeFunctionPoint(userStory);
             softAssert.assertNotNull(fp, "T01 - NotNull: " + userStory.getName());
+            
+            Set<DataFunction> data = userStory.getDataFunctions();
+            for (DataFunction df : data) {
+                int fpdf = count.calculeFunctionPoint(df);
+                softAssert.assertNotNull(fpdf, "T02 - NotNull: " + df.getName());
+                softAssert.assertEquals(df.getUserStory(), userStory, "T03 - Equals: df.us == us");
+                softAssert.assertNotNull(df, "T04 - NotNull: " + df.getDataElementTypes());
+                softAssert.assertNotNull(df, "T05 - NotNull: " + df.getRecordElementTypes());
+            }
         }
 
         softAssert.assertAll();
     }
 
     @Test
-    public void countAPF() {
+    public void countAPF() throws BusinessRuleException {
 
         int fp = count.calculeFunctionPoint(apf);
 
         softAssert.assertNotNull(fp, "T01 - NotNull:");
-        softAssert.assertEquals(fp, 140, "T02 - Function Points: ");
+        softAssert.assertEquals(fp, 155, "T02 - Function Points: ");
 
         softAssert.assertAll();
     }
 
     @Test
-    public void countUserStoryWithILF() {
+    public void countUserStoryWithILF() throws BusinessRuleException {
 
         UserStory us = createStoryWithILF();
 
@@ -107,7 +117,7 @@ public class IndicativeCountTest extends AbstractTest {
     }
 
     @Test
-    public void countUserStoryWithEIF() {
+    public void countUserStoryWithEIF() throws BusinessRuleException {
 
         UserStory us = createStoryWithEIF();
 
@@ -120,7 +130,7 @@ public class IndicativeCountTest extends AbstractTest {
     }
 
     @Test
-    public void countUserStoryWithILFandEIF() {
+    public void countUserStoryWithILFandEIF() throws BusinessRuleException {
 
         UserStory us = createStoryWithILFandEIF();
 
@@ -130,5 +140,18 @@ public class IndicativeCountTest extends AbstractTest {
         softAssert.assertEquals(fp, 50, "T02 - Function Points: ");
 
         softAssert.assertAll();
+    }
+    
+    @Test(expectedExceptions = BusinessRuleException.class, expectedExceptionsMessageRegExp = "error.count.indicative.datafunction.not.exists")
+    public void countDataFunctionNull() throws BusinessRuleException {
+        DataFunction df = null;
+        count.calculeFunctionPoint(df);
+    }
+    
+    @Test(expectedExceptions = BusinessRuleException.class, expectedExceptionsMessageRegExp = "error.count.indicative.datafunction.not.exists")
+    public void countDataFunctionNotExists() throws BusinessRuleException {
+        DataFunction df = DataFunction.createEIF("Nome");
+        df.setType("OutroTipo");
+        count.calculeFunctionPoint(df);
     }
 }

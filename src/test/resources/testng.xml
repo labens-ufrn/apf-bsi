@@ -7,6 +7,8 @@
             <class name="br.ufrn.dct.apf.service.ProjectServiceTest" />
             <class name="br.ufrn.dct.apf.service.TeamServiceTest" />
             <class name="br.ufrn.dct.apf.service.UserServiceTest" />
+            <class name="br.ufrn.dct.apf.service.UserStoryServiceTest" />
+            <class name="br.ufrn.dct.apf.service.IndicativeCountTest" />
             <class name="br.ufrn.dct.apf.ConceitosTest" />
         </classes>
     </test>

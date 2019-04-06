@@ -44,6 +44,8 @@
                                         <tr>
                                             <th>ID</th>
                                             <th>Nome</th>
+                                            <th>Nº US</th>
+                                            <th>Contagem</th>
                                             <th>Team</th>
                                         </tr>
                                     </thead>
@@ -51,6 +53,8 @@
                                         <tr th:each="project : ${projects}">
                                             <td th:text="${project.id}"></td>
                                             <td th:text="${project.name}"></td>
+                                            <td th:text="${project.userStories.size()}"></td>
+                                            <td th:text="${counter.calculeFunctionPoint(project)}">Started</td>
                                             <td>
                                                 <ul>
                                                     <li th:each="member : ${project.team}" th:text="${member.user.name}">user name</li>

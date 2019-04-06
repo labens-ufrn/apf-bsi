@@ -14,7 +14,6 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 import br.ufrn.dct.apf.model.DataFunction;
-import br.ufrn.dct.apf.model.ILF;
 import br.ufrn.dct.apf.model.Project;
 import br.ufrn.dct.apf.model.User;
 import br.ufrn.dct.apf.model.UserStory;
@@ -134,7 +133,7 @@ public class UserStoryServiceTest extends AbstractTestNGSpringContextTests {
     @Test
     public void saveWithDataFunction() {
 
-        ILF aliProject = new ILF("ALI Projeto");
+        DataFunction aliProject = DataFunction.createILF("ALI Projeto");
         // Colocar 2 Record Element Types (RET): Project e Member
         aliProject.setRecordElementTypes(2L);
         // Somar os Data Element Types (DET): 7 + 4.
@@ -144,7 +143,7 @@ public class UserStoryServiceTest extends AbstractTestNGSpringContextTests {
 
         userStoryService.save(us1);
 
-        Set<DataFunction> dados = us1.getDataFunction();
+        Set<DataFunction> dados = us1.getDataFunctions();
 
         softAssert.assertTrue(dados.contains(aliProject), "T01 - contains");
     }

@@ -22,6 +22,10 @@ public class DataFunction implements Serializable {
      */
     private static final long serialVersionUID = 1L;
 
+    public static final String TYPE_ILF = "TYPE_ILF";
+    
+    public static final String TYPE_EIF = "TYPE_EIF";
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "data_id")
@@ -48,11 +52,45 @@ public class DataFunction implements Serializable {
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "user_story_id", nullable = false)
     private UserStory userStory;
-
-    public DataFunction() {
+    
+    /**
+     * Internal Logical Files (ILF's, in Portuguese, Arquivos Lógico Interno - ALI's).
+     *
+     * A user identifiable group of logically related data that resides entirely
+     * within the applications boundary and is maintained through external inputs.
+     *
+     * Source: <a href="http://www.softwaremetrics.com/fpafund.htm">http://www.softwaremetrics.com/fpafund.htm</a>
+     *
+     * @author Taciano Morais Silva
+     * @since 04/04/2019
+     * @param name A data function's name.
+     */
+    public static DataFunction createILF(String name) {
+        return new DataFunction(name, TYPE_ILF);
     }
+    
+    /**
+     * External Interface Files (EIF’s, in Portuguese, Arquivos Interface Externa - AIE's).
+     *
+     * A user identifiable group of logically related data that is used for reference
+     * purposes only. The data resides entirely outside the application and is
+     * maintained by another application.
+     *
+     * The external interface file is an internal logical file for another application.
+     *
+     * Source: <a href="http://www.softwaremetrics.com/fpafund.htm">http://www.softwaremetrics.com/fpafund.htm</a>
+     *
+     * @author Taciano Morais Silva
+     * @since 04/04/2019
+     * @param name A data function's name.
+     */
+    public static DataFunction createEIF(String name) {
+        return new DataFunction(name, TYPE_EIF);
+    }
+    
+    private DataFunction() {}
 
-    public DataFunction(String name, String type) {
+    private DataFunction(String name, String type) {
         this.name = name;
         this.type = type;
     }
@@ -103,5 +141,13 @@ public class DataFunction implements Serializable {
 
     public void setUserStory(UserStory us) {
         this.userStory = us;
+    }
+
+    public boolean isILF() {
+        return getType().equals(TYPE_ILF);
+    }
+    
+    public boolean isEIF() {
+        return getType().equals(TYPE_EIF);
     }
 }

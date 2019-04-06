@@ -13,7 +13,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
-import br.ufrn.dct.apf.model.ILF;
+import br.ufrn.dct.apf.model.DataFunction;
 import br.ufrn.dct.apf.model.Member;
 import br.ufrn.dct.apf.model.Project;
 import br.ufrn.dct.apf.model.User;
@@ -140,7 +140,7 @@ public class ConceitosTest extends AbstractTestNGSpringContextTests {
         us2.setProject(p1);
 
         System.out.println("Adicionando ALI ...");
-        ILF aliUS = new ILF("ALI UserStory");
+        DataFunction aliUS = DataFunction.createILF("ALI UserStory");
         // Colocar 1 Record Element Types (RET): UserStory
         aliUS.setRecordElementTypes(1L);
         // numero de Data Element Types (DET): 7
@@ -158,7 +158,7 @@ public class ConceitosTest extends AbstractTestNGSpringContextTests {
         userStoryService.save(us3);
 
         System.out.println("Adicionando ALI ...");
-        ILF aliProject = new ILF("ALI Projeto");
+        DataFunction aliProject = DataFunction.createILF("ALI Projeto");
         // Colocar 2 Record Element Types (RET): Project e Member
         aliProject.setRecordElementTypes(2L);
         // Somar os Data Element Types (DET): 7 + 4.
@@ -186,6 +186,12 @@ public class ConceitosTest extends AbstractTestNGSpringContextTests {
 
         for (UserStory us : stories) {
             System.out.println("US ID = " + us.getId() + ", Name = " + us.getName());
+            
+            Set<DataFunction> dfs = us.getDataFunctions();
+            for (DataFunction data : dfs) {
+                System.out.println("Data ID = " + data.getId() + ", Name = " + data.getName() + ", Type = " + data.getType());
+                softAssert.assertEquals(data.getUserStory(), us, "Equals - Conceitos - df.us == us");
+            }
         }
 
         System.out.println("Apagando o user stories ...");

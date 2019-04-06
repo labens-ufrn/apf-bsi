@@ -45,7 +45,7 @@ public class UserStory implements Serializable {
     private Project project;
 
     @OneToMany(mappedBy = "userStory", targetEntity = DataFunction.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private Set<DataFunction> dataFunction = new HashSet<>();
+    private Set<DataFunction> dataFunctions = new HashSet<>();
 
     public UserStory() {
     }
@@ -87,12 +87,12 @@ public class UserStory implements Serializable {
         this.project = project;
     }
 
-    public Set<DataFunction> getDataFunction() {
-        return dataFunction;
+    public Set<DataFunction> getDataFunctions() {
+        return dataFunctions;
     }
 
-    public void setDataFunction(Set<DataFunction> datas) {
-        this.dataFunction = datas;
+    public void setDataFunctions(Set<DataFunction> datas) {
+        this.dataFunctions = datas;
     }
 
     public void addData(DataFunction data) {
@@ -100,8 +100,8 @@ public class UserStory implements Serializable {
             data.setUserStory(this);
         }
 
-        if (!dataFunction.contains(data)) {
-            dataFunction.add(data);
+        if (!dataFunctions.contains(data)) {
+            dataFunctions.add(data);
         }
     }
 }
