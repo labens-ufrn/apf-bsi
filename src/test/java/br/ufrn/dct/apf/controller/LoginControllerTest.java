@@ -1,18 +1,11 @@
 package br.ufrn.dct.apf.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -24,7 +17,7 @@ import br.ufrn.dct.apf.service.UserService;
 @SpringBootTest
 @AutoConfigureMockMvc
 @WebMvcTest
-public class LoginControllerTest {
+public class LoginControllerTest extends AbstractTestNGSpringContextTests {
     
     private SoftAssert softAssert;
     
