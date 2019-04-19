@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta name="viewport" content="width=device-width" />
-    <title>Project Registration</title>
+    <title>Project Addiction</title>
 
     <link rel="stylesheet" type="text/css" th:href="@{/css/home.css}" />
     <link rel="stylesheet" type="text/css" th:href="@{/css/simple-sidebar.css}" />
@@ -17,33 +17,7 @@
     <div th:replace="fragments/header :: header"></div>
     <div id="wrapper" class="wrapper.toggled toggled" style="margin-top:50px">
         <!-- Sidebar -->
-        <div id="sidebar-wrapper">
-            <ul class="sidebar-nav">
-                <li class="sidebar-brand">
-                    <a href="#">
-                        Start Bootstrap
-                    </a>
-                </li>
-                <li>
-                    <a href="#">Dashboard</a>
-                </li>
-                <li>
-                    <a th:href="@{/project}">Project</a>
-                </li>
-                <li>
-                    <a th:href="@{/us/add}">User Story</a>
-                </li>
-                <li>
-                    <a th:href="@{/user}">User</a>
-                </li>
-                <li>
-                    <a th:href="@{/admin/home}">Home Admin</a>
-                </li>
-                <li>
-                    <a href="#">Contact</a>
-                </li>
-            </ul>
-        </div>
+        <div th:replace="fragments/menu"></div>
         <!-- /#sidebar-wrapper -->
 
     <!-- Page Content -->

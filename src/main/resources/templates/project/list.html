@@ -43,16 +43,7 @@
 
     <div id="wrapper" class="wrapper.toggled toggled" style="margin-top: 50px">
         <!-- Sidebar -->
-        <div id="sidebar-wrapper">
-            <ul class="sidebar-nav">
-                <li><a class="sidebar-brand" th:href="@{/dashboard}">Dashboard</a></li>
-                <li><a th:href="@{/project}">Project</a></li>
-                <li><a th:href="@{/us/add}">User Story</a></li>
-                <li><a th:href="@{/user}">User</a></li>
-                <li><a th:href="@{/admin/home}">Home Admin</a></li>
-                <li><a href="#">Contact</a></li>
-            </ul>
-        </div>
+        <div th:replace="fragments/menu"></div>
         <!-- /#sidebar-wrapper -->
 
         <!-- Page Content -->
