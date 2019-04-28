@@ -57,6 +57,9 @@ public class Project implements Serializable {
 
     @OneToMany(mappedBy = "project", targetEntity = UserStory.class, fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
     private Set<UserStory> userStories = new HashSet<>();
+    
+    @OneToMany(targetEntity = DataFunction.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private Set<DataFunction> dataFunctions = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -118,6 +121,14 @@ public class Project implements Serializable {
 
     public void setUserStories(Set<UserStory> userStories) {
         this.userStories = userStories;
+    }
+    
+    public Set<DataFunction> getDataFunctions() {
+        return dataFunctions;
+    }
+
+    public void setDataFunctions(Set<DataFunction> dataFunctions) {
+        this.dataFunctions = dataFunctions;
     }
 
     public Boolean getPrivate() {

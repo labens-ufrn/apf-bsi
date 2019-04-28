@@ -1,62 +1,38 @@
-package br.ufrn.dct.apf.model;
+package br.ufrn.dct.apf.dto;
 
 import java.io.Serializable;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import br.ufrn.dct.apf.model.DataFunction;
+import br.ufrn.dct.apf.model.Project;
+import br.ufrn.dct.apf.model.UserStory;
 
-@Entity
-@Table(name = "dataFunction")
-public class DataFunction implements Serializable {
+public class DataFunctionDTO implements Serializable {
 
     /**
      * Serial Id.
      */
     private static final long serialVersionUID = 1L;
 
-    public static final String TYPE_ILF = "TYPE_ILF";
-    
-    public static final String TYPE_EIF = "TYPE_EIF";
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "data_id")
     private Long id;
 
-    @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name = "type", nullable = false)
     private String type;
 
     /**
      * number of Record Element Types (RET).
      */
-    @Column(name = "ret")
     private Long recordElementTypes;
 
     /**
      * number of Data Element Types (DET).
      */
-    @Column(name = "det")
     private Long dataElementTypes;
-
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_story_id", nullable = true)
-    private UserStory userStory;
     
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.DETACH)
-    @JoinColumn(name = "project_id", nullable = false)
     private Project project;
 
+    private UserStory userStory;
+    
     /**
      * Internal Logical Files (ILF's, in Portuguese, Arquivos Lógico Interno - ALI's).
      *
@@ -69,8 +45,8 @@ public class DataFunction implements Serializable {
      * @since 04/04/2019
      * @param name A data function's name.
      */
-    public static DataFunction createILF(String name) {
-        return new DataFunction(name, TYPE_ILF);
+    public static DataFunctionDTO createILF(String name) {
+        return new DataFunctionDTO(name, DataFunction.TYPE_ILF);
     }
     
     /**
@@ -86,15 +62,17 @@ public class DataFunction implements Serializable {
      *
      * @author Taciano Morais Silva
      * @since 04/04/2019
-     * @param name A data function's name.
+     * 
      */
-    public static DataFunction createEIF(String name) {
-        return new DataFunction(name, TYPE_EIF);
+    public DataFunctionDTO() {
     }
     
-    public DataFunction() {}
-
-    private DataFunction(String name, String type) {
+    /**
+     * 
+     * @param name A data function's name.
+     * @param type
+     */
+    public DataFunctionDTO(String name, String type) {
         this.name = name;
         this.type = type;
     }
@@ -138,7 +116,7 @@ public class DataFunction implements Serializable {
     public void setDataElementTypes(Long det) {
         this.dataElementTypes = det;
     }
-
+    
     public Project getProject() {
         return project;
     }
@@ -153,13 +131,5 @@ public class DataFunction implements Serializable {
 
     public void setUserStory(UserStory us) {
         this.userStory = us;
-    }
-
-    public boolean isILF() {
-        return getType().equals(TYPE_ILF);
-    }
-    
-    public boolean isEIF() {
-        return getType().equals(TYPE_EIF);
     }
 }
