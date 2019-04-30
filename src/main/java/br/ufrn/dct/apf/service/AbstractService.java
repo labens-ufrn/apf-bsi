@@ -2,6 +2,7 @@ package br.ufrn.dct.apf.service;
 
 import java.util.GregorianCalendar;
 
+import br.ufrn.dct.apf.model.Attribution;
 import br.ufrn.dct.apf.model.Member;
 import br.ufrn.dct.apf.model.Project;
 import br.ufrn.dct.apf.model.User;
@@ -29,10 +30,11 @@ public class AbstractService {
         return obj == null;
 }
 
-    protected Member createMember(Project project, User user) {
+    protected Member createMember(Project project, User user, Attribution attrib) {
         Member member = new Member();
         member.setProject(project);
         member.setUser(user);
+        member.setAttribution(attrib);
         member.setCreatedOn(GregorianCalendar.getInstance().getTime());
         return member;
     }
