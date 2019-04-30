@@ -32,11 +32,11 @@ public class Project implements Serializable {
     @Column(name = "project_id")
     private Long id;
 
-    @Column(name = "name")
+    @Column(name = "name", unique = true)
     @NotEmpty(message = "Especifique um nome para o projeto")
     private String name;
 
-    @Column(name = "description")
+    @Column(name = "description", nullable = false)
     @NotEmpty(message = "Escreva uma descrição para o projeto")
     private String description;
 
