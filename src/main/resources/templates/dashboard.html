@@ -17,16 +17,7 @@
     <div th:replace="fragments/header :: header"></div>
     <div id="wrapper" class="wrapper.toggled toggled" style="margin-top:50px">
         <!-- Sidebar -->
-        <div id="sidebar-wrapper">
-            <ul class="sidebar-nav">
-                <li><a class="sidebar-brand" th:href="@{/dashboard}">Dashboard</a></li>
-                <li><a th:href="@{/project}">Project</a></li>
-                <li><a th:href="@{/us/add}">User Story</a></li>
-                <li><a th:href="@{/user}">User</a></li>
-                <li><a th:href="@{/admin/home}">Home Admin</a></li>
-                <li><a href="#">Contact</a></li>
-            </ul>
-        </div>
+        <div th:replace="fragments/menu"></div>
         <!-- /#sidebar-wrapper -->
 
         <!-- Page Content -->
@@ -44,8 +35,12 @@
                                         <tr>
                                             <th>ID</th>
                                             <th>Nome</th>
+                                            <th>Nº DF</th>
                                             <th>Nº US</th>
-                                            <th>Contagem</th>
+                                            <th>
+                                                <span id="th-ci" data-placement="top" data-toggle="tooltip" 
+                                            data-original-title="Contagem Indicativa">Contagem</span>
+                                            </th>
                                             <th>Team</th>
                                         </tr>
                                     </thead>
@@ -53,6 +48,7 @@
                                         <tr th:each="project : ${projects}">
                                             <td th:text="${project.id}"></td>
                                             <td th:text="${project.name}"></td>
+                                            <td th:text="${project.dataFunctions.size()}"></td>
                                             <td th:text="${project.userStories.size()}"></td>
                                             <td th:text="${counter.calculeFunctionPoint(project)}">Started</td>
                                             <td>
@@ -81,6 +77,8 @@
             e.preventDefault();
             $("#wrapper").toggleClass("toggled");
         });
+        
+        $('#th-ci').tooltip();
     </script>
 </body>
 </html>

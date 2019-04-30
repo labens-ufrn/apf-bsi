@@ -14,11 +14,11 @@ public class IndicativeCount extends AbstractFunctionPointCount {
     private static final int FUNCTION_POINT_EIF = 15;
 
     public int calculeFunctionPoint(Project project) throws BusinessRuleException {
-        Set<UserStory> userStories = project.getUserStories();
+        Set<DataFunction> df = project.getDataFunctions();
 
         int i = 0;
-        for (UserStory us : userStories) {
-            i += calculeFunctionPoint(us);
+        for (DataFunction dataFunction : df) {
+            i += calculeFunctionPoint(dataFunction);
         }
         return i;
     }

@@ -48,6 +48,9 @@ public class DataFunction implements Serializable {
      */
     @Column(name = "det")
     private Long dataElementTypes;
+    
+    @Column(name = "description")
+    private String description;
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "user_story_id", nullable = true)
@@ -121,6 +124,14 @@ public class DataFunction implements Serializable {
 
     public void setType(String type) {
         this.type = type;
+    }
+    
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public Long getRecordElementTypes() {
