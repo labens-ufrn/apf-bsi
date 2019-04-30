@@ -37,6 +37,10 @@ public class Member implements Serializable {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "project_id", nullable = false)
     private Project project;
+    
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "attrib_id", nullable = false)
+    private Attribution attribution;
 
     @Column(nullable = false)
     @Temporal(TemporalType.DATE)
@@ -65,6 +69,14 @@ public class Member implements Serializable {
 
     public void setProject(Project project) {
         this.project = project;
+    }
+    
+    public Attribution getAttribution() {
+        return attribution;
+    }
+
+    public void setAttribution(Attribution attrib) {
+        this.attribution = attrib;
     }
 
     public Date getCreatedOn() {

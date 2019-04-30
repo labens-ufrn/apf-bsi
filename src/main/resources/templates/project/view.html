@@ -75,7 +75,10 @@
                             <tr th:each="dataFunction : ${project.dataFunctions}">
                                 <td th:text="${dataFunction.id}"></td>
                                 <td th:text="${dataFunction.name}"></td>
-                                <td th:text="${dataFunction.type}"></td>
+                                <td th:switch="${dataFunction.type}">
+                                    <span th:case="'TYPE_ILF'">ALI</span>
+                                    <span th:case="'TYPE_EIF'">AIE</span>
+                                </td>
                                 <td>
                                     <div class="btn-group pull-right">
                                         <a class="btn btn-sm btn-primary" th:href="@{/edit/{id}(id=${dataFunction.id})}" >Editar</a>
@@ -139,8 +142,8 @@
                             <tr>
                                 <th>ID</th>
                                 <th>Nome</th>
-                                <th>Role</th>
-                                <th></th>
+                                <th>Perfil</th>
+                                <th>Atribuição</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -148,6 +151,7 @@
                                 <td th:text="${member.user.id}"></td>
                                 <td th:text="${member.user.name}"></td>
                                 <td th:text="${member.user.roles}"></td>
+                                <td th:text="${member.attribution.name}"></td>
                                 <td>
                                     <div class="btn-group pull-right">
                                         <a class="btn btn-sm btn-primary" th:href="@{/edit/{id}(id=${member.id})}" >Editar</a>

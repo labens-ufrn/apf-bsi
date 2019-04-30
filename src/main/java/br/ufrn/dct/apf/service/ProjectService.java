@@ -8,13 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
+import br.ufrn.dct.apf.model.Attribution;
 import br.ufrn.dct.apf.model.Member;
 import br.ufrn.dct.apf.model.Project;
-import br.ufrn.dct.apf.model.Role;
 import br.ufrn.dct.apf.model.User;
+import br.ufrn.dct.apf.repository.AttributionRepository;
 import br.ufrn.dct.apf.repository.MemberRepository;
 import br.ufrn.dct.apf.repository.ProjectRepository;
-import br.ufrn.dct.apf.repository.RoleRepository;
 
 @Service
 public class ProjectService extends AbstractService {
@@ -26,9 +26,9 @@ public class ProjectService extends AbstractService {
 
     @Autowired
     private ProjectRepository repository;
-
+    
     @Autowired
-    private RoleRepository roleRepository;
+    private AttributionRepository attribRepository;
 
     @Autowired
     private MemberRepository memberRepository;
@@ -81,9 +81,8 @@ public class ProjectService extends AbstractService {
     }
 
     private void addMember(Project project, User user) {
-        Role projectManager = roleRepository.findByRoleName(Role.PROJECT_MANAGER_ROLE);
-        user.setNewRole(projectManager);
-        Member manager = createMember(project, user);
+        Attribution projectManager = attribRepository.findByName(Attribution.PROJECT_MANAGER);
+        Member manager = createMember(project, user, projectManager);
         project.addMember(manager);
     }
 

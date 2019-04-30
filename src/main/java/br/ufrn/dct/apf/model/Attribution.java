@@ -10,8 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "role")
-public class Role implements Serializable {
+@Table(name = "attribution")
+public class Attribution implements Serializable {
 
     /**
      *
@@ -19,19 +19,19 @@ public class Role implements Serializable {
     private static final long serialVersionUID = 1L;
 
     /**
-     * Regra para definir permissões padrão de usuários do sistema.
+     * Regra para definir permissões membros de um projeto.
      */
-    public static final String USER_ROLE = "USER";
-
-    public static final String ADMIN_ROLE = "ADMIN";
+    public static final String PROJECT_MANAGER = "PROJECT MANAGER";
+    
+    public static final String PROJECT_MEMBER = "PROJECT MEMBER";
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "role_id")
+    @Column(name = "attrib_id")
     private int id;
 
-    @Column(name = "role_name", unique = true)
-    private String roleName;
+    @Column(name = "attrib_name", unique = true)
+    private String name;
 
     public int getId() {
         return id;
@@ -41,16 +41,16 @@ public class Role implements Serializable {
         this.id = id;
     }
 
-    public String getRoleName() {
-        return roleName;
+    public String getName() {
+        return name;
     }
 
-    public void setRoleName(String roleName) {
-        this.roleName = roleName;
+    public void setName(String attribName) {
+        this.name = attribName;
     }
 
     public String toString() {
-        return this.roleName;
+        return this.name;
     }
 
     @Override
@@ -58,7 +58,7 @@ public class Role implements Serializable {
         final int prime = 31;
         int result = 1;
         result = prime * result + id;
-        result = prime * result + ((roleName == null) ? 0 : roleName.hashCode());
+        result = prime * result + ((name == null) ? 0 : name.hashCode());
         return result;
     }
 
@@ -70,13 +70,13 @@ public class Role implements Serializable {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        Role other = (Role) obj;
+        Attribution other = (Attribution) obj;
         if (id != other.id)
             return false;
-        if (roleName == null) {
-            if (other.roleName != null)
+        if (name == null) {
+            if (other.name != null)
                 return false;
-        } else if (!roleName.equals(other.roleName))
+        } else if (!name.equals(other.name))
             return false;
         return true;
     }
