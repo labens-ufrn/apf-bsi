@@ -29,7 +29,7 @@ public class DataFunctionService {
     }
 
     private DataFunction createDF(DataFunctionDTO dfDTO) {
-        DataFunction df = null;
+        DataFunction df = new DataFunction();
         if (dfDTO.getType().equals(DataFunction.TYPE_ILF)) {
             df = DataFunction.createILF(dfDTO.getName());
         }
