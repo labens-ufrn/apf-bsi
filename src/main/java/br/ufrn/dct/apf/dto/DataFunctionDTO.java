@@ -2,7 +2,6 @@ package br.ufrn.dct.apf.dto;
 
 import java.io.Serializable;
 
-import br.ufrn.dct.apf.model.DataFunction;
 import br.ufrn.dct.apf.model.Project;
 import br.ufrn.dct.apf.model.UserStory;
 
@@ -38,18 +37,7 @@ public class DataFunctionDTO implements Serializable {
      *
      * A user identifiable group of logically related data that resides entirely
      * within the applications boundary and is maintained through external inputs.
-     *
-     * Source: <a href="http://www.softwaremetrics.com/fpafund.htm">http://www.softwaremetrics.com/fpafund.htm</a>
-     *
-     * @author Taciano Morais Silva
-     * @since 04/04/2019
-     * @param name A data function's name.
-     */
-    public static DataFunctionDTO createILF(String name) {
-        return new DataFunctionDTO(name, DataFunction.TYPE_ILF);
-    }
-    
-    /**
+     * 
      * External Interface Files (EIF’s, in Portuguese, Arquivos Interface Externa - AIE's).
      *
      * A user identifiable group of logically related data that is used for reference

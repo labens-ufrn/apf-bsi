@@ -40,7 +40,6 @@ public class DataFunctionController extends AbstractController {
         Project project = projectService.findOne(id);
         df.setProject(project);
         mv.addObject("datafunction", df);
-        //mv.addObject("projactive", project);
 
         return mv;
     }
@@ -79,7 +78,7 @@ public class DataFunctionController extends AbstractController {
 
         List<Project> projects = projectService.findByName(current.getId(), df.getProject().getName());
         Project p = null;
-        if (projects.size() != 0) {
+        if (!projects.isEmpty()) {
             p = projects.get(0);
             df.setProject(p);
         }

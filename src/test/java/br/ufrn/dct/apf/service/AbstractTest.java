@@ -10,7 +10,7 @@ import br.ufrn.dct.apf.model.Project;
 import br.ufrn.dct.apf.model.User;
 import br.ufrn.dct.apf.model.UserStory;
 
-public class AbstractTest extends AbstractTestNGSpringContextTests {
+public abstract class AbstractTest extends AbstractTestNGSpringContextTests {
 
     @Autowired
     private UserStoryService userStoryService;

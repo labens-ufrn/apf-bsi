@@ -40,7 +40,6 @@ public class UserStoryController extends AbstractController {
         Project project = projectService.findOne(id);
         us.setProject(project);
         mv.addObject("userstory", us);
-        //mv.addObject("projactive", project);
 
         return mv;
     }
