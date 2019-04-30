@@ -58,7 +58,7 @@ public class Project implements Serializable {
     @OneToMany(mappedBy = "project", targetEntity = UserStory.class, fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
     private Set<UserStory> userStories = new HashSet<>();
     
-    @OneToMany(targetEntity = DataFunction.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "project", targetEntity = DataFunction.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<DataFunction> dataFunctions = new HashSet<>();
 
     public Long getId() {
