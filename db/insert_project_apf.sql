@@ -7,17 +7,18 @@ INSERT INTO user (active,email,last_name,name,password) VALUES (
 INSERT INTO project (active,created_on,description,name,is_private) VALUES (
 1,{d '2019-04-30'},'Analisador de Pontos de Função','APF Oficial',0);
 
-INSERT INTO member (created_on,project_id,user_id) VALUES (
+INSERT INTO member (created_on,project_id,user_id,attrib_id) VALUES (
 {d '2019-04-04'},
 (select project_id from project where name = 'APF Oficial'),
-(select user_id from user where email = 'admin@apf.ceres.ufrn.br')
+(select user_id from user where email = 'admin@apf.ceres.ufrn.br'),
+1
 );
 
 INSERT INTO data_function (name,det,ret,type,description, project_id,user_story_id) VALUES (
 'ALI Project',
 10,2,
 'TYPE_ILF',
-'2 RET: Project e Member. 10 DET - 6 (project) + 4 (member)',
+'2 RET: Project e Member. 10 DET: 6 (project) + 4 (member)',
 (select project_id from project where name = 'APF Oficial'),
 null);
 
@@ -25,7 +26,7 @@ INSERT INTO data_function (name,det,ret,type,description, project_id,user_story_
 'ALI User',
 8,2,
 'TYPE_ILF',
-'2 RET: User e Role. 8 DET - 6 (user) + 2 (role)',
+'2 RET: User e Role. 8 DET: 6 (user) + 2 (role)',
 (select project_id from project where name = 'APF Oficial'),
 null);
 
@@ -33,7 +34,7 @@ INSERT INTO data_function (name,det,ret,type,description, project_id,user_story_
 'ALI User Story',
 4,1,
 'TYPE_ILF',
-'1 RET: User Story. 4 DET - 4 (us)',
+'1 RET: User Story. 4 DET: 4 (us)',
 (select project_id from project where name = 'APF Oficial'),
 null);
 
@@ -41,7 +42,7 @@ INSERT INTO data_function (name,det,ret,type,description, project_id,user_story_
 'ALI Data Function',
 8,1,
 'TYPE_ILF',
-'1 RET: Data Function. 8 DET - 8 (df)',
+'1 RET: Data Function. 8 DET: 8 (df)',
 (select project_id from project where name = 'APF Oficial'),
 null);
 
@@ -49,6 +50,14 @@ INSERT INTO data_function (name,det,ret,type,description, project_id,user_story_
 'ALI Transaction Function',
 8,1,
 'TYPE_ILF',
-'1 RET: Transaction Function. 8 DET - 8 (tf)',
+'1 RET: Transaction Function. 8 DET: 8 (tf)',
+(select project_id from project where name = 'APF Oficial'),
+null);
+
+INSERT INTO data_function (name,det,ret,type,description, project_id,user_story_id) VALUES (
+'ALI Attribution',
+2,1,
+'TYPE_ILF',
+'1 RET: Attribution. 2 DET: 2 (attrib)',
 (select project_id from project where name = 'APF Oficial'),
 null);
