@@ -145,6 +145,8 @@ public class ConceitosTest extends AbstractTestNGSpringContextTests {
         aliUS.setRecordElementTypes(1L);
         // numero de Data Element Types (DET): 7
         aliUS.setDataElementTypes(7L);
+        
+        aliUS.setProject(p1);
 
         us1.addData(aliUS);
 
@@ -163,6 +165,8 @@ public class ConceitosTest extends AbstractTestNGSpringContextTests {
         aliProject.setRecordElementTypes(2L);
         // Somar os Data Element Types (DET): 7 + 4.
         aliProject.setDataElementTypes(11L);
+        
+        aliProject.setProject(p1);
 
         us1.addData(aliProject);
 

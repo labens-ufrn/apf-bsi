@@ -14,9 +14,11 @@ import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
+import br.ufrn.dct.apf.model.Attribution;
 import br.ufrn.dct.apf.model.Member;
 import br.ufrn.dct.apf.model.Project;
 import br.ufrn.dct.apf.model.User;
+import br.ufrn.dct.apf.repository.AttributionRepository;
 import br.ufrn.dct.apf.repository.UserRepository;
 
 @ContextConfiguration("/spring-test-beans.xml")
@@ -30,6 +32,9 @@ public class ProjectServiceTest extends AbstractTestNGSpringContextTests {
 
     @Autowired
     private UserRepository userRepository;
+    
+    @Autowired
+    private AttributionRepository attribRepository;
 
     private Project p1, p2;
 
@@ -144,6 +149,7 @@ public class ProjectServiceTest extends AbstractTestNGSpringContextTests {
         Member m1 = new Member();
         m1.setUser(user1);
         m1.setProject(p2);
+        m1.setAttribution(attribRepository.findByName(Attribution.PROJECT_MANAGER));
         m1.setCreatedOn(GregorianCalendar.getInstance().getTime());
         p2.addMember(m1);
 
@@ -285,6 +291,7 @@ public class ProjectServiceTest extends AbstractTestNGSpringContextTests {
         Member m1 = new Member();
         m1.setUser(user1);
         m1.setProject(p2);
+        m1.setAttribution(attribRepository.findByName(Attribution.PROJECT_MANAGER));
         m1.setCreatedOn(GregorianCalendar.getInstance().getTime());
         p2.addMember(m1);
 

@@ -42,19 +42,19 @@ public class RoleRepositoryTest extends AbstractTestNGSpringContextTests {
             System.out.println("Role Name: " + role.getRoleName());
         }
         
-        softAssert.assertEquals(regras.size(), 4, "T00 - Equals:");
+        softAssert.assertEquals(regras.size(), 2, "T00 - Equals:");
         
         Role regra = repository.findByRoleName(adminRole);
 
         softAssert.assertNotNull(regra, "T01 - NotNull:");
         softAssert.assertEquals(regra.getRoleName(), "ADMIN", "T02 - Equals:");
         
-        String managerRole = Role.PROJECT_MANAGER_ROLE;
+        String userRole = Role.USER_ROLE;
 
-        Role manager = repository.findByRoleName(managerRole);
+        Role user = repository.findByRoleName(userRole);
 
-        softAssert.assertNotNull(manager, "T03 - NotNull:");
-        softAssert.assertEquals(manager.getRoleName(), "PROJECT MANAGER", "T04 - Equals:");
+        softAssert.assertNotNull(user, "T03 - NotNull:");
+        softAssert.assertEquals(user.getRoleName(), "USER", "T04 - Equals:");
 
         softAssert.assertAll();
     }

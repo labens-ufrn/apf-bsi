@@ -12,6 +12,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
+import br.ufrn.dct.apf.model.Attribution;
 import br.ufrn.dct.apf.model.Member;
 import br.ufrn.dct.apf.model.Project;
 import br.ufrn.dct.apf.model.User;
@@ -27,6 +28,9 @@ public class ProjectRepositoryTest extends AbstractTestNGSpringContextTests {
 
     @Autowired
     private UserRepository userRepository;
+    
+    @Autowired
+    private AttributionRepository attribRepository;
 
     private Project p1;
 
@@ -48,6 +52,7 @@ public class ProjectRepositoryTest extends AbstractTestNGSpringContextTests {
         Member owner = new Member();
         owner.setProject(p1);
         owner.setUser(manager);
+        owner.setAttribution(attribRepository.findByName(Attribution.PROJECT_MANAGER));
         owner.setCreatedOn(GregorianCalendar.getInstance().getTime());
 
         p1.addMember(owner);

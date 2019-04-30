@@ -42,27 +42,32 @@ public class AbstractTest extends AbstractTestNGSpringContextTests {
         us1.setProject(apf);
 
         DataFunction aliProject = createProjectILF();
+        aliProject.setProject(apf);
         us1.addData(aliProject);
 
         UserStory us2 = new UserStory("US02", "Manter User");
         us2.setProject(apf);
 
         DataFunction aliUser = createUserILF();
+        aliUser.setProject(apf);
         us2.addData(aliUser);
         
         DataFunction aieEndereco = createAIE();
+        aieEndereco.setProject(apf);
         us2.addData(aieEndereco);
 
         UserStory us3 = new UserStory("US03", "Manter UserStory");
         us3.setProject(apf);
 
         DataFunction aliUserStory = createUserStoryILF();
+        aliUserStory.setProject(apf);
         us3.addData(aliUserStory);
 
         UserStory us4 = new UserStory("US04", "Manter DataFunction");
         us4.setProject(apf);
 
         DataFunction aliDataFunction = createDataFunctionILF();
+        aliDataFunction.setProject(apf);
         us4.addData(aliDataFunction);
 
         userStoryService.save(us1);

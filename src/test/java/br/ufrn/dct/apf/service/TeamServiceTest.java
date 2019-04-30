@@ -13,10 +13,12 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
+import br.ufrn.dct.apf.model.Attribution;
 import br.ufrn.dct.apf.model.Member;
 import br.ufrn.dct.apf.model.Project;
 import br.ufrn.dct.apf.model.Role;
 import br.ufrn.dct.apf.model.User;
+import br.ufrn.dct.apf.repository.AttributionRepository;
 import br.ufrn.dct.apf.repository.RoleRepository;
 
 @ContextConfiguration("/spring-test-beans.xml")
@@ -36,6 +38,9 @@ public class TeamServiceTest extends AbstractTestNGSpringContextTests {
 
     @Autowired
     private MemberService memberService;
+    
+    @Autowired
+    private AttributionRepository attribRepository;
 
     private Project p1;
     private User analista, desenvolvedor, dev2;
@@ -136,11 +141,13 @@ public class TeamServiceTest extends AbstractTestNGSpringContextTests {
         m1 = new Member();
         m1.setUser(analista);
         m1.setProject(p1);
+        m1.setAttribution(attribRepository.findByName(Attribution.PROJECT_MEMBER));
         m1.setCreatedOn(GregorianCalendar.getInstance().getTime());
 
         m2 = new Member();
         m2.setUser(desenvolvedor);
         m2.setProject(p1);
+        m2.setAttribution(attribRepository.findByName(Attribution.PROJECT_MEMBER));
         m2.setCreatedOn(GregorianCalendar.getInstance().getTime());
 
         p1 = projectService.findOne(p1.getId());
@@ -218,11 +225,13 @@ public class TeamServiceTest extends AbstractTestNGSpringContextTests {
         m1 = new Member();
         m1.setUser(analista);
         m1.setProject(p1);
+        m1.setAttribution(attribRepository.findByName(Attribution.PROJECT_MEMBER));
         m1.setCreatedOn(GregorianCalendar.getInstance().getTime());
 
         m2 = new Member();
         m2.setUser(desenvolvedor);
         m2.setProject(p1);
+        m2.setAttribution(attribRepository.findByName(Attribution.PROJECT_MEMBER));
         m2.setCreatedOn(GregorianCalendar.getInstance().getTime());
         
         m1 = memberService.save(m1);

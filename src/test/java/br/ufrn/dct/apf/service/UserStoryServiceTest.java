@@ -138,6 +138,8 @@ public class UserStoryServiceTest extends AbstractTestNGSpringContextTests {
         aliProject.setRecordElementTypes(2L);
         // Somar os Data Element Types (DET): 7 + 4.
         aliProject.setDataElementTypes(11L);
+        
+        aliProject.setProject(p1);
 
         us1.addData(aliProject);
 
