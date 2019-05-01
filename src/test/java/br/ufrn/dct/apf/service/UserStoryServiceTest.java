@@ -173,7 +173,7 @@ public class UserStoryServiceTest extends AbstractTestNGSpringContextTests {
     }
 
     @Test
-    public void delete() {
+    public void delete() throws BusinessRuleException {
         UserStory us4 = new UserStory("US04", "Testando o delete de UserStory");
         us4.setProject(p1);
 
@@ -189,8 +189,13 @@ public class UserStoryServiceTest extends AbstractTestNGSpringContextTests {
 
         softAssert.assertNotNull(uss, "T03 - NotNull:");
         softAssert.assertEquals(uss.size(), 3, "T04 - Equals:");
+        
+        p1 = service.findOne(p1.getId());
+        Boolean t = p1.getUserStories().contains(found);
+        p1.getUserStories().remove(found);
+        service.save(p1, manager);
 
-        userStoryService.delete(id4);
+        //userStoryService.delete(id4);
 
         found = userStoryService.findOne(id4);
         uss = userStoryService.findAll();

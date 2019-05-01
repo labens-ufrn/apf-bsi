@@ -19,7 +19,7 @@ import br.ufrn.dct.apf.repository.UserRepository;
 
 @ContextConfiguration("/spring-test-beans.xml")
 @DataJpaTest
-public class IndicativeCountTest extends AbstractTest {
+public class IndicativeCountTest extends AbstractServiceTest {
 
     private SoftAssert softAssert;
 

@@ -52,13 +52,13 @@ public class Project implements Serializable {
     @Column(name = "active")
     private int active;
 
-    @OneToMany(mappedBy = "project", targetEntity = Member.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "project", targetEntity = Member.class, orphanRemoval = true, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<Member> team = new HashSet<>();
 
-    @OneToMany(mappedBy = "project", targetEntity = UserStory.class, fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "project", targetEntity = UserStory.class, orphanRemoval = true, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<UserStory> userStories = new HashSet<>();
     
-    @OneToMany(mappedBy = "project", targetEntity = DataFunction.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "project", targetEntity = DataFunction.class, orphanRemoval = true, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<DataFunction> dataFunctions = new HashSet<>();
 
     public Long getId() {

@@ -5,15 +5,24 @@ import java.util.GregorianCalendar;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 
+import br.ufrn.dct.apf.dto.DataFunctionDTO;
 import br.ufrn.dct.apf.model.DataFunction;
 import br.ufrn.dct.apf.model.Project;
+import br.ufrn.dct.apf.model.Role;
 import br.ufrn.dct.apf.model.User;
 import br.ufrn.dct.apf.model.UserStory;
+import br.ufrn.dct.apf.repository.RoleRepository;
 
-public abstract class AbstractTest extends AbstractTestNGSpringContextTests {
+public abstract class AbstractServiceTest extends AbstractTestNGSpringContextTests {
 
     @Autowired
+    private RoleRepository roleRepository;
+    
+    @Autowired
     private UserStoryService userStoryService;
+    
+    @Autowired
+    private DataFunctionService dataService;
 
     protected User createUser(String name, String lastName) {
         User user = new User();
@@ -23,6 +32,7 @@ public abstract class AbstractTest extends AbstractTestNGSpringContextTests {
         user.setEmail(name+lastName+"@gmail.com");
         user.setPassword("12345");
         user.setActive(1);
+        user.setNewRole(roleRepository.findByRoleName(Role.USER_ROLE));
 
         return user;
     }
@@ -36,6 +46,21 @@ public abstract class AbstractTest extends AbstractTestNGSpringContextTests {
         apf.setCreatedOn(GregorianCalendar.getInstance().getTime());
         return apf;
     }
+    
+    /**
+     * Create a project object.
+     * @param name
+     * @param description
+     * @return
+     */
+    protected Project createProject(String name, String description) {
+        Project p = new Project();
+        p.setName(name);
+        p.setDescription(description);
+        p.setPrivate(false);
+        p.setCreatedOn(GregorianCalendar.getInstance().getTime());
+        return p;
+    }
 
     protected Project addUserStoriesInAPF(Project apf) {
         UserStory us1 = new UserStory("US01", "Manter Projeto");
@@ -43,6 +68,7 @@ public abstract class AbstractTest extends AbstractTestNGSpringContextTests {
 
         DataFunction aliProject = createProjectILF();
         aliProject.setProject(apf);
+        dataService.save(aliProject);
         us1.addData(aliProject);
 
         UserStory us2 = new UserStory("US02", "Manter User");
@@ -50,10 +76,12 @@ public abstract class AbstractTest extends AbstractTestNGSpringContextTests {
 
         DataFunction aliUser = createUserILF();
         aliUser.setProject(apf);
+        dataService.save(aliUser);
         us2.addData(aliUser);
         
         DataFunction aieEndereco = createAIE();
         aieEndereco.setProject(apf);
+        dataService.save(aieEndereco);
         us2.addData(aieEndereco);
 
         UserStory us3 = new UserStory("US03", "Manter UserStory");
@@ -61,6 +89,7 @@ public abstract class AbstractTest extends AbstractTestNGSpringContextTests {
 
         DataFunction aliUserStory = createUserStoryILF();
         aliUserStory.setProject(apf);
+        dataService.save(aliUserStory);
         us3.addData(aliUserStory);
 
         UserStory us4 = new UserStory("US04", "Manter DataFunction");
@@ -68,6 +97,7 @@ public abstract class AbstractTest extends AbstractTestNGSpringContextTests {
 
         DataFunction aliDataFunction = createDataFunctionILF();
         aliDataFunction.setProject(apf);
+        dataService.save(aliDataFunction);
         us4.addData(aliDataFunction);
 
         userStoryService.save(us1);
@@ -161,6 +191,24 @@ public abstract class AbstractTest extends AbstractTestNGSpringContextTests {
         aie.setRecordElementTypes(1L);
         //Data Element Types (DET): Atributos 10 (Table 1).
         aie.setDataElementTypes(10L);
+        return aie;
+    }
+    
+    protected DataFunctionDTO createILF(String name, Long ret, Long det) {
+        DataFunctionDTO ali = new DataFunctionDTO(name, DataFunction.TYPE_ILF);
+        //2 Record Element Types (RET).
+        ali.setRecordElementTypes(ret);
+        //Data Element Types (DET).
+        ali.setDataElementTypes(det);
+        return ali;
+    }
+    
+    protected DataFunctionDTO createEIF(String name, Long ret, Long det) {
+        DataFunctionDTO aie = new DataFunctionDTO(name, DataFunction.TYPE_EIF);
+        //2 Record Element Types (RET).
+        aie.setRecordElementTypes(ret);
+        //Data Element Types (DET).
+        aie.setDataElementTypes(det);
         return aie;
     }
 }

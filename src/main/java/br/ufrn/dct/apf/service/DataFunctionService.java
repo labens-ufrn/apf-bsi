@@ -25,6 +25,10 @@ public class DataFunctionService {
 
     public DataFunction save(DataFunctionDTO dfDTO) {
         DataFunction df = createDF(dfDTO);
+        return save(df);
+    }
+    
+    public DataFunction save(DataFunction df) {
         return repository.saveAndFlush(df);
     }
 
