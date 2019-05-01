@@ -16,10 +16,8 @@ import org.testng.asserts.SoftAssert;
 import br.ufrn.dct.apf.model.Attribution;
 import br.ufrn.dct.apf.model.Member;
 import br.ufrn.dct.apf.model.Project;
-import br.ufrn.dct.apf.model.Role;
 import br.ufrn.dct.apf.model.User;
 import br.ufrn.dct.apf.repository.AttributionRepository;
-import br.ufrn.dct.apf.repository.RoleRepository;
 
 @ContextConfiguration("/spring-test-beans.xml")
 @DataJpaTest
@@ -29,9 +27,6 @@ public class TeamServiceTest extends AbstractTestNGSpringContextTests {
 
     @Autowired
     private ProjectService projectService;
-
-    @Autowired
-    private RoleRepository roleService;
 
     @Autowired
     private UserService userService;
@@ -45,7 +40,7 @@ public class TeamServiceTest extends AbstractTestNGSpringContextTests {
     private Project p1;
     private User analista, desenvolvedor, dev2;
     private Member m1, m2;
-    private Role projectOwner, projectDev;
+    private Attribution projectOwner, projectDev;
 
     @BeforeMethod
     public void startTest() throws BusinessRuleException {
@@ -69,18 +64,14 @@ public class TeamServiceTest extends AbstractTestNGSpringContextTests {
         dev2.setEmail("dev2@gmai.com");
         dev2.setPassword("12345");
 
-        projectOwner = new Role();
-        projectOwner.setRoleName("Project Owner");
+        projectOwner = new Attribution();
+        projectOwner.setName("PROJECT_OWNER");
 
-        projectDev = new Role();
-        projectDev.setRoleName("Project Dev");
+        projectDev = new Attribution();
+        projectDev.setName("PROJECT_DEV");
 
-        roleService.save(projectOwner);
-        roleService.save(projectDev);
-
-        analista.setNewRole(projectOwner);
-
-        desenvolvedor.setNewRole(projectDev);
+        attribRepository.save(projectOwner);
+        attribRepository.save(projectDev);
 
         userService.save(analista);
         userService.save(desenvolvedor);
@@ -101,8 +92,8 @@ public class TeamServiceTest extends AbstractTestNGSpringContextTests {
         projectService.delete(p1.getId());
         userService.delete(analista.getId());
         userService.delete(desenvolvedor.getId());
-        roleService.delete(projectOwner.getId());
-        roleService.delete(projectDev.getId());
+        attribRepository.delete(projectOwner.getId());
+        attribRepository.delete(projectDev.getId());
         p1 = null;
     }
 
@@ -112,6 +103,11 @@ public class TeamServiceTest extends AbstractTestNGSpringContextTests {
 
         softAssert.assertNotNull(membros, "T01 - NotNull:");
         softAssert.assertEquals(membros.size(), 1, "T02 - Equals:");
+        Member m = membros.get(0);
+        softAssert.assertEquals(m.getAttribution().getId(), 1, "T03 - Equals:");
+        softAssert.assertEquals(m.getAttribution().getName(), Attribution.PROJECT_MANAGER, "T04 - Equals:");
+        softAssert.assertEquals(m.getUser().getId(), analista.getId(), "T05 - Equals:");
+        softAssert.assertEquals(m.getProject().getId(), p1.getId(), "T06 - Equals:");
 
         softAssert.assertAll();
     }
@@ -131,6 +127,25 @@ public class TeamServiceTest extends AbstractTestNGSpringContextTests {
         softAssert.assertEquals(found.getUser().getId(), analista.getId(), "T04 - Equals:");
 
         softAssert.assertNotNull(found.getCreatedOn(), "T05 - NotNull:");
+        
+        softAssert.assertEquals(found.getAttribution().getId(), 1, "T06 - Equals:");
+        softAssert.assertEquals(found.getAttribution().getName(), Attribution.PROJECT_MANAGER, "T07 - Equals:");
+        
+        Attribution attribManager = attribRepository.findOne(1);
+        Attribution attribOwner = attribRepository.findByName("PROJECT_OWNER");
+        
+        softAssert.assertTrue(found.getAttribution().equals(attribManager), "T08 - Equals:");
+        softAssert.assertFalse(found.getAttribution().equals(attribOwner), "T09 - Equals:");
+        softAssert.assertFalse(found.getAttribution().equals(null), "T10 - Equals:");
+        softAssert.assertTrue(projectOwner.equals(projectOwner), "T11 - Equals:");
+        softAssert.assertTrue(projectOwner.equals(attribOwner), "T12 - Equals:");
+       
+        List<Attribution> atts = attribRepository.findAll();
+        
+        softAssert.assertNotNull(atts, "T13 - NotNull:");
+        softAssert.assertEquals(atts.size(), 4, "T14 - Equals:");
+        
+        softAssert.assertNotNull(attribOwner.hashCode(), "T15 - Equals:");
 
         softAssert.assertAll();
     }
@@ -141,7 +156,7 @@ public class TeamServiceTest extends AbstractTestNGSpringContextTests {
         m1 = new Member();
         m1.setUser(analista);
         m1.setProject(p1);
-        m1.setAttribution(attribRepository.findByName(Attribution.PROJECT_MEMBER));
+        m1.setAttribution(attribRepository.findByName(Attribution.PROJECT_MANAGER));
         m1.setCreatedOn(GregorianCalendar.getInstance().getTime());
 
         m2 = new Member();
