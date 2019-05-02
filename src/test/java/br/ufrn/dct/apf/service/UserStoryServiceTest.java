@@ -95,6 +95,7 @@ public class UserStoryServiceTest extends AbstractTestNGSpringContextTests {
         UserStory found = userStoryService.findOne(id);
 
         softAssert.assertNotNull(found, "T01 - NotNull:");
+        softAssert.assertNotNull(found.getId(), "T01.1 - NotNull:");
 
         softAssert.assertEquals(found.getName(), us1.getName(), "T03 - Equals:");
         softAssert.assertEquals(found.getDescription(), us1.getDescription(), "T04 - Equals:");
@@ -121,7 +122,8 @@ public class UserStoryServiceTest extends AbstractTestNGSpringContextTests {
         softAssert.assertNotNull(uss, "T03 - NotNull:");
         softAssert.assertEquals(uss.size(), 3, "T04 - Equals:");
 
-        softAssert.assertEquals(found.getName(), us3.getName(), "T05 - Equals:");
+        softAssert.assertEquals(found.getId(), us3.getId(), "T05.1 - Equals:");
+        softAssert.assertEquals(found.getName(), us3.getName(), "T05.2 - Equals:");
         softAssert.assertEquals(found.getDescription(), us3.getDescription(), "T06 - Equals:");
         softAssert.assertEquals(found.getProject().getId(), us3.getProject().getId(), "T07 - Equals:");
 
@@ -188,10 +190,11 @@ public class UserStoryServiceTest extends AbstractTestNGSpringContextTests {
         softAssert.assertNotNull(found, "T02 - NotNull:");
 
         softAssert.assertNotNull(uss, "T03 - NotNull:");
-        softAssert.assertEquals(uss.size(), 3, "T04 - Equals:");
+        softAssert.assertEquals(uss.size(), 3, "T04.1 - Equals:");
         
         p1 = service.findOne(p1.getId());
         Boolean t = p1.getUserStories().contains(found);
+        softAssert.assertTrue(t, "T04.2 - Equals");
         p1.getUserStories().remove(found);
         service.save(p1, manager);
 
