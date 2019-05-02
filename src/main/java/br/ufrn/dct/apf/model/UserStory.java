@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -44,6 +43,7 @@ public class UserStory implements Serializable {
     @JoinColumn(name = "project_id", nullable = false)
     private Project project;
 
+    //TODO verificar a possibilidade de colocar um Cascade.Persist
     @OneToMany(mappedBy = "userStory", targetEntity = DataFunction.class, fetch = FetchType.EAGER)
     private Set<DataFunction> dataFunctions = new HashSet<>();
 

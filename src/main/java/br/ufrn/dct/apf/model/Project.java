@@ -21,10 +21,22 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.format.annotation.DateTimeFormat;
 
+/**
+ * The Project class represents Software Design objects with their basic elements:
+ *  name, description, user stories list, data function list (database), 
+ *  and list of transaction functions (requirements). 
+ * We follow an agile methodology based on XP and YP (easYProcess).
+ * @author Taciano Morais Silva
+ * @version 1.0
+ * @since 17/10/2017, 22h51m
+ */
 @Entity
 @Table(name = "project")
 public class Project implements Serializable {
 
+    /**
+     * Serial number.
+     */
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -60,6 +72,8 @@ public class Project implements Serializable {
     
     @OneToMany(mappedBy = "project", targetEntity = DataFunction.class, orphanRemoval = true, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<DataFunction> dataFunctions = new HashSet<>();
+    
+    public Project() {}
 
     public Long getId() {
         return id;
