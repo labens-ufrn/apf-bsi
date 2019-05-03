@@ -5,19 +5,15 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta name="viewport" content="width=device-width" />
     <title>User Story Addiction</title>
-    <!-- JQuery -->
-    <script type="text/javascript" th:src="@{/js/jquery-3.2.0.min.js}"></script>
+    
+    <link rel="stylesheet" type="text/css" th:href="@{/css/home.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/css/simple-sidebar.css}" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.bundle.min.js"></script>
     <!--Import https://www.devbridge.com/sourcery/components/jquery-autocomplete/#-->
     <script type="text/javascript" th:src="@{/js/jquery.autocomplete.js}"></script>
-    <!-- Compiled and minified JavaScript -->
-    <script type="text/javascript" th:src="@{/js/materialize.min.js}"></script>
-
-    <!--Import materialize.css-->
-    <link type="text/css" rel="stylesheet" th:href="@{/css/materialize.min.css}" media="screen,projection"/>
-    <!--Import Google Icon Font-->
-    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"></link>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script>
       $(document).ready(function() {
         $('#autocomplete-input').devbridgeAutocomplete({
@@ -30,50 +26,63 @@
     </script>
 </head>
 <body>
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <strong>Adicionar User Story</strong>
-        </div>
-        <div class="panel-body">
-            <form class="form-horizontal" th:object="${userstory}" th:action="@{/us/save}" method="POST" style="margin: 10px">
-                <div class="form-group">
-                    <fieldset>
-                        <div class="form-group row">
-                            <div class="alert alert-danger" th:if="${#fields.hasAnyErrors()}">
-                                <div th:each="detailedError : ${#fields.detailedErrors()}">
-                                    <span th:text="${detailedError.message}"></span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <div class="col-md-4" th:classappend="${#fields.hasErrors('project.name')}? 'has-error'">
-                                <div class="input-field col s12">
-                                <i class="material-icons prefix">textsms</i>
-                                <label for="autocomplete-input">Projeto</label>
-                                <input type="text" id="autocomplete-input" class="autocomplete" th:field="*{project.name}">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <div class="col-md-4" th:classappend="${#fields.hasErrors('name')}? 'has-error'">
-                                <label>Nome</label>
-                                <input type="text" class="form-control input-sm" th:field="*{name}" autofocus="autofocus" placeholder="Informe o nome" maxlength="50"/>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <div class="col-md-4" th:classappend="${#fields.hasErrors('description')}? 'has-error'">
-                                <label>Descrição</label>
-                                <input type="text" class="form-control input-sm" th:field="*{description}" maxlength="150" placeholder="Informe a descrição"/>
-                            </div>
-                        </div>
-                    </fieldset>
+    <div th:replace="fragments/header :: header"></div>
+    <div id="wrapper" class="wrapper.toggled toggled" style="margin-top:50px">
+        <!-- Sidebar -->
+        <div th:replace="fragments/menu"></div>
+        <!-- /#sidebar-wrapper -->
+
+    <!-- Page Content -->
+    <div id="page-content-wrapper">
+        <div class="container-fluid">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <strong>Adicionar User Story</strong>
                 </div>
-                <div class="form-group row">
-                    <button type="submit" class="btn btn-sm btn-primary">Salvar</button>
-                    <a th:href="@{/home}" class="btn btn-sm btn-default">Cancelar</a>
+                <div class="panel-body">
+                    <form class="form-horizontal" th:object="${userstory}" th:action="@{/us/save}" method="POST" style="margin: 10px">
+                        <div class="form-group">
+                            <fieldset>
+                                <div class="form-group row">
+                                    <div class="alert alert-danger" th:if="${#fields.hasAnyErrors()}">
+                                        <div th:each="detailedError : ${#fields.detailedErrors()}">
+                                            <span th:text="${detailedError.message}"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-md-4" th:classappend="${#fields.hasErrors('project.name')}? 'has-error'">
+                                        <div class="input-field col s12">
+                                        <label for="autocomplete-input">Projeto</label>
+                                        <input type="text" id="autocomplete-input" class="autocomplete" th:field="*{project.name}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-md-4" th:classappend="${#fields.hasErrors('name')}? 'has-error'">
+                                        <label>Nome</label>
+                                        <input type="text" class="form-control input-sm" th:field="*{name}" autofocus="autofocus" placeholder="Informe o nome" maxlength="50"/>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-md-4" th:classappend="${#fields.hasErrors('description')}? 'has-error'">
+                                        <label>Descrição</label>
+                                        <input type="text" class="form-control input-sm" th:field="*{description}" maxlength="150" placeholder="Informe a descrição"/>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
+                        <div class="form-group row">
+                            <button type="submit" class="btn btn-sm btn-primary">Salvar</button>
+                            <a th:href="@{/home}" class="btn btn-sm btn-default">Cancelar</a>
+                        </div>
+                    </form>
                 </div>
-            </form>
+            </div>
         </div>
+        <!-- /#page-content-wrapper -->
+        <div th:include="fragments/footer :: footer-authenticated" align="center"></div>
+    </div>
     </div>
 </body>
 </html>
