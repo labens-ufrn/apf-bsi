@@ -1,6 +1,8 @@
 package br.ufrn.dct.apf.dto;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 import br.ufrn.dct.apf.model.Project;
 import br.ufrn.dct.apf.model.UserStory;
@@ -31,6 +33,8 @@ public class DataFunctionDTO implements Serializable {
     private Project project;
 
     private UserStory userStory;
+    
+    private Set<UserStory> userStories = new HashSet<>();
     
     /**
      * Internal Logical Files (ILF's, in Portuguese, Arquivos Lógico Interno - ALI's).
@@ -119,5 +123,13 @@ public class DataFunctionDTO implements Serializable {
 
     public void setUserStory(UserStory us) {
         this.userStory = us;
+    }
+    
+    public Set<UserStory> getUserStories() {
+        return userStories;
+    }
+
+    public void setUserStories(Set<UserStory> userStories) {
+        this.userStories = userStories;
     }
 }

@@ -16,11 +16,13 @@
     <script type="text/javascript" th:src="@{/js/jquery.autocomplete.js}"></script>
     <script>
       $(document).ready(function() {
-        $('#autocomplete-input').devbridgeAutocomplete({
+        $('#autocomplete-input').autocomplete({
           serviceUrl: '/apf/project/suggestion',
           paramName: 'searchstr',
-          minChars: 1,
+          minChars: 2,
           autoSelectFirst: true,
+          onSelect: function (suggestion) {
+              window.location= '/apf/df/add/' + suggestion.data;
         });
       });
     </script>
@@ -35,7 +37,7 @@
     <!-- Page Content -->
     <div id="page-content-wrapper">
         <div class="container-fluid">
-            <div class="panel panel-default">
+            <div id="painelDF" class="panel panel-default">
                 <div class="panel-heading">
                   <strong>Cadastro de Funções de Dados</strong>
                 </div>
@@ -54,10 +56,21 @@
                                 <div class="col-md-4" th:classappend="${#fields.hasErrors('project.name')}? 'has-error'">
                                     <div class="input-field col s12">
                                         <label for="autocomplete-input">Projeto</label>
-                                        <input type="text" id="autocomplete-input" class="autocomplete" th:field="*{project.name}">
+                                        <input type="text" id="autocomplete-input" class="form-control input-sm autocomplete-suggestion" th:field="*{project.name}">
                                     </div>
                                 </div>
                             </div>
+                            
+                            <div id="divUS" class="form-group row">
+                                <div id="divUS2" class="col-md-4" th:classappend="${#fields.hasErrors('userStory.id')}? 'has-error'">
+                                    <label>User Story</label>
+                                    <select id="usSelect" class="form-control" th:field="${userStory.id}">
+                                        <option value="0">Selecione um User Story</option>
+                                        <option th:each="us : ${userStories}" th:value="${us.id}" th:text="${us.name}"></option>
+                                    </select>
+                                </div>
+                            </div>
+                            
                             <div class="form-group row">
                                 <div class="col-md-4" th:classappend="${#fields.hasErrors('name')}? 'has-error'">
                                     <label>Nome</label>
@@ -74,13 +87,13 @@
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <div class="col-md-1" th:classappend="${#fields.hasErrors('recordElementTypes')}? 'has-error'">
+                                <div class="col-md-2" th:classappend="${#fields.hasErrors('recordElementTypes')}? 'has-error'">
                                     <label>Record Element Types</label>
                                     <input type="number" class="form-control input-sm" th:field="*{recordElementTypes}" maxlength="50" placeholder="Informe o Tipo"/>
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <div class="col-md-1" th:classappend="${#fields.hasErrors('dataElementTypes')}? 'has-error'">
+                                <div class="col-md-2" th:classappend="${#fields.hasErrors('dataElementTypes')}? 'has-error'">
                                     <label>Data Element Types</label>
                                     <input type="number" class="form-control input-sm" th:field="*{dataElementTypes}" maxlength="50" placeholder="Informe o Tipo"/>
                                 </div>

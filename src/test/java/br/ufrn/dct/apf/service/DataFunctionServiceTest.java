@@ -14,7 +14,6 @@ import br.ufrn.dct.apf.dto.DataFunctionDTO;
 import br.ufrn.dct.apf.model.DataFunction;
 import br.ufrn.dct.apf.model.Project;
 import br.ufrn.dct.apf.model.User;
-import br.ufrn.dct.apf.model.UserStory;
 import br.ufrn.dct.apf.repository.UserRepository;
 
 @ContextConfiguration("/spring-test-beans.xml")
@@ -173,6 +172,8 @@ public class DataFunctionServiceTest extends AbstractServiceTest {
         p1 = projectService.findOne(p1.getId());
         
         Boolean t = p1.getDataFunctions().contains(found);
+        softAssert.assertTrue(t, "T04 - Equals:");
+        
         p1.getDataFunctions().remove(found);
         found.setProject(null);
         projectService.save(p1, manager);
