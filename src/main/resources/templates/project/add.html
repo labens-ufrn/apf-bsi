@@ -63,9 +63,9 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <div class="col-md-2" th:classappend="${#fields.hasErrors('createdOn')}? 'has-error'">
+                            <div class="col-md-2" th:classappend="${#fields.hasErrors('private')}? 'has-error'">
                                 <label>Privado</label>
-                                <input type="checkbox" th:field="*{isPrivate}"/>
+                                <input type="checkbox" th:field="*{private}"/>
                             </div>
                         </div>
                     </fieldset>
