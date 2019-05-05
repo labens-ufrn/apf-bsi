@@ -18,6 +18,7 @@ import br.ufrn.dct.apf.model.Attribution;
 import br.ufrn.dct.apf.model.Member;
 import br.ufrn.dct.apf.model.Project;
 import br.ufrn.dct.apf.model.User;
+import br.ufrn.dct.apf.model.UserStory;
 import br.ufrn.dct.apf.repository.AttributionRepository;
 import br.ufrn.dct.apf.repository.UserRepository;
 
@@ -331,5 +332,80 @@ public class ProjectServiceTest extends AbstractTestNGSpringContextTests {
         user.setActive(1);
 
         return user;
+    }
+    
+    /**
+     * Teste baseado na discussão no link:
+     * https://codereview.stackexchange.com/questions/129358/unit-testing-equals-hashcode-and-comparator-asserting-contracts
+     * @throws BusinessRuleException
+     */
+    @Test
+    public void equalsAndHashcode() throws BusinessRuleException {
+        Project project1 = new Project();
+
+        project1.setId(55L);
+        project1.setName("Test Project");
+        project1.setDescription("TestNG Project");
+        project1.setPrivate(false);
+        project1.setCreatedOn(GregorianCalendar.getInstance().getTime());
+        project1.setActive(1);
+
+        Project project2 = new Project();
+
+        project2.setId(55L);
+        project2.setName("Test Project");
+        project2.setDescription("TestNG Project");
+        project2.setPrivate(false);
+        project2.setCreatedOn(GregorianCalendar.getInstance().getTime());
+        project2.setActive(1);
+
+        Project project3 = new Project();
+
+        project3.setId(55L);
+        project3.setName("Test Project");
+        project3.setDescription("TestNG Project");
+        project3.setPrivate(false);
+        project3.setCreatedOn(GregorianCalendar.getInstance().getTime());
+        project3.setActive(1);
+        
+        UserStory us = new UserStory("Test Project", "TestNG Project");
+        us.setId(55L);
+
+        softAssert.assertEquals(project1, project1, "T01 - Equals:TestReflexive");
+        softAssert.assertEquals(project1, project2, "T02 - Equals:TestSymmetric");
+        softAssert.assertEquals(project2, project1, "T03 - Equals:TestSymmetric");
+        softAssert.assertEquals(project1, project2, "T04 - Equals:TestTransitive");
+        softAssert.assertEquals(project2, project3, "T05 - Equals:TestTransitive");
+        softAssert.assertEquals(project1, project3, "T06 - Equals:TestTransitive");
+        softAssert.assertFalse(project1.equals(null), "T07 - Equals:TestNonNullity");
+        softAssert.assertFalse(project1.equals(us), "T08 - Equals:TestNonNullity");
+        
+        softAssert.assertEquals(project1.hashCode(), project1.hashCode(), "T08 - Equals:TestHashCodeConsistency");
+        softAssert.assertEquals(project1.hashCode(), project2.hashCode(), "T09 - Equals:TestHashCodeEquality");
+        
+        project1.setId(null);
+        project1.setName(null);
+        
+        softAssert.assertFalse(project1.equals(project2), "T10 - Equals:TestDifferent");
+        softAssert.assertFalse(project1.equals(project3), "T11 - Equals:TestDifferent");
+        
+        project1.setId(55L);
+        project1.setName("Test Project");
+        project2.setId(56L);
+        project3.setName("Test Project 3");
+        
+        softAssert.assertFalse(project1.equals(project2), "T12 - Equals:TestDifferent");
+        softAssert.assertFalse(project1.equals(project3), "T13 - Equals:TestDifferent");
+        
+        project2.setId(null);
+        project3.setName(null);
+        
+        softAssert.assertNotEquals(project1.hashCode(), project2.hashCode(), "T08 - Equals:TestHashCodeConsistency");
+        softAssert.assertNotEquals(project1.hashCode(), project3.hashCode(), "T09 - Equals:TestHashCodeEquality");
+        
+        softAssert.assertFalse(project1.equals(project2), "T14 - Equals:TestDifferent");
+        softAssert.assertFalse(project1.equals(project3), "T15 - Equals:TestDifferent");
+
+        softAssert.assertAll();
     }
 }
