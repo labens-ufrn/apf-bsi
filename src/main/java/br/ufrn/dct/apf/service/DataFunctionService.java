@@ -43,8 +43,22 @@ public class DataFunctionService {
         df.setRecordElementTypes(dfDTO.getRecordElementTypes());
         df.setDataElementTypes(dfDTO.getDataElementTypes());
         df.setProject(dfDTO.getProject());
+        df.setUserStory(dfDTO.getUserStory());
         
         return df;
+    }
+    
+    private DataFunctionDTO createDTO(DataFunction df) {
+        DataFunctionDTO dto = new DataFunctionDTO();
+        dto.setId(df.getId());
+        dto.setName(df.getName());
+        dto.setType(df.getType());
+        dto.setRecordElementTypes(df.getRecordElementTypes());
+        dto.setDataElementTypes(df.getDataElementTypes());
+        dto.setProject(df.getProject());
+        dto.setUserStory(df.getUserStory());
+        
+        return dto;
     }
 
     public void delete(Long id) {
