@@ -17,6 +17,7 @@ import br.ufrn.dct.apf.model.Attribution;
 import br.ufrn.dct.apf.model.Member;
 import br.ufrn.dct.apf.model.Project;
 import br.ufrn.dct.apf.model.User;
+import br.ufrn.dct.apf.model.UserStory;
 import br.ufrn.dct.apf.repository.AttributionRepository;
 
 @ContextConfiguration("/spring-test-beans.xml")
@@ -303,6 +304,105 @@ public class TeamServiceTest extends AbstractTestNGSpringContextTests {
 
         memberService.delete(m1.getId());
         memberService.delete(m2.getId());
+
+        softAssert.assertAll();
+    }
+    
+    /**
+     * Teste baseado na discussão no link:
+     * https://codereview.stackexchange.com/questions/129358/unit-testing-equals-hashcode-and-comparator-asserting-contracts
+     * @throws BusinessRuleException
+     */
+    @Test
+    public void equalsAndHashcode() throws BusinessRuleException {
+        Member m1, m2, m3;
+        
+        Project p2 = new Project();
+
+        p2.setName("APF Project");
+        p2.setDescription("Analisador de Pontos por Função");
+        p2.setPrivate(false);
+        p2.setCreatedOn(GregorianCalendar.getInstance().getTime());
+        
+        m1 = new Member();
+        m1.setUser(analista);
+        m1.setProject(p1);
+        m1.setAttribution(attribRepository.findByName(Attribution.PROJECT_MEMBER));
+        m1.setCreatedOn(GregorianCalendar.getInstance().getTime());
+
+        m2 = new Member();
+        m2.setUser(analista);
+        m2.setProject(p1);
+        m2.setAttribution(attribRepository.findByName(Attribution.PROJECT_MEMBER));
+        m2.setCreatedOn(GregorianCalendar.getInstance().getTime());
+        
+        m3 = new Member();
+        m3.setUser(analista);
+        m3.setProject(p1);
+        m3.setAttribution(attribRepository.findByName(Attribution.PROJECT_MEMBER));
+        m3.setCreatedOn(GregorianCalendar.getInstance().getTime());
+        
+        //m1 = memberService.save(m1);
+        
+        UserStory us = new UserStory("Test Project", "TestNG Project");
+        us.setId(55L);
+
+        softAssert.assertEquals(m1, m1, "T01 - Equals:TestReflexive");
+        softAssert.assertEquals(m1, m2, "T02 - Equals:TestSymmetric");
+        softAssert.assertEquals(m2, m1, "T03 - Equals:TestSymmetric");
+        softAssert.assertEquals(m1, m2, "T04 - Equals:TestTransitive");
+        softAssert.assertEquals(m2, m3, "T05 - Equals:TestTransitive");
+        softAssert.assertEquals(m1, m3, "T06 - Equals:TestTransitive");
+        softAssert.assertFalse(m1.equals(null), "T07 - Equals:TestNonNullity");
+        softAssert.assertFalse(m1.equals(us), "T08 - Equals:TestNonNullity");
+        
+        softAssert.assertEquals(m1.hashCode(), m1.hashCode(), "T09 - Equals:TestHashCodeConsistency");
+        softAssert.assertEquals(m1.hashCode(), m2.hashCode(), "T10 - Equals:TestHashCodeEquality");
+        
+        m1.setId(null);
+        m1.setUser(null);
+        m1.setProject(null);
+        
+        softAssert.assertFalse(m1.equals(m2), "T11 - Equals:TestDifferent");
+        softAssert.assertFalse(m1.equals(m3), "T12 - Equals:TestDifferent");
+        
+        m1.setId(55L);
+        m1.setUser(analista);
+        m1.setProject(p1);
+        
+        m2.setId(56L);
+        m2.setUser(desenvolvedor);
+        m2.setProject(p1);
+        
+        m3.setId(55L);
+        m3.setUser(desenvolvedor);
+        m3.setProject(p1);
+        
+        softAssert.assertFalse(m1.equals(m2), "T13 - Equals:TestDifferent");
+        softAssert.assertFalse(m1.equals(m3), "T14 - Equals:TestDifferent");
+        
+        m2.setUser(null);
+        m3.setProject(null);
+        
+        softAssert.assertFalse(m2.equals(m1), "T15 - Equals:TestDifferent");
+        
+        softAssert.assertNotEquals(m1.hashCode(), m2.hashCode(), "T16 - Equals:TestHashCodeConsistency");
+        softAssert.assertNotEquals(m1.hashCode(), m3.hashCode(), "T17 - Equals:TestHashCodeEquality");
+        
+        softAssert.assertFalse(m1.equals(m2), "T18 - Equals:TestDifferent");
+        softAssert.assertFalse(m1.equals(m3), "T19 - Equals:TestDifferent");
+        
+        m1.setUser(null);
+        m1.setProject(null);
+        m3.setUser(null);
+        m3.setProject(null);
+        
+        softAssert.assertFalse(m1.equals(m2), "T20 - Equals:TestDifferent");
+        softAssert.assertTrue(m1.equals(m3), "T21 - Equals:TestEquals");
+        
+        //memberService.delete(m1.getId());
+        //memberService.delete(m2.getId());
+        //memberService.delete(m3.getId());
 
         softAssert.assertAll();
     }
