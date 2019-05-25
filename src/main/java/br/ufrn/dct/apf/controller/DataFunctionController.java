@@ -35,7 +35,7 @@ public class DataFunctionController extends AbstractController {
 
     @Autowired
     private ProjectService projectService;
-    
+
     @GetMapping("/df/add/{projectId}")
     public ModelAndView add(DataFunctionDTO df, @PathVariable("projectId") Long id) {
 
@@ -44,7 +44,7 @@ public class DataFunctionController extends AbstractController {
         df.setProject(project);
         Set<UserStory> userStories = project.getUserStories();
         UserStory userStory = new UserStory();
-        
+
         mv.addObject("project", project);
         mv.addObject("userStories", userStories);
         mv.addObject("userStory", userStory);
@@ -58,7 +58,7 @@ public class DataFunctionController extends AbstractController {
     public ModelAndView add(DataFunctionDTO df) {
         ModelAndView mv = new ModelAndView("df/add");
         setUserAuth(mv);
-        
+
         Project project = new Project();
         Set<UserStory> userStories = new HashSet<>();
         UserStory userStory = new UserStory();
@@ -67,7 +67,7 @@ public class DataFunctionController extends AbstractController {
             df.setProject(project);
             userStories = project.getUserStories();
         }
-        
+
         mv.addObject("project", project);
         mv.addObject("userStories", userStories);
         mv.addObject("userStory", userStory);
@@ -76,7 +76,7 @@ public class DataFunctionController extends AbstractController {
 
         return mv;
     }
-    
+
     @GetMapping("/df/list")
     public ModelAndView list() {
         ModelAndView mv = new ModelAndView("df/list");

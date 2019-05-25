@@ -32,7 +32,7 @@ public class UserStoryController extends AbstractController {
 
     @Autowired
     private ProjectService projectService;
-    
+
     @GetMapping("/us/add/{projectId}")
     public ModelAndView add(UserStory us, @PathVariable("projectId") Long id) {
 
@@ -52,7 +52,7 @@ public class UserStoryController extends AbstractController {
 
         return mv;
     }
-    
+
     @GetMapping("/us/list")
     public ModelAndView list() {
         ModelAndView mv = new ModelAndView("us/list");
