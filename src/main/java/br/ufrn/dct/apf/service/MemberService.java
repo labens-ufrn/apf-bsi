@@ -19,7 +19,7 @@ public class MemberService extends AbstractService {
     }
 
     public Member findOne(Long id) {
-        return repository.findOne(id);
+        return repository.findById(id).orElse(null);
     }
 
     public Member save(Member member) throws BusinessRuleException {
@@ -45,7 +45,7 @@ public class MemberService extends AbstractService {
     }
 
     public void delete(Long id) {
-        repository.delete(id);
+        repository.deleteById(id);
     }
 
     private void checkMemberNull(Member member) throws BusinessRuleException {
