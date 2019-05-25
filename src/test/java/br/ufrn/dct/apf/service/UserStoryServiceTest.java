@@ -222,4 +222,78 @@ public class UserStoryServiceTest extends AbstractTestNGSpringContextTests {
 
         return userRepository.save(user);
     }
+    
+    @Test
+    public void equalsAndHashcode() throws BusinessRuleException {       
+        DataFunction aliProject = DataFunction.createILF("ALI Projeto");
+        aliProject.setRecordElementTypes(2L);
+        aliProject.setDataElementTypes(11L);
+        aliProject.setProject(p1);
+
+        UserStory us1 = new UserStory();
+        
+        us1.setId(55L);
+        us1.setName("Test Project");
+        us1.setDescription("TestNG Project");
+        us1.addData(aliProject);
+        us1.setProject(p1);
+
+        UserStory us2 = new UserStory();
+
+        us2.setId(55L);
+        us2.setName("Test Project");
+        us2.setDescription("TestNG Project");
+        us2.addData(aliProject);
+        us2.setProject(p1);
+        
+        UserStory us3 = new UserStory();
+
+        us3.setId(55L);
+        us3.setName("Test Project");
+        us3.setDescription("TestNG Project");
+        us3.addData(aliProject);
+        us3.setProject(p1);
+        
+        DataFunction df = new DataFunction();
+        df.setId(55L);
+        df.setName("Test Project");
+        df.setDescription("TestNG Project");
+
+        softAssert.assertEquals(us1, us1, "T01 - Equals:TestReflexive");
+        softAssert.assertEquals(us1, us2, "T02 - Equals:TestSymmetric");
+        softAssert.assertEquals(us2, us1, "T03 - Equals:TestSymmetric");
+        softAssert.assertEquals(us1, us2, "T04 - Equals:TestTransitive");
+        softAssert.assertEquals(us2, us3, "T05 - Equals:TestTransitive");
+        softAssert.assertEquals(us1, us3, "T06 - Equals:TestTransitive");
+        softAssert.assertFalse(us1.equals(null), "T07 - Equals:TestNonNullity");
+        softAssert.assertFalse(us1.equals(df), "T08 - Equals:TestNonNullity");
+        
+        softAssert.assertEquals(us1.hashCode(), us1.hashCode(), "T08 - Equals:TestHashCodeConsistency");
+        softAssert.assertEquals(us1.hashCode(), us2.hashCode(), "T09 - Equals:TestHashCodeEquality");
+        
+        us1.setId(null);
+        us1.setName(null);
+        
+        softAssert.assertFalse(us1.equals(us2), "T10 - Equals:TestDifferent");
+        softAssert.assertFalse(us1.equals(us3), "T11 - Equals:TestDifferent");
+        
+        us1.setId(55L);
+        us1.setName("Test Project");
+        us2.setId(56L);
+        us3.setName("Test Project 3");
+        
+        softAssert.assertFalse(us1.equals(us2), "T12 - Equals:TestDifferent");
+        softAssert.assertFalse(us1.equals(us3), "T13 - Equals:TestDifferent");
+        
+        us2.setId(null);
+        us3.setName(null);
+        
+        softAssert.assertNotEquals(us1.hashCode(), us2.hashCode(), "T08 - Equals:TestHashCodeConsistency");
+        softAssert.assertNotEquals(us1.hashCode(), us3.hashCode(), "T09 - Equals:TestHashCodeEquality");
+        
+        softAssert.assertFalse(us1.equals(us2), "T14 - Equals:TestDifferent");
+        softAssert.assertFalse(us1.equals(us3), "T15 - Equals:TestDifferent");
+
+        softAssert.assertAll();
+    }
 }
