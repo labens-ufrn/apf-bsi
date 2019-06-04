@@ -31,7 +31,7 @@ public class Member implements Serializable {
     private Long id;
 
     @OneToOne(cascade=CascadeType.DETACH)
-    @JoinColumn(name="user_id", nullable=false, insertable=true, updatable=true)
+    @JoinColumn(name="user_id", nullable=false)
     private User user;
 
     @ManyToOne(fetch = FetchType.EAGER)
@@ -111,11 +111,8 @@ public class Member implements Serializable {
         } else if (!project.equals(other.project))
             return false;
         if (user == null) {
-            if (other.user != null)
-                return false;
-        } else if (!user.equals(other.user))
-            return false;
-        return true;
+            return other.user == null;
+        } else return user.equals(other.user);
     }
 
 

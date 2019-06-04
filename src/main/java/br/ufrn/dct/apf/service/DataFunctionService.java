@@ -13,14 +13,14 @@ import br.ufrn.dct.apf.repository.DataFunctionRepository;
 public class DataFunctionService {
 
     @Autowired
-    private DataFunctionRepository repository;
+    private DataFunctionRepository dataFunctionRepository;
 
     public List<DataFunction> findAll() {
-        return repository.findAll();
+        return dataFunctionRepository.findAll();
     }
 
     public DataFunction findOne(Long id) {
-        return repository.findById(id).orElse(null);
+        return dataFunctionRepository.findById(id).orElse(null);
     }
 
     public DataFunction save(DataFunctionDTO dfDTO) {
@@ -29,7 +29,7 @@ public class DataFunctionService {
     }
 
     public DataFunction save(DataFunction df) {
-        return repository.saveAndFlush(df);
+        return dataFunctionRepository.saveAndFlush(df);
     }
 
     private DataFunction createDF(DataFunctionDTO dfDTO) {
@@ -62,6 +62,6 @@ public class DataFunctionService {
     }
 
     public void delete(Long id) {
-        repository.deleteById(id);
+        dataFunctionRepository.deleteById(id);
     }
 }
