@@ -6,9 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 
 import br.ufrn.dct.apf.dto.DataFunctionDTO;
+import br.ufrn.dct.apf.dto.TransactionFunctionDTO;
 import br.ufrn.dct.apf.model.DataFunction;
 import br.ufrn.dct.apf.model.Project;
 import br.ufrn.dct.apf.model.Role;
+import br.ufrn.dct.apf.model.TransactionFunction;
 import br.ufrn.dct.apf.model.User;
 import br.ufrn.dct.apf.model.UserStory;
 import br.ufrn.dct.apf.repository.RoleRepository;
@@ -210,5 +212,32 @@ public abstract class AbstractServiceTest extends AbstractTestNGSpringContextTes
         //Data Element Types (DET).
         aie.setDataElementTypes(det);
         return aie;
+    }
+    
+    protected TransactionFunctionDTO createEI(String name, Integer ftr, Integer det) {
+        TransactionFunctionDTO ee = new TransactionFunctionDTO();
+        ee.setName(name);
+        ee.setType(TransactionFunction.TYPE_EI);
+        ee.setFileTypeReferenced(ftr);
+        ee.setDataElementTypes(det);
+        return ee;
+    }
+    
+    protected TransactionFunctionDTO createEO(String name, Integer ftr, Integer det) {
+        TransactionFunctionDTO se = new TransactionFunctionDTO();
+        se.setName(name);
+        se.setType(TransactionFunction.TYPE_EO);
+        se.setFileTypeReferenced(ftr);
+        se.setDataElementTypes(det);
+        return se;
+    }
+    
+    protected TransactionFunctionDTO createEQ(String name, Integer ftr, Integer det) {
+        TransactionFunctionDTO ce = new TransactionFunctionDTO();
+        ce.setName(name);
+        ce.setType(TransactionFunction.TYPE_EI);
+        ce.setFileTypeReferenced(ftr);
+        ce.setDataElementTypes(det);
+        return ce;
     }
 }

@@ -2,6 +2,7 @@ package br.ufrn.dct.apf.service;
 
 import java.util.List;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.ContextConfiguration;
@@ -22,6 +23,8 @@ import br.ufrn.dct.apf.repository.UserRepository;
 public class DataFunctionServiceTest extends AbstractServiceTest {
 
     private SoftAssert softAssert;
+    
+    private ModelMapper modelMapper = new ModelMapper();
 
     @Autowired
     private ProjectService projectService;
@@ -68,9 +71,12 @@ public class DataFunctionServiceTest extends AbstractServiceTest {
 
         dfDto2 = createEIF("DF2", 1L, 10L);
         dfDto2.setProject(p1);
+        
+        DataFunction newdf1 = modelMapper.map(dfDto1, DataFunction.class);
+        DataFunction newdf2 = modelMapper.map(dfDto2, DataFunction.class);
 
-        df1 = dataService.save(dfDto1);
-        df2 = dataService.save(dfDto2);
+        df1 = dataService.save(newdf1);
+        df2 = dataService.save(newdf2);
     }
 
     @AfterMethod
@@ -119,7 +125,9 @@ public class DataFunctionServiceTest extends AbstractServiceTest {
         dfDto3.setProject(p1);
         dfDto3.setUserStory(us);
 
-        DataFunction df3 = dataService.save(dfDto3);
+        DataFunction newdf3 = modelMapper.map(dfDto3, DataFunction.class);
+        
+        DataFunction df3 = dataService.save(newdf3);
 
         Long id3 = df3.getId();
 
@@ -170,7 +178,9 @@ public class DataFunctionServiceTest extends AbstractServiceTest {
         DataFunctionDTO dfDto4 = createILF("DF4", 1L, 8L);
         dfDto4.setProject(p1);
 
-        DataFunction df4 = dataService.save(dfDto4);
+        DataFunction newdf4 = modelMapper.map(dfDto4, DataFunction.class);
+        
+        DataFunction df4 = dataService.save(newdf4);
 
         Long id4 = df4.getId();
 
@@ -211,7 +221,9 @@ public class DataFunctionServiceTest extends AbstractServiceTest {
         dfDto.setProject(p1);
         dfDto.setUserStory(us);
 
-        DataFunction df = dataService.save(dfDto);
+        DataFunction newdf = modelMapper.map(dfDto, DataFunction.class);
+        
+        DataFunction df = dataService.save(newdf);
 
         Long id = df.getId();
 
