@@ -58,4 +58,4 @@ Desenvolvido a partir do tutorial e do código linkado abaixo:
 
 ### Tutoriais
 
-Na página [Tutoriais](Tutoriais.md) temos a lista de tutoriais consultados.
+Na página [Tutoriais](Tutorials.md) temos a lista de tutoriais consultados.
