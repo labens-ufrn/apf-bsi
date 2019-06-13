@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import br.ufrn.dct.apf.dto.DataFunctionDTO;
+import br.ufrn.dct.apf.model.DataFunction;
 import br.ufrn.dct.apf.model.Project;
 import br.ufrn.dct.apf.model.User;
 import br.ufrn.dct.apf.model.UserStory;
@@ -91,22 +92,22 @@ public class DataFunctionController extends AbstractController {
     }
 
     @PostMapping("/df/save")
-    public ModelAndView save(@Valid DataFunctionDTO df, BindingResult result) {
+    public ModelAndView save(@Valid DataFunctionDTO dfDto, BindingResult result) {
 
         if (result.hasErrors()) {
             LOGGER.error("error.df.controller.save");
-            return add(df);
+            return add(dfDto);
         }
 
         User current = getCurrentUser();
 
-        List<Project> projects = projectService.findByName(current.getId(), df.getProject().getName());
+        List<Project> projects = projectService.findByName(current.getId(), dfDto.getProject().getName());
         Project p = null;
         if (!projects.isEmpty()) {
             p = projects.get(0);
-            df.setProject(p);
+            dfDto.setProject(p);
         }
-
+        DataFunction df = convertToEntity(dfDto);
         service.save(df);
 
         DataFunctionDTO newDF = new DataFunctionDTO();
