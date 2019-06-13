@@ -12,7 +12,7 @@ import br.ufrn.dct.apf.repository.RoleRepository;
 import br.ufrn.dct.apf.repository.UserRepository;
 
 @Service
-public class UserService {
+public class UserService extends AbstractService {
 
     private static final int ACTIVE = 1;
 

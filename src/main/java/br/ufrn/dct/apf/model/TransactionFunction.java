@@ -12,33 +12,56 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
- * There are two types of data functions −
+ * Transaction Functions
  *
- *   Internal Logical Files
- *   External Interface Files
+ * There are three types of transaction functions.
  *
- * Data Functions are made up of internal and external resources 
- * that affect the system.
+ *  External Inputs
+ *  External Outputs
+ *  External Inquiries
+ *  
+ * Transaction functions are made up of the processes that are exchanged
+ * between the user, the external applications and the application being measured.
+ * 
+ * https://www.tutorialspoint.com/estimation_techniques/estimation_techniques_function_points.htm
  * 
  * @author Taciano Morais Silva
- * @since 04/04/2019
+ * @version 1.0
+ * @since 23/05/2019, 14h11m
+ *
  */
 @Entity
-@Table(name = "dataFunction")
-public class DataFunction implements Serializable {
+@Table(name = "transactionFunction")
+public class TransactionFunction implements Serializable {
 
     /**
      * Serial Id.
      */
     private static final long serialVersionUID = 1L;
 
-    public static final String TYPE_ILF = "TYPE_ILF";
+    /**
+     * External Input (EI) is a transaction function in which Data goes “into” 
+     * the application from outside the boundary to inside. This data is coming 
+     * external to the application.
+     */
+    public static final String TYPE_EI = "TYPE_EI";
     
-    public static final String TYPE_EIF = "TYPE_EIF";
+    /**
+     * External Output (EO) is a transaction function in which data comes “out”
+     * of the system. Additionally, an EO may update an ILF. The data creates reports
+     * or output files sent to other applications.
+     */
+    public static final String TYPE_EO = "TYPE_EO";
+    
+    /**
+     * External Inquiry (EQ) is a transaction function
+     * with both input and output components that result in data retrieval.
+     */
+    public static final String TYPE_EQ = "TYPE_EQ";
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "data_id")
+    @Column(name = "trans_id")
     private Long id;
 
     @Column(name = "name", nullable = false)
@@ -48,14 +71,13 @@ public class DataFunction implements Serializable {
     private String type;
 
     /**
-     * number of Record Element Types (RET).
+     * number of File Type Referenced (FTR).
      * 
-     * A Record Element Type (RET) is the largest user identifiable subgroup
-     * of elements within an ILF or an EIF. It is best to look at logical 
-     * groupings of data to help identify them.
+     * File Type Referenced (FTR) is the largest user identifiable subgroup 
+     * within the EI, EO, or EQ that is referenced to.
      */
-    @Column(name = "ret")
-    private Long recordElementTypes;
+    @Column(name = "ftr")
+    private Integer fileTypeReferenced;
 
     /**
      * number of Data Element Types (DET).
@@ -64,7 +86,7 @@ public class DataFunction implements Serializable {
      * They are unique and user identifiable.
      */
     @Column(name = "det")
-    private Long dataElementTypes;
+    private Integer dataElementTypes;
     
     @Column(name = "description")
     private String description;
@@ -77,44 +99,21 @@ public class DataFunction implements Serializable {
     @JoinColumn(name = "project_id", nullable = true)
     private Project project;
 
-    /**
-     * Internal Logical Files (ILF's, in Portuguese, Arquivos Lógico Interno - ALI's).
-     *
-     * A user identifiable group of logically related data that resides entirely
-     * within the applications boundary and is maintained through external inputs.
-     *
-     * Source: <a href="http://www.softwaremetrics.com/fpafund.htm">http://www.softwaremetrics.com/fpafund.htm</a>
-     *
-     * @author Taciano Morais Silva
-     * @since 04/04/2019
-     * @param name A data function's name.
-     */
-    public static DataFunction createILF(String name) {
-        return new DataFunction(name, TYPE_ILF);
+    public static TransactionFunction createEI(String name) {
+        return new TransactionFunction(name, TYPE_EI);
     }
     
-    /**
-     * External Interface Files (EIF’s, in Portuguese, Arquivos Interface Externa - AIE's).
-     *
-     * A user identifiable group of logically related data that is used for reference
-     * purposes only. The data resides entirely outside the application and is
-     * maintained by another application.
-     *
-     * The external interface file is an internal logical file for another application.
-     *
-     * Source: <a href="http://www.softwaremetrics.com/fpafund.htm">http://www.softwaremetrics.com/fpafund.htm</a>
-     *
-     * @author Taciano Morais Silva
-     * @since 04/04/2019
-     * @param name A data function's name.
-     */
-    public static DataFunction createEIF(String name) {
-        return new DataFunction(name, TYPE_EIF);
+    public static TransactionFunction createEO(String name) {
+        return new TransactionFunction(name, TYPE_EO);
     }
     
-    public DataFunction() {}
+    public static TransactionFunction createEQ(String name) {
+        return new TransactionFunction(name, TYPE_EQ);
+    }
+    
+    public TransactionFunction() {}
 
-    private DataFunction(String name, String type) {
+    private TransactionFunction(String name, String type) {
         this.name = name;
         this.type = type;
     }
@@ -151,19 +150,19 @@ public class DataFunction implements Serializable {
         this.description = description;
     }
 
-    public Long getRecordElementTypes() {
-        return recordElementTypes;
+    public Integer getFileTypeReferenced() {
+        return fileTypeReferenced;
     }
 
-    public void setRecordElementTypes(Long ret) {
-        this.recordElementTypes = ret;
+    public void setFileTypeReferenced(Integer ftr) {
+        this.fileTypeReferenced = ftr;
     }
 
-    public Long getDataElementTypes() {
+    public Integer getDataElementTypes() {
         return dataElementTypes;
     }
 
-    public void setDataElementTypes(Long det) {
+    public void setDataElementTypes(Integer det) {
         this.dataElementTypes = det;
     }
 
@@ -183,12 +182,16 @@ public class DataFunction implements Serializable {
         this.userStory = us;
     }
 
-    public boolean isILF() {
-        return getType().equals(TYPE_ILF);
+    public boolean isEI() {
+        return getType().equals(TYPE_EI);
     }
     
-    public boolean isEIF() {
-        return getType().equals(TYPE_EIF);
+    public boolean isEO() {
+        return getType().equals(TYPE_EO);
+    }
+    
+    public boolean isEQ() {
+        return getType().equals(TYPE_EQ);
     }
 
     @Override
@@ -208,7 +211,7 @@ public class DataFunction implements Serializable {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        DataFunction other = (DataFunction) obj;
+        TransactionFunction other = (TransactionFunction) obj;
         if (id == null) {
             if (other.id != null)
                 return false;
