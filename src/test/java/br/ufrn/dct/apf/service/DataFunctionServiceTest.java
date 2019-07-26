@@ -325,6 +325,9 @@ public class DataFunctionServiceTest extends AbstractServiceTest {
         softAssert.assertFalse(df1.equals(df3), "T15 - Equals:TestDifferent");
 
         softAssert.assertFalse(df3.equals(df1), "T16 - Equals:TestDifferent");
+ 
+        softAssert.assertEquals(df1.getDataElementTypes(), Long.valueOf(10L), "T17 - Equals:TestDifferent");
+        softAssert.assertEquals(df1.getRecordElementTypes(), Long.valueOf(1L), "T18 - Equals:TestDifferent");
 
         softAssert.assertAll();
     }
