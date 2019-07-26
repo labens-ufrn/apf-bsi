@@ -24,7 +24,7 @@ public class LoginController extends AbstractController {
     private UserService userService;
     
     @Autowired
-    private ProjectService service;
+    private ProjectService projectService;
 
     private static final String LOGIN_VIEW = "login";
 
@@ -87,7 +87,7 @@ public class LoginController extends AbstractController {
         setUserAuth(mv);
         User user = getCurrentUser();
 
-        mv.addObject("projects", service.findByUserId(user.getId()));
+        mv.addObject("projects", projectService.findByUserId(user.getId()));
         
         return mv;
     }
@@ -97,7 +97,7 @@ public class LoginController extends AbstractController {
         ModelAndView mv = new ModelAndView("dashboard");
         setUserAuth(mv);
 
-        mv.addObject("projects", service.findByIsPrivateFalse());
+        mv.addObject("projects", projectService.findByIsPrivateFalse());
         mv.addObject("counter", new IndicativeCount());
         
         return mv;

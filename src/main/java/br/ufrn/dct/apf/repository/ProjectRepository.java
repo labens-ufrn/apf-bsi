@@ -13,12 +13,12 @@ import br.ufrn.dct.apf.model.Project;
 public interface ProjectRepository extends JpaRepository<Project, Long> {
 
     @Query(value = "SELECT * FROM project p, member m where p.project_id = m.project_id and m.user_id = :userId", nativeQuery=true)
-    public List<Project> findByUserId(@Param("userId") Long userId);
+    List<Project> findByUserId(@Param("userId") Long userId);
 
-    public List<Project> findByNameContaining(String name);
+    List<Project> findByNameContaining(String name);
 
-    public List<Project> findByTeamUserIdAndNameContaining(Long userId, String name);
+    List<Project> findByTeamUserIdAndNameContaining(Long userId, String name);
     
-    public List<Project> findByIsPrivateFalse();
+    List<Project> findByIsPrivateFalse();
 
 }

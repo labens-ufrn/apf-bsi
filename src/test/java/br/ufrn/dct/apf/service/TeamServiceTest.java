@@ -34,7 +34,7 @@ public class TeamServiceTest extends AbstractTestNGSpringContextTests {
 
     @Autowired
     private MemberService memberService;
-    
+
     @Autowired
     private AttributionRepository attribRepository;
 
@@ -58,7 +58,7 @@ public class TeamServiceTest extends AbstractTestNGSpringContextTests {
         desenvolvedor.setLastName("Silva");
         desenvolvedor.setEmail("zesilva@gmai.com");
         desenvolvedor.setPassword("12345");
-        
+
         dev2 = new User();
         dev2.setName("dev2");
         dev2.setLastName("Silva");
@@ -93,8 +93,8 @@ public class TeamServiceTest extends AbstractTestNGSpringContextTests {
         projectService.delete(p1.getId());
         userService.delete(analista.getId());
         userService.delete(desenvolvedor.getId());
-        attribRepository.delete(projectOwner.getId());
-        attribRepository.delete(projectDev.getId());
+        attribRepository.deleteById(projectOwner.getId());
+        attribRepository.deleteById(projectDev.getId());
         p1 = null;
     }
 
@@ -128,24 +128,24 @@ public class TeamServiceTest extends AbstractTestNGSpringContextTests {
         softAssert.assertEquals(found.getUser().getId(), analista.getId(), "T04 - Equals:");
 
         softAssert.assertNotNull(found.getCreatedOn(), "T05 - NotNull:");
-        
+
         softAssert.assertEquals(found.getAttribution().getId(), 1, "T06 - Equals:");
         softAssert.assertEquals(found.getAttribution().getName(), Attribution.PROJECT_MANAGER, "T07 - Equals:");
-        
-        Attribution attribManager = attribRepository.findOne(1);
+
+        Attribution attribManager = attribRepository.findById(1).orElse(null);
         Attribution attribOwner = attribRepository.findByName("PROJECT_OWNER");
-        
+
         softAssert.assertTrue(found.getAttribution().equals(attribManager), "T08 - Equals:");
         softAssert.assertFalse(found.getAttribution().equals(attribOwner), "T09 - Equals:");
         softAssert.assertFalse(found.getAttribution().equals(null), "T10 - Equals:");
         softAssert.assertTrue(projectOwner.equals(projectOwner), "T11 - Equals:");
         softAssert.assertTrue(projectOwner.equals(attribOwner), "T12 - Equals:");
-       
+
         List<Attribution> atts = attribRepository.findAll();
-        
+
         softAssert.assertNotNull(atts, "T13 - NotNull:");
         softAssert.assertEquals(atts.size(), 4, "T14 - Equals:");
-        
+
         softAssert.assertNotNull(attribOwner.hashCode(), "T15 - Equals:");
 
         softAssert.assertAll();
@@ -225,13 +225,13 @@ public class TeamServiceTest extends AbstractTestNGSpringContextTests {
 
         Project project = projectByAnalista.get(0);
         softAssert.assertEquals(project.getId(), p1.getId(), "T07 - Equals:");
-        
+
         Member found = memberService.findOne(t01.getId());
 
         softAssert.assertEquals(t01, found, "T08 - Equals");
         softAssert.assertNotEquals(null, found, "T08 - Equals");
         softAssert.assertNotEquals(t01, t02, "T08 - Equals");
-        
+
         softAssert.assertAll();
     }
 
@@ -249,7 +249,7 @@ public class TeamServiceTest extends AbstractTestNGSpringContextTests {
         m2.setProject(p1);
         m2.setAttribution(attribRepository.findByName(Attribution.PROJECT_MEMBER));
         m2.setCreatedOn(GregorianCalendar.getInstance().getTime());
-        
+
         m1 = memberService.save(m1);
 
         p1 = projectService.findOne(p1.getId());
@@ -307,7 +307,7 @@ public class TeamServiceTest extends AbstractTestNGSpringContextTests {
 
         softAssert.assertAll();
     }
-    
+
     /**
      * Teste baseado na discussão no link:
      * https://codereview.stackexchange.com/questions/129358/unit-testing-equals-hashcode-and-comparator-asserting-contracts
@@ -316,14 +316,14 @@ public class TeamServiceTest extends AbstractTestNGSpringContextTests {
     @Test
     public void equalsAndHashcode() throws BusinessRuleException {
         Member m1, m2, m3;
-        
+
         Project p2 = new Project();
 
         p2.setName("APF Project");
         p2.setDescription("Analisador de Pontos por Função");
         p2.setPrivate(false);
         p2.setCreatedOn(GregorianCalendar.getInstance().getTime());
-        
+
         m1 = new Member();
         m1.setUser(analista);
         m1.setProject(p1);
@@ -335,15 +335,15 @@ public class TeamServiceTest extends AbstractTestNGSpringContextTests {
         m2.setProject(p1);
         m2.setAttribution(attribRepository.findByName(Attribution.PROJECT_MEMBER));
         m2.setCreatedOn(GregorianCalendar.getInstance().getTime());
-        
+
         m3 = new Member();
         m3.setUser(analista);
         m3.setProject(p1);
         m3.setAttribution(attribRepository.findByName(Attribution.PROJECT_MEMBER));
         m3.setCreatedOn(GregorianCalendar.getInstance().getTime());
-        
+
         //m1 = memberService.save(m1);
-        
+
         UserStory us = new UserStory("Test Project", "TestNG Project");
         us.setId(55L);
 
@@ -355,51 +355,51 @@ public class TeamServiceTest extends AbstractTestNGSpringContextTests {
         softAssert.assertEquals(m1, m3, "T06 - Equals:TestTransitive");
         softAssert.assertFalse(m1.equals(null), "T07 - Equals:TestNonNullity");
         softAssert.assertFalse(m1.equals(us), "T08 - Equals:TestNonNullity");
-        
+
         softAssert.assertEquals(m1.hashCode(), m1.hashCode(), "T09 - Equals:TestHashCodeConsistency");
         softAssert.assertEquals(m1.hashCode(), m2.hashCode(), "T10 - Equals:TestHashCodeEquality");
-        
+
         m1.setId(null);
         m1.setUser(null);
         m1.setProject(null);
-        
+
         softAssert.assertFalse(m1.equals(m2), "T11 - Equals:TestDifferent");
         softAssert.assertFalse(m1.equals(m3), "T12 - Equals:TestDifferent");
-        
+
         m1.setId(55L);
         m1.setUser(analista);
         m1.setProject(p1);
-        
+
         m2.setId(56L);
         m2.setUser(desenvolvedor);
         m2.setProject(p1);
-        
+
         m3.setId(55L);
         m3.setUser(desenvolvedor);
         m3.setProject(p1);
-        
+
         softAssert.assertFalse(m1.equals(m2), "T13 - Equals:TestDifferent");
         softAssert.assertFalse(m1.equals(m3), "T14 - Equals:TestDifferent");
-        
+
         m2.setUser(null);
         m3.setProject(null);
-        
+
         softAssert.assertFalse(m2.equals(m1), "T15 - Equals:TestDifferent");
-        
+
         softAssert.assertNotEquals(m1.hashCode(), m2.hashCode(), "T16 - Equals:TestHashCodeConsistency");
         softAssert.assertNotEquals(m1.hashCode(), m3.hashCode(), "T17 - Equals:TestHashCodeEquality");
-        
+
         softAssert.assertFalse(m1.equals(m2), "T18 - Equals:TestDifferent");
         softAssert.assertFalse(m1.equals(m3), "T19 - Equals:TestDifferent");
-        
+
         m1.setUser(null);
         m1.setProject(null);
         m3.setUser(null);
         m3.setProject(null);
-        
+
         softAssert.assertFalse(m1.equals(m2), "T20 - Equals:TestDifferent");
         softAssert.assertTrue(m1.equals(m3), "T21 - Equals:TestEquals");
-        
+
         //memberService.delete(m1.getId());
         //memberService.delete(m2.getId());
         //memberService.delete(m3.getId());

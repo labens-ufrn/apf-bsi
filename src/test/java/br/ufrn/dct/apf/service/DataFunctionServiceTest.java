@@ -25,7 +25,7 @@ public class DataFunctionServiceTest extends AbstractServiceTest {
 
     @Autowired
     private ProjectService projectService;
-    
+
     @Autowired
     private UserStoryService userStoryService;
 
@@ -38,11 +38,11 @@ public class DataFunctionServiceTest extends AbstractServiceTest {
     private Project p1;
 
     private DataFunction df1, df2;
-    
+
     private DataFunctionDTO dfDto1, dfDto2;
 
     private User manager;
-    
+
     private UserStory us;
 
     @BeforeMethod
@@ -50,14 +50,14 @@ public class DataFunctionServiceTest extends AbstractServiceTest {
         softAssert = new SoftAssert();
 
         p1 = new Project();
-        
+
         p1 = createProject("DF Project Example", "Data Function Project Example");
 
         manager = createUser("User", "DF");
         userRepository.save(manager);
 
         projectService.save(p1, manager);
-        
+
         us = new UserStory("US DF", "UserStory para DF");
         us.setProject(p1);
         userStoryService.save(us);
@@ -80,7 +80,7 @@ public class DataFunctionServiceTest extends AbstractServiceTest {
         dataService.delete(df2.getId());
         userStoryService.delete(us.getId());
         projectService.delete(p1.getId());
-        userRepository.delete(manager.getId());
+        userRepository.deleteById(manager.getId());
         p1 = null;
         df1 = null;
         df2 = null;
@@ -182,16 +182,16 @@ public class DataFunctionServiceTest extends AbstractServiceTest {
 
         softAssert.assertNotNull(dfs, "T03 - NotNull:");
         softAssert.assertEquals(dfs.size(), 3, "T04 - Equals:");
-        
+
         p1 = projectService.findOne(p1.getId());
-        
+
         Boolean t = p1.getDataFunctions().contains(found);
         softAssert.assertTrue(t, "T04 - Equals:");
-        
+
         p1.getDataFunctions().remove(found);
         found.setProject(null);
         projectService.save(p1, manager);
-        
+
         //dataService.delete(id4);
 
         found = dataService.findOne(id4);
@@ -204,7 +204,7 @@ public class DataFunctionServiceTest extends AbstractServiceTest {
 
         softAssert.assertAll();
     }
-    
+
     @Test
     public void createDataFunction() throws BusinessRuleException {
         DataFunctionDTO dfDto = createILF("DTO", 1L, 8L);
@@ -223,21 +223,21 @@ public class DataFunctionServiceTest extends AbstractServiceTest {
 
         softAssert.assertNotNull(dfs, "T03 - NotNull:");
         softAssert.assertEquals(dfs.size(), 3, "T04 - Equals:");
-        
+
         UserStory usFound = userStoryService.findOne(us.getId());
-        
+
         Boolean usB = usFound.getDataFunctions().contains(found);
         softAssert.assertTrue(usB, "T05 - Equals:");
-        
+
         p1 = projectService.findOne(p1.getId());
-        
+
         Boolean t = p1.getDataFunctions().contains(found);
         softAssert.assertTrue(t, "T06 - Equals:");
-        
+
         p1.getDataFunctions().remove(found);
         found.setProject(null);
         projectService.save(p1, manager);
-        
+
         //dataService.delete(id4);
 
         found = dataService.findOne(id);
@@ -250,7 +250,7 @@ public class DataFunctionServiceTest extends AbstractServiceTest {
 
         softAssert.assertAll();
     }
-    
+
     @Test
     public void equalsAndHashcode() throws BusinessRuleException {
         DataFunction df1 = new DataFunction();
@@ -274,7 +274,7 @@ public class DataFunctionServiceTest extends AbstractServiceTest {
         df2.setType(DataFunction.TYPE_ILF);
         df2.setProject(p1);
         df2.setUserStory(us);
-        
+
         DataFunction df3 = new DataFunction();
 
         df3.setId(55L);
@@ -285,7 +285,7 @@ public class DataFunctionServiceTest extends AbstractServiceTest {
         df3.setType(DataFunction.TYPE_ILF);
         df3.setProject(p1);
         df3.setUserStory(us);
-        
+
         UserStory us = new UserStory("Test Project", "TestNG Project");
         us.setId(55L);
 
@@ -297,35 +297,35 @@ public class DataFunctionServiceTest extends AbstractServiceTest {
         softAssert.assertEquals(df1, df3, "T06 - Equals:TestTransitive");
         softAssert.assertFalse(df1.equals(null), "T07 - Equals:TestNonNullity");
         softAssert.assertFalse(df1.equals(us), "T08 - Equals:TestNonNullity");
-        
+
         softAssert.assertEquals(df1.hashCode(), df1.hashCode(), "T08 - Equals:TestHashCodeConsistency");
         softAssert.assertEquals(df1.hashCode(), df2.hashCode(), "T09 - Equals:TestHashCodeEquality");
-        
+
         df1.setId(null);
         df1.setName(null);
-        
+
         softAssert.assertFalse(df1.equals(df2), "T10 - Equals:TestDifferent");
         softAssert.assertFalse(df1.equals(df3), "T11 - Equals:TestDifferent");
-        
+
         df1.setId(55L);
         df1.setName("Test Project");
         df2.setId(56L);
         df3.setName("Test Project 3");
-        
+
         softAssert.assertFalse(df1.equals(df2), "T12 - Equals:TestDifferent");
         softAssert.assertFalse(df1.equals(df3), "T13 - Equals:TestDifferent");
-        
+
         df2.setId(null);
         df3.setName(null);
-        
+
         softAssert.assertNotEquals(df1.hashCode(), df2.hashCode(), "T08 - Equals:TestHashCodeConsistency");
         softAssert.assertNotEquals(df1.hashCode(), df3.hashCode(), "T09 - Equals:TestHashCodeEquality");
-        
+
         softAssert.assertFalse(df1.equals(df2), "T14 - Equals:TestDifferent");
         softAssert.assertFalse(df1.equals(df3), "T15 - Equals:TestDifferent");
 
         softAssert.assertFalse(df3.equals(df1), "T16 - Equals:TestDifferent");
-        
+ 
         softAssert.assertEquals(df1.getDataElementTypes(), Long.valueOf(10L), "T17 - Equals:TestDifferent");
         softAssert.assertEquals(df1.getRecordElementTypes(), Long.valueOf(1L), "T18 - Equals:TestDifferent");
 
