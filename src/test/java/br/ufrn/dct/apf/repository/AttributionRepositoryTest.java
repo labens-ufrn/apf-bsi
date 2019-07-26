@@ -20,7 +20,7 @@ public class AttributionRepositoryTest extends AbstractTestNGSpringContextTests 
     private SoftAssert softAssert;
 
     @Autowired
-    private AttributionRepository repository;
+    private AttributionRepository attribRepository;
 
     @BeforeMethod
     public void startTest() {
@@ -36,22 +36,22 @@ public class AttributionRepositoryTest extends AbstractTestNGSpringContextTests 
     public void findByName() {
         String projectManager = Attribution.PROJECT_MANAGER;
 
-        List<Attribution> atribuicoes = repository.findAll();
-        
+        List<Attribution> atribuicoes = attribRepository.findAll();
+
         for (Attribution attrib : atribuicoes) {
             System.out.println("Attrib Name: " + attrib.getName());
         }
-        
+
         softAssert.assertEquals(atribuicoes.size(), 2, "T00 - Equals:");
-        
-        Attribution manager = repository.findByName(projectManager);
+
+        Attribution manager = attribRepository.findByName(projectManager);
 
         softAssert.assertNotNull(manager, "T01 - NotNull:");
         softAssert.assertEquals(manager.getName(), "PROJECT MANAGER", "T02 - Equals:");
-        
+
         String projectMember = Attribution.PROJECT_MEMBER;
 
-        Attribution member = repository.findByName(projectMember);
+        Attribution member = attribRepository.findByName(projectMember);
 
         softAssert.assertNotNull(member, "T03 - NotNull:");
         softAssert.assertEquals(member.getName(), "PROJECT MEMBER", "T04 - Equals:");

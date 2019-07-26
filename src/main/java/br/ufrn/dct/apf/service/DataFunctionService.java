@@ -13,23 +13,23 @@ import br.ufrn.dct.apf.repository.DataFunctionRepository;
 public class DataFunctionService {
 
     @Autowired
-    private DataFunctionRepository repository;
+    private DataFunctionRepository dataFunctionRepository;
 
     public List<DataFunction> findAll() {
-        return repository.findAll();
+        return dataFunctionRepository.findAll();
     }
 
     public DataFunction findOne(Long id) {
-        return repository.findOne(id);
+        return dataFunctionRepository.findById(id).orElse(null);
     }
 
     public DataFunction save(DataFunctionDTO dfDTO) {
         DataFunction df = createDF(dfDTO);
         return save(df);
     }
-    
+
     public DataFunction save(DataFunction df) {
-        return repository.saveAndFlush(df);
+        return dataFunctionRepository.saveAndFlush(df);
     }
 
     private DataFunction createDF(DataFunctionDTO dfDTO) {
@@ -44,10 +44,10 @@ public class DataFunctionService {
         df.setDataElementTypes(dfDTO.getDataElementTypes());
         df.setProject(dfDTO.getProject());
         df.setUserStory(dfDTO.getUserStory());
-        
+
         return df;
     }
-    
+
     private DataFunctionDTO createDTO(DataFunction df) {
         DataFunctionDTO dto = new DataFunctionDTO();
         dto.setId(df.getId());
@@ -57,11 +57,11 @@ public class DataFunctionService {
         dto.setDataElementTypes(df.getDataElementTypes());
         dto.setProject(df.getProject());
         dto.setUserStory(df.getUserStory());
-        
+
         return dto;
     }
 
     public void delete(Long id) {
-        repository.delete(id);
+        dataFunctionRepository.deleteById(id);
     }
 }

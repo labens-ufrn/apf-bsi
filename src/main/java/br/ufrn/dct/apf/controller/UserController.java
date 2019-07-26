@@ -20,104 +20,103 @@ import br.ufrn.dct.apf.service.UserService;
 @Controller
 public class UserController extends AbstractController {
 
-        @Autowired
-        private UserService service;
+    @Autowired
+    private UserService service;
 
-        @Autowired
-        private RoleRepository roleRepository;
+    @Autowired
+    private RoleRepository roleRepository;
 
-        @GetMapping("/user")
-        public ModelAndView profile() {
+    @GetMapping("/user")
+    public ModelAndView profile() {
 
-            ModelAndView mv = new ModelAndView("user/profile");
+        ModelAndView mv = new ModelAndView("user/profile");
 
-            User current = getCurrentUser();
+        User current = getCurrentUser();
 
-            setUserAuth(mv);
+        setUserAuth(mv);
 
-            mv.addObject("user", service.findOne(current.getId()));
+        mv.addObject("user", service.findOne(current.getId()));
 
-            return mv;
+        return mv;
+    }
+
+    @GetMapping("/user/edit/{id}")
+    public ModelAndView editProfile(@PathVariable("id") Long id) {
+
+        return update(service.findOne(id));
+    }
+
+    @GetMapping("/user/update")
+    public ModelAndView update(User user) {
+        ModelAndView mv = new ModelAndView("user/edit");
+
+        mv.addObject("user", user);
+
+        return mv;
+    }
+
+    @PostMapping("/user/save")
+    public ModelAndView saveProfile(@Valid User user, BindingResult result) {
+        ModelAndView modelAndView = new ModelAndView();
+
+        service.edit(user);
+
+        modelAndView.addObject("successMessage", "User has been registered successfully");
+        modelAndView.addObject("user", new User());
+
+        return profile();
+    }
+
+    @GetMapping("/admin/user")
+    public ModelAndView findAll() {
+
+        ModelAndView mv = new ModelAndView("admin/user/list");
+
+        setUserAuth(mv);
+
+        mv.addObject("users", service.findAll());
+
+        return mv;
+    }
+
+    @GetMapping("/admin/user/add")
+    public ModelAndView add(User user) {
+        List<Role> regras = roleRepository.findAll();
+
+        ModelAndView mv = new ModelAndView("admin/user/add");
+        mv.addObject("regras", regras);
+        mv.addObject("user", user);
+
+        return mv;
+    }
+
+    @GetMapping("/admin/user/edit/{id}")
+    public ModelAndView edit(@PathVariable("id") Long id) {
+        return add(service.findOne(id));
+    }
+
+    @GetMapping("/admin/user/delete/{id}")
+    public ModelAndView delete(@PathVariable("id") Long id) {
+        service.delete(id);
+        return findAll();
+    }
+
+    @PostMapping("/admin/user/save")
+    public ModelAndView save(@Valid User user, BindingResult result) {
+        ModelAndView modelAndView = new ModelAndView();
+        User userExists = service.findUserByEmail(user.getEmail());
+        if (userExists != null) {
+            result.rejectValue("email", "error.user", "There is already a user registered with the email provided");
         }
-
-        @GetMapping("/user/edit/{id}")
-        public ModelAndView editProfile(@PathVariable("id") Long id) {
-
-            return update(service.findOne(id));
-        }
-
-        @GetMapping("/user/update")
-        public ModelAndView update(User user) {
-            ModelAndView mv = new ModelAndView("user/edit");
-
-            mv.addObject("user", user);
-
-            return mv;
-        }
-
-        @PostMapping("/user/save")
-        public ModelAndView saveProfile(@Valid User user, BindingResult result) {
-            ModelAndView modelAndView = new ModelAndView();
-
-            service.edit(user);
-
+        if (result.hasErrors()) {
+            result.reject("erro!", result.getAllErrors().toArray(), "Erro ao salvar usuário");
+            findAll();
+        } else {
+            service.save(user);
             modelAndView.addObject("successMessage", "User has been registered successfully");
             modelAndView.addObject("user", new User());
-
-            return profile();
         }
 
-        @GetMapping("/admin/user")
-        public ModelAndView findAll() {
-
-            ModelAndView mv = new ModelAndView("admin/user/list");
-
-            setUserAuth(mv);
-
-            mv.addObject("users", service.findAll());
-
-            return mv;
-        }
-
-        @GetMapping("/admin/user/add")
-        public ModelAndView add(User user) {
-            List<Role> regras = roleRepository.findAll();
-
-            ModelAndView mv = new ModelAndView("admin/user/add");
-            mv.addObject("regras", regras);
-            mv.addObject("user", user);
-
-            return mv;
-        }
-
-        @GetMapping("/admin/user/edit/{id}")
-        public ModelAndView edit(@PathVariable("id") Long id) {
-            return add(service.findOne(id));
-        }
-
-        @GetMapping("/admin/user/delete/{id}")
-        public ModelAndView delete(@PathVariable("id") Long id) {
-            service.delete(id);
-            return findAll();
-        }
-
-        @PostMapping("/admin/user/save")
-        public ModelAndView save(@Valid User user, BindingResult result) {
-            ModelAndView modelAndView = new ModelAndView();
-            User userExists = service.findUserByEmail(user.getEmail());
-            if (userExists != null) {
-                result.rejectValue("email", "error.user",
-                        "There is already a user registered with the email provided");
-            }
-            if (result.hasErrors()) {
-                result.reject("erro!", result.getAllErrors().toArray(), "Erro ao salvar usuário");
-                findAll();
-            } else {
-                service.save(user);
-                modelAndView.addObject("successMessage", "User has been registered successfully");
-                modelAndView.addObject("user", new User());
-            }
-
-            return findAll();
-        }
+        return findAll();
+    }
 }

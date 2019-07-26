@@ -4,10 +4,14 @@
 
     <test name="TestNGSpringIntegration">
         <classes>
+            <class name="br.ufrn.dct.apf.repository.AttributionRepositoryTest" />
+            <class name="br.ufrn.dct.apf.repository.ProjectRepositoryTest" />
+            <class name="br.ufrn.dct.apf.repository.RoleRepositoryTest" />
             <class name="br.ufrn.dct.apf.service.ProjectServiceTest" />
             <class name="br.ufrn.dct.apf.service.TeamServiceTest" />
             <class name="br.ufrn.dct.apf.service.UserServiceTest" />
             <class name="br.ufrn.dct.apf.service.UserStoryServiceTest" />
+            <class name="br.ufrn.dct.apf.service.DataFunctionServiceTest" />
             <class name="br.ufrn.dct.apf.service.IndicativeCountTest" />
             <class name="br.ufrn.dct.apf.ConceitosTest" />
         </classes>
