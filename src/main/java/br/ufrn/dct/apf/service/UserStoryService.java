@@ -9,7 +9,7 @@ import br.ufrn.dct.apf.model.UserStory;
 import br.ufrn.dct.apf.repository.UserStoryRepository;
 
 @Service
-public class UserStoryService {
+public class UserStoryService extends AbstractService {
 
     @Autowired
     private UserStoryRepository repository;

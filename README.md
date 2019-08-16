@@ -16,6 +16,7 @@ Sistema para facilitar a contagem na análise por pontos de função (APF) desen
 * JDK 8
 * MariaDB ou MySql
 * Criação do Banco de Dados (dev e test) e Usuário
+
 ```sql
     CREATE DATABASE apf_db;
     CREATE DATABASE apf_db_test;
@@ -25,12 +26,15 @@ Sistema para facilitar a contagem na análise por pontos de função (APF) desen
     GRANT ALL ON apf_db.* TO 'apf_user'@'localhost';
     GRANT ALL ON apf_db_test.* TO 'apf_user'@'localhost';
 ```
+
 * Povoamento do Banco de Dados
+
 ```sql
-    INSERT INTO ROLE VALUES (1,'ADMIN');
-    INSERT INTO ROLE VALUES (2,'USER');
-    INSERT INTO ROLE VALUES (3,'PROJECT MANAGER');
-    INSERT INTO ROLE VALUES (4,'PROJECT MEMBER');
+    INSERT INTO role VALUES (1,'ADMIN');
+    INSERT INTO role VALUES (2,'USER');
+
+    INSERT INTO attribution VALUES (1,'PROJECT MANAGER');
+    INSERT INTO attribution VALUES (2,'PROJECT MEMBER');
 ```
 ## Execução
 
@@ -53,3 +57,7 @@ Desenvolvido a partir do tutorial e do código linkado abaixo:
 * https://github.com/gustavoponce7/SpringSecurityLoginTutorial
 * https://franckaragao.wordpress.com/2016/08/23/integracao-continua-com-o-travis-ci-em-projetos-java-usando-o-maven/
 * https://github.com/lowrin/spring-boot-input-autocomplete-example
+
+### Tutoriais
+
+Na página [Tutoriais](Tutorials.md) temos a lista de tutoriais consultados.
