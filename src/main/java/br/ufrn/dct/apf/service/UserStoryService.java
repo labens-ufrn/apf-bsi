@@ -19,7 +19,7 @@ public class UserStoryService extends AbstractService {
     }
 
     public UserStory findOne(Long id) {
-        return repository.findOne(id);
+        return repository.findById(id).orElse(null);
     }
 
     public UserStory save(UserStory userStory) {
@@ -27,6 +27,6 @@ public class UserStoryService extends AbstractService {
     }
 
     public void delete(Long id) {
-        repository.delete(id);
+        repository.deleteById(id);
     }
 }

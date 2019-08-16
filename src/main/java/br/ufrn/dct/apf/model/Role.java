@@ -74,10 +74,7 @@ public class Role implements Serializable {
         if (id != other.id)
             return false;
         if (roleName == null) {
-            if (other.roleName != null)
-                return false;
-        } else if (!roleName.equals(other.roleName))
-            return false;
-        return true;
+            return other.roleName == null;
+        } else return roleName.equals(other.roleName);
     }
 }

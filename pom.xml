@@ -55,34 +55,39 @@
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jdbc</artifactId>
+            <version>2.1.5.RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
-            <version>1.5.10.RELEASE</version>
+            <version>2.1.5.RELEASE</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
-            <version>1.5.10.RELEASE</version>
+            <version>2.1.5.RELEASE</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>
-            <version>1.5.10.RELEASE</version>
+            <version>2.1.5.RELEASE</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-thymeleaf</artifactId>
-            <version>1.5.10.RELEASE</version>
+            <version>2.1.5.RELEASE</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
-            <version>1.5.10.RELEASE</version>
+            <version>2.1.5.RELEASE</version>
         </dependency>
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
-            <version>1.5.10.RELEASE</version>
+            <version>2.1.5.RELEASE</version>
             <optional>true</optional>
         </dependency>
 
@@ -95,7 +100,7 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
-            <version>1.5.10.RELEASE</version>
+            <version>2.1.5.RELEASE</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -124,6 +129,11 @@
         </dependency>
 
         <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>1.2.17</version>
+        </dependency>
+        <dependency>
             <groupId>org.modelmapper</groupId>
             <artifactId>modelmapper</artifactId>
             <version>2.3.4</version>
@@ -144,7 +154,7 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>1.5.10.RELEASE</version>
+                <version>2.1.5.RELEASE</version>
                 <executions>
                     <execution>
                         <goals>
@@ -201,10 +211,6 @@
                     <artifactId>maven-surefire-plugin</artifactId>
                     <version>2.22.0</version>
                     <configuration>
-                        <!-- <forkMode>once</forkMode> -->
-                        <suitexmlfiles>
-                            <suitexmlfile>${basedir}/src/test/resources/testng.xml</suitexmlfile>
-                        </suitexmlfiles>
                         <includes>
                             <include>**/*Tests.java</include>
                             <include>**/*Test.java</include>
@@ -247,9 +253,8 @@
                 <version>3.0.0</version>
                 <configuration>
                     <dependencyDetailsEnabled>true</dependencyDetailsEnabled>
-                    <dependencyLocationsEnabled>false</dependencyLocationsEnabled>
                 </configuration>
-                <!-- <reportSets> <reportSet> <reports> <report>dependencies</report> 
+                <!-- <reportSets> <reportSet> <reports> <report>dependencies</report>
                     <report>scm</report> </reports> </reportSet> </reportSets> -->
             </plugin>
             <plugin>
@@ -266,9 +271,6 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-pmd-plugin</artifactId>
                 <version>3.10.0</version>
-                <configuration>
-                    <linkXref>true</linkXref>
-                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>

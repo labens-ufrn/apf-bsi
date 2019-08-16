@@ -4,13 +4,13 @@ import java.util.List;
 
 public class ProjectSuggestionWrapper {
 
-    List<ProjectSuggestion> suggestions;
+    private List<ProjectSuggestion> suggestions;
 
     public List<ProjectSuggestion> getSuggestions() {
       return suggestions;
     }
 
-    public void setSuggestions(List<ProjectSuggestion> suggestions) {
+    void setSuggestions(List<ProjectSuggestion> suggestions) {
       this.suggestions = suggestions;
   }
 
