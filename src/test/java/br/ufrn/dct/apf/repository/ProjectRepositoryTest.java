@@ -28,7 +28,7 @@ public class ProjectRepositoryTest extends AbstractTestNGSpringContextTests {
 
     @Autowired
     private UserRepository userRepository;
-    
+
     @Autowired
     private AttributionRepository attribRepository;
 
@@ -63,8 +63,8 @@ public class ProjectRepositoryTest extends AbstractTestNGSpringContextTests {
     @AfterMethod
     public void endTest() {
         softAssert = null;
-        repository.delete(p1.getId());
-        userRepository.delete(user1.getId());
+        repository.deleteById(p1.getId());
+        userRepository.deleteById(user1.getId());
         p1 = null;
         user1 = null;
     }

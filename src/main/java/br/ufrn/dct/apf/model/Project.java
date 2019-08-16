@@ -1,30 +1,19 @@
 package br.ufrn.dct.apf.model;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.validation.constraints.NotNull;
-
-import org.hibernate.validator.constraints.NotEmpty;
-import org.springframework.format.annotation.DateTimeFormat;
-
 /**
  * The Project class represents Software Design objects with their basic elements:
- *  name, description, user stories list, data function list (database), 
- *  and list of transaction functions (requirements). 
+ *  name, description, user stories list, data function list (database),
+ *  and list of transaction functions (requirements).
  * We follow an agile methodology based on XP and YP (easYProcess).
  * @author Taciano Morais Silva
  * @version 1.0
@@ -56,7 +45,7 @@ public class Project implements Serializable {
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date createdOn;
-    
+
     @Column(name = "isPrivate", columnDefinition = "boolean default false")
     @NotNull
     private Boolean isPrivate;
@@ -69,7 +58,7 @@ public class Project implements Serializable {
 
     @OneToMany(mappedBy = "project", targetEntity = UserStory.class, orphanRemoval = true, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<UserStory> userStories = new HashSet<>();
-    
+
     @OneToMany(mappedBy = "project", targetEntity = DataFunction.class, orphanRemoval = true, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<DataFunction> dataFunctions = new HashSet<>();
     
@@ -137,7 +126,7 @@ public class Project implements Serializable {
     public void setUserStories(Set<UserStory> userStories) {
         this.userStories = userStories;
     }
-    
+
     public Set<DataFunction> getDataFunctions() {
         return dataFunctions;
     }
@@ -186,10 +175,7 @@ public class Project implements Serializable {
         } else if (!id.equals(other.id))
             return false;
         if (name == null) {
-            if (other.name != null)
-                return false;
-        } else if (!name.equals(other.name))
-            return false;
-        return true;
+            return other.name == null;
+        } else return name.equals(other.name);
     }
 }

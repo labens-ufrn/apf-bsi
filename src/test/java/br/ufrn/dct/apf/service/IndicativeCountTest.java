@@ -65,7 +65,7 @@ public class IndicativeCountTest extends AbstractServiceTest {
         //userStoryService.delete(us1.getId());
         //userStoryService.delete(us2.getId());
         projectService.delete(apf.getId());
-        userRepository.delete(manager.getId());
+        userRepository.deleteById(manager.getId());
         apf = null;
         manager = null;
     }
@@ -78,7 +78,7 @@ public class IndicativeCountTest extends AbstractServiceTest {
         for (UserStory userStory : uss) {
             int fp = count.calculeFunctionPoint(userStory);
             softAssert.assertNotNull(fp, "T01 - NotNull: " + userStory.getName());
-            
+
             Set<DataFunction> data = userStory.getDataFunctions();
             for (DataFunction df : data) {
                 int fpdf = count.calculeFunctionPoint(df);
@@ -141,13 +141,13 @@ public class IndicativeCountTest extends AbstractServiceTest {
 
         softAssert.assertAll();
     }
-    
+
     @Test(expectedExceptions = BusinessRuleException.class, expectedExceptionsMessageRegExp = "error.count.indicative.datafunction.not.exists")
     public void countDataFunctionNull() throws BusinessRuleException {
         DataFunction df = null;
         count.calculeFunctionPoint(df);
     }
-    
+
     @Test(expectedExceptions = BusinessRuleException.class, expectedExceptionsMessageRegExp = "error.count.indicative.datafunction.not.exists")
     public void countDataFunctionNotExists() throws BusinessRuleException {
         DataFunction df = DataFunction.createEIF("Nome");

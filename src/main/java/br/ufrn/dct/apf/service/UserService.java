@@ -62,10 +62,10 @@ public class UserService extends AbstractService {
     }
 
     public User findOne(Long id) {
-        return userRepository.findOne(id);
+        return userRepository.findById(id).orElse(null);
     }
 
     public void delete(Long id) {
-        userRepository.delete(id);
+        userRepository.deleteById(id);
     }
 }

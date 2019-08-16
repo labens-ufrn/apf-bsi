@@ -1,5 +1,7 @@
 # Analisador de Pontos de Função
 
+[![Build Status](https://travis-ci.com/labens-ufrn/apf-bsi.svg?branch=master)](https://travis-ci.com/labens-ufrn/apf-bsi)
+
 Sistema para facilitar a contagem na análise por pontos de função (APF) desenvolvido para ser utilizado nas disciplinas de Engenharia de Software do curso de Bacharelado em Sistemas de Informação do CERES/UFRN.
 
 ## Padrões de Codificação

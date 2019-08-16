@@ -12,21 +12,55 @@ import br.ufrn.dct.apf.repository.DataFunctionRepository;
 public class DataFunctionService extends AbstractService {
 
     @Autowired
-    private DataFunctionRepository repository;
+    private DataFunctionRepository dataFunctionRepository;
 
     public List<DataFunction> findAll() {
-        return repository.findAll();
+        return dataFunctionRepository.findAll();
     }
 
     public DataFunction findOne(Long id) {
-        return repository.findOne(id);
+        return dataFunctionRepository.findById(id).orElse(null);
     }
-    
+
+    public DataFunction save(DataFunctionDTO dfDTO) {
+        DataFunction df = createDF(dfDTO);
+        return save(df);
+    }
+
     public DataFunction save(DataFunction df) {
-        return repository.saveAndFlush(df);
+        return dataFunctionRepository.saveAndFlush(df);
+    }
+
+    private DataFunction createDF(DataFunctionDTO dfDTO) {
+        DataFunction df = new DataFunction();
+        if (dfDTO.getType().equals(DataFunction.TYPE_ILF)) {
+            df = DataFunction.createILF(dfDTO.getName());
+        }
+        if (dfDTO.getType().equals(DataFunction.TYPE_EIF)) {
+            df = DataFunction.createEIF(dfDTO.getName());
+        }
+        df.setRecordElementTypes(dfDTO.getRecordElementTypes());
+        df.setDataElementTypes(dfDTO.getDataElementTypes());
+        df.setProject(dfDTO.getProject());
+        df.setUserStory(dfDTO.getUserStory());
+
+        return df;
+    }
+
+    private DataFunctionDTO createDTO(DataFunction df) {
+        DataFunctionDTO dto = new DataFunctionDTO();
+        dto.setId(df.getId());
+        dto.setName(df.getName());
+        dto.setType(df.getType());
+        dto.setRecordElementTypes(df.getRecordElementTypes());
+        dto.setDataElementTypes(df.getDataElementTypes());
+        dto.setProject(df.getProject());
+        dto.setUserStory(df.getUserStory());
+
+        return dto;
     }
 
     public void delete(Long id) {
-        repository.delete(id);
+        dataFunctionRepository.deleteById(id);
     }
 }

@@ -5,7 +5,7 @@ public class ProjectSuggestion {
     String value;
     String data;
 
-    public ProjectSuggestion(String name) {
+    ProjectSuggestion(String name) {
           this.value = name;
           this.data = "";
         }

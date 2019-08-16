@@ -26,7 +26,7 @@ public class ProjectService extends AbstractService {
 
     @Autowired
     private ProjectRepository repository;
-    
+
     @Autowired
     private AttributionRepository attribRepository;
 
@@ -46,9 +46,9 @@ public class ProjectService extends AbstractService {
     }
 
     public Project findOne(Long id) {
-        return repository.findOne(id);
+        return repository.findById(id).orElse(null);
     }
-    
+
     public List<Project> findByIsPrivateFalse() {
         return repository.findByIsPrivateFalse();
     }
@@ -98,7 +98,7 @@ public class ProjectService extends AbstractService {
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public void delete(Long id) {
         LOGGER.log(Level.INFO, "ProjectService.delete.id = "+ id);
-        repository.delete(id);
+        repository.deleteById(id);
     }
 
     private void checkProjectNull(Object obj) throws BusinessRuleException {
