@@ -46,7 +46,7 @@ public class Project implements Serializable {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date createdOn;
 
-    @Column(name = "isPrivate", columnDefinition = "boolean default false")
+    @Column(name = "isPrivate", columnDefinition = "BIT", length = 1)
     @NotNull
     private Boolean isPrivate;
 
