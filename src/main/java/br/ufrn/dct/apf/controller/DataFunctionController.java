@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import br.ufrn.dct.apf.dto.DataFunctionDTO;
-import br.ufrn.dct.apf.model.DataFunction;
 import br.ufrn.dct.apf.model.Project;
 import br.ufrn.dct.apf.model.User;
 import br.ufrn.dct.apf.model.UserStory;
@@ -107,8 +106,8 @@ public class DataFunctionController extends AbstractController {
             p = projects.get(0);
             dfDto.setProject(p);
         }
-        DataFunction df = convertToEntity(dfDto);
-        service.save(df);
+
+        service.save(dfDto);
 
         DataFunctionDTO newDF = new DataFunctionDTO();
         newDF.setProject(p);
