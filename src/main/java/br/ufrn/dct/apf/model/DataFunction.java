@@ -85,7 +85,6 @@ public class DataFunction implements Serializable {
      *
      * Source: <a href="http://www.softwaremetrics.com/fpafund.htm">http://www.softwaremetrics.com/fpafund.htm</a>
      *
-     * @author Taciano Morais Silva
      * @since 04/04/2019
      * @param name A data function's name.
      */
@@ -104,7 +103,6 @@ public class DataFunction implements Serializable {
      *
      * Source: <a href="http://www.softwaremetrics.com/fpafund.htm">http://www.softwaremetrics.com/fpafund.htm</a>
      *
-     * @author Taciano Morais Silva
      * @since 04/04/2019
      * @param name A data function's name.
      */
