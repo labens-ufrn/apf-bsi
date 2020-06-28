@@ -86,7 +86,7 @@ public class UserStoryController extends AbstractController {
         
         if (us != null && us.getProject() != null && us.getProject().getId() != null) {
             project = projectService.findOne(us.getProject().getId());
-        } else {
+        } else if (us != null) {
             List<Project> projects = projectService.findByName(current.getId(), us.getProject().getName());
             project = projects.get(0);
         }
