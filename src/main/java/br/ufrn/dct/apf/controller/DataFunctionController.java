@@ -6,7 +6,8 @@ import java.util.Set;
 
 import javax.validation.Valid;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -28,7 +29,7 @@ public class DataFunctionController extends AbstractController {
     /**
      * Logger.
      */
-    private static final Logger LOGGER = Logger.getLogger(DataFunctionController.class.getName());
+    private static final Logger logger = LogManager.getLogger(DataFunctionController.class);
 
     @Autowired
     private DataFunctionService service;
@@ -94,7 +95,7 @@ public class DataFunctionController extends AbstractController {
     public ModelAndView save(@Valid DataFunctionDTO dfDto, BindingResult result) {
 
         if (result.hasErrors()) {
-            LOGGER.error("error.df.controller.save");
+            logger.error("error.df.controller.save");
             return add(dfDto);
         }
 
