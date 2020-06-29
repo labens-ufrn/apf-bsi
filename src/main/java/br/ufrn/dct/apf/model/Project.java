@@ -178,4 +178,10 @@ public class Project implements Serializable {
             return other.name == null;
         } else return name.equals(other.name);
     }
+    
+    @Override
+    public String toString() {
+        // TODO Auto-generated method stub
+        return "Project@" + this.id + "[" + this.name + "]";
+    }
 }
