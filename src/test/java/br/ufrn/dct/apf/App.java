@@ -11,7 +11,7 @@ public class App {
 
     public static void main(String[] args) {
 
-        HashSet < String > celebrities = new HashSet < String > ();
+        HashSet<String> celebrities = new HashSet<String>();
 
         celebrities.add("Tom Cruise");
         celebrities.add("Akshay Kumar");
@@ -44,7 +44,7 @@ public class App {
         p1.setDescription("Analisador de Pontos por Função");
         p1.setCreatedOn(GregorianCalendar.getInstance().getTime());
 
-        HashSet < Member > team = new HashSet < Member > ();
+        HashSet<Member> team = new HashSet<Member>();
 
         Member m1 = new Member();
         m1.setId(1L);
