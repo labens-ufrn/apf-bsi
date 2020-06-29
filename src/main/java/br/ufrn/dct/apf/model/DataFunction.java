@@ -216,4 +216,10 @@ public class DataFunction implements Serializable {
             return other.name == null;
         } else return name.equals(other.name);
     }
+    
+    @Override
+    public String toString() {
+        // TODO Auto-generated method stub
+        return "DataFunction@" + this.id + "@"+ this.type +"[" + this.name + "]";
+    }
 }
