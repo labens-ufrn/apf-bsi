@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import br.ufrn.dct.apf.count.EstimativeCount;
 import br.ufrn.dct.apf.count.IndicativeCount;
 import br.ufrn.dct.apf.model.User;
 import br.ufrn.dct.apf.service.ProjectService;
@@ -98,7 +99,8 @@ public class LoginController extends AbstractController {
         setUserAuth(mv);
 
         mv.addObject("projects", projectService.findByIsPrivateFalse());
-        mv.addObject("counter", new IndicativeCount());
+        mv.addObject("icounter", new IndicativeCount());
+        mv.addObject("ecounter", new EstimativeCount());
         
         return mv;
     }
