@@ -181,7 +181,6 @@ public class Project implements Serializable {
     
     @Override
     public String toString() {
-        // TODO Auto-generated method stub
         return "Project@" + this.id + "[" + this.name + "]";
     }
 }
