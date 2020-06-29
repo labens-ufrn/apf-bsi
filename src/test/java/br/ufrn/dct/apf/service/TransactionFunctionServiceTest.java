@@ -92,7 +92,7 @@ public class TransactionFunctionServiceTest extends AbstractServiceTest {
         transService.delete(tf4.getId());
         userStoryService.delete(us.getId());
         projectService.delete(p1.getId());
-        userRepository.delete(manager.getId());
+        userRepository.delete(manager);
         p1 = null;
         tf1 = null;
         tf2 = null;
@@ -356,8 +356,8 @@ public class TransactionFunctionServiceTest extends AbstractServiceTest {
 
         softAssert.assertFalse(tf3.equals(tf1), "T16 - Equals:TestDifferent");
         
-        softAssert.assertEquals(tf1.getDataElementTypes(), 10, "T17 - Equals:TestDifferent");
-        softAssert.assertEquals(tf1.getFileTypeReferenced(), 1, "T18 - Equals:TestDifferent");
+        softAssert.assertEquals(tf1.getDataElementTypes(),  Integer.valueOf(10), "T17 - Equals:TestDifferent");
+        softAssert.assertEquals(tf1.getFileTypeReferenced(), Integer.valueOf(1), "T18 - Equals:TestDifferent");
 
         softAssert.assertAll();
     }
