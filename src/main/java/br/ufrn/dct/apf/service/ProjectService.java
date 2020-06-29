@@ -2,8 +2,8 @@ package br.ufrn.dct.apf.service;
 
 import java.util.List;
 
-import org.apache.log4j.Level;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
@@ -22,7 +22,7 @@ public class ProjectService extends AbstractService {
     /**
      * Logger.
      */
-    private static final Logger LOGGER = Logger.getLogger(ProjectService.class.getName());
+    private static final Logger logger = LogManager.getLogger(ProjectService.class);
 
     @Autowired
     private ProjectRepository repository;
@@ -59,7 +59,7 @@ public class ProjectService extends AbstractService {
     }
 
     public Project save(Project project, User owner) throws BusinessRuleException {
-        LOGGER.log(Level.INFO, "save " + project);
+        logger.info("save " + project);
         checkProjectNull(project);
         checkMemberNull(owner);
 
@@ -81,7 +81,7 @@ public class ProjectService extends AbstractService {
     }
 
     private void checkOwnerMember(Project project, User user) throws BusinessRuleException {
-        LOGGER.log(Level.INFO, "checkMember " + project + " - " + user);
+        logger.info("checkMember " + project + " - " + user);
         if (!isOwnerMember(project, user)) {
             throw new BusinessRuleException("error.project.service.member.not.exists");
         }
@@ -97,7 +97,7 @@ public class ProjectService extends AbstractService {
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public void delete(Long id) {
-        LOGGER.log(Level.INFO, "ProjectService.delete.id = "+ id);
+        logger.info("delete.id = " + id);
         repository.deleteById(id);
     }
 

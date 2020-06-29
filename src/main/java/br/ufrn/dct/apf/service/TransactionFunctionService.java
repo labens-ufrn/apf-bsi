@@ -5,11 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.ufrn.dct.apf.dto.DataFunctionDTO;
 import br.ufrn.dct.apf.dto.TransactionFunctionDTO;
-import br.ufrn.dct.apf.model.DataFunction;
 import br.ufrn.dct.apf.model.TransactionFunction;
-import br.ufrn.dct.apf.repository.DataFunctionRepository;
 import br.ufrn.dct.apf.repository.TransactionFunctionRepository;
 
 @Service
@@ -23,7 +20,7 @@ public class TransactionFunctionService extends AbstractService {
     }
 
     public TransactionFunction findOne(Long id) {
-        return repository.findOne(id);
+        return repository.findById(id).orElse(null);
     }
 
     public TransactionFunction save(TransactionFunctionDTO tfDTO) {
@@ -35,7 +32,7 @@ public class TransactionFunctionService extends AbstractService {
         return repository.saveAndFlush(df);
     }
 
-    private TransactionFunction createTF(TransactionFunctionDTO tfDTO) {
+    public TransactionFunction createTF(TransactionFunctionDTO tfDTO) {
         TransactionFunction tf = new TransactionFunction();
         if (tfDTO.getType().equals(TransactionFunction.TYPE_EI)) {
             tf = TransactionFunction.createEI(tfDTO.getName());
@@ -54,7 +51,7 @@ public class TransactionFunctionService extends AbstractService {
         return tf;
     }
     
-    private TransactionFunctionDTO createDTO(TransactionFunction tf) {
+    public TransactionFunctionDTO createDTO(TransactionFunction tf) {
         TransactionFunctionDTO dto = new TransactionFunctionDTO();
         dto.setId(tf.getId());
         dto.setName(tf.getName());
@@ -68,6 +65,6 @@ public class TransactionFunctionService extends AbstractService {
     }
 
     public void delete(Long id) {
-        repository.delete(id);
+        repository.deleteById(id);
     }
 }
