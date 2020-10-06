@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.ufrn.dct.apf.dto.DataFunctionDTO;
 import br.ufrn.dct.apf.model.DataFunction;
 import br.ufrn.dct.apf.repository.DataFunctionRepository;
 

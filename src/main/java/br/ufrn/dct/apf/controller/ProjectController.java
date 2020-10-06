@@ -5,8 +5,8 @@ import java.util.List;
 
 import javax.validation.Valid;
 
-import org.apache.log4j.Level;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -28,7 +28,7 @@ public class ProjectController extends AbstractController {
     /**
      * Logger.
      */
-    private static final Logger LOGGER = Logger.getLogger(ProjectService.class.getName());
+    private static final Logger logger = LogManager.getLogger(ProjectController.class);
 
     @Autowired
     private ProjectService service;
@@ -91,7 +91,7 @@ public class ProjectController extends AbstractController {
         try {
             service.save(project, user);
         } catch (BusinessRuleException e) {
-            LOGGER.error("error.project.controller.save", e);
+            logger.error("error.project.controller.save", e);
             modelAndView.addObject("errorMessage", "User has been registered successfully");
         }
 
@@ -109,7 +109,7 @@ public class ProjectController extends AbstractController {
     @GetMapping(value = "/project/suggestion", produces = "application/json")
     @ResponseBody
     public ProjectSuggestionWrapper autocompleteSuggestions(@RequestParam("searchstr") String searchstr) {
-        LOGGER.log(Level.INFO, "searchstr = "+ searchstr);
+        logger.debug("searchstr = "+ searchstr);
 
         List<ProjectSuggestion> suggestions = new ArrayList<>();
         User current = getCurrentUser();

@@ -4,6 +4,13 @@
 
 Sistema para facilitar a contagem na análise por pontos de função (APF) desenvolvido para ser utilizado nas disciplinas de Engenharia de Software do curso de Bacharelado em Sistemas de Informação do CERES/UFRN.
 
+## Documentação do Projeto
+
+* Plano de Iteração
+* Documento de Visão
+* Lista de User Stories
+* Contagem de Tamanho Funcional com Análise por Pontos de Função
+
 ## Padrões de Codificação
 
 * Insert spaces for tabs
@@ -60,4 +67,4 @@ Desenvolvido a partir do tutorial e do código linkado abaixo:
 
 ### Tutoriais
 
-Na página [Tutoriais](Tutorials.md) temos a lista de tutoriais consultados.
+Na página [Tutoriais](docs/Tutorials.md) temos a lista de tutoriais consultados.

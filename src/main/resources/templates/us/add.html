@@ -51,6 +51,14 @@
                                     </div>
                                 </div>
                                 <div class="form-group row">
+                                    <div class="col-md-2">
+                                        <label>US id: </label>
+                                        <input  type="text" class="form-control input-sm" id="id" th:field="*{id}" readOnly="readonly"/>
+                                        <label>Project id: </label>
+                                        <input type="text" class="form-control input-sm" id="project_id" th:field="*{project.id}" readOnly="readonly"/>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
                                     <div class="col-md-4" th:classappend="${#fields.hasErrors('project.name')}? 'has-error'">
                                         <div class="input-field col s12">
                                         <label for="autocomplete-input">Projeto</label>

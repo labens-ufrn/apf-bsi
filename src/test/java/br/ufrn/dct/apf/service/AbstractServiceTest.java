@@ -25,6 +25,9 @@ public abstract class AbstractServiceTest extends AbstractTestNGSpringContextTes
     
     @Autowired
     private DataFunctionService dataService;
+    
+    @Autowired
+    private TransactionFunctionService transService;
 
     protected User createUser(String name, String lastName) {
         User user = new User();
@@ -72,6 +75,11 @@ public abstract class AbstractServiceTest extends AbstractTestNGSpringContextTes
         aliProject.setProject(apf);
         dataService.save(aliProject);
         us1.addData(aliProject);
+        
+        TransactionFunction eeProject = transService.createTF(createEI("Add Project", 1, 5));
+        eeProject.setProject(apf);
+        transService.save(eeProject);
+        us1.addTransaction(eeProject);
 
         UserStory us2 = new UserStory("US02", "Manter User");
         us2.setProject(apf);
@@ -148,7 +156,7 @@ public abstract class AbstractServiceTest extends AbstractTestNGSpringContextTes
 
     protected DataFunction createAIE() {
         DataFunction aieEndereco = DataFunction.createEIF("AIE Endereco");
-        // Colocar 1 Record Element Types (RET): Tabelas Endereço
+        // Colocar 1 Record Element Types (RET): Tabelas EndereçocreateTF
         aieEndereco.setRecordElementTypes(1L);
         // Somar os Data Element Types (DET): Atributos 7 (endereco).
         aieEndereco.setDataElementTypes(7L);

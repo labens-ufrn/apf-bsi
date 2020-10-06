@@ -7,6 +7,11 @@ import java.util.Set;
 import br.ufrn.dct.apf.model.Project;
 import br.ufrn.dct.apf.model.UserStory;
 
+/**
+ * 
+ * @author Taciano Morais Silva
+ * @since 04/04/2019
+ */
 public class DataFunctionDTO implements Serializable {
 
     /**
@@ -51,10 +56,6 @@ public class DataFunctionDTO implements Serializable {
      * The external interface file is an internal logical file for another application.
      *
      * Source: <a href="http://www.softwaremetrics.com/fpafund.htm">http://www.softwaremetrics.com/fpafund.htm</a>
-     *
-     * @author Taciano Morais Silva
-     * @since 04/04/2019
-     * 
      */
     public DataFunctionDTO() {
     }
