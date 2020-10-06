@@ -36,12 +36,16 @@
                                             <th>ID</th>
                                             <th>Nome</th>
                                             <th>
+                                                <span id="th-us" data-placement="top" data-toggle="tooltip" 
+                                            data-original-title="User Stories">Nº US</span>
+                                            </th>
+                                            <th>
                                                 <span id="th-df" data-placement="top" data-toggle="tooltip" 
                                             data-original-title="Funções de Dados">Nº DF</span>
                                             </th>
                                             <th>
-                                                <span id="th-us" data-placement="top" data-toggle="tooltip" 
-                                            data-original-title="User Stories">Nº US</span>
+                                                <span id="th-tf" data-placement="top" data-toggle="tooltip" 
+                                            data-original-title="Funções de Transação">Nº TF</span>
                                             </th>
                                             <th>
                                                 <span id="th-ci" data-placement="top" data-toggle="tooltip" 
@@ -58,8 +62,9 @@
                                         <tr th:each="project : ${projects}">
                                             <td th:text="${project.id}"></td>
                                             <td th:text="${project.name}"></td>
-                                            <td th:text="${project.dataFunctions.size()}"></td>
                                             <td th:text="${project.userStories.size()}"></td>
+                                            <td th:text="${project.dataFunctions.size()}"></td>
+                                            <td th:text="${project.transactionFunctions.size()}"></td>  
                                             <td th:text="${icounter.calculeFunctionPoint(project)}"></td>
                                             <td th:text="${ecounter.calculeFunctionPoint(project)} + ' PF'">PF</td>
                                             <td>
@@ -91,6 +96,7 @@
         });
         
         $('#th-df').tooltip();
+        $('#th-tf').tooltip();
         $('#th-us').tooltip();
         $('#th-ci').tooltip();
         $('#th-ce').tooltip();
