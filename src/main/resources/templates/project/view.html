@@ -81,8 +81,8 @@
                                 </td>
                                 <td>
                                     <div class="btn-group pull-right">
-                                        <a class="btn btn-sm btn-primary" th:href="@{/edit/{id}(id=${dataFunction.id})}" >Editar</a>
-                                        <a class="delete btn btn-sm btn-danger" th:href="@{/delete/{id}(id=${dataFunction.id})}">Excluir</a>
+                                        <a class="btn btn-sm btn-primary" th:href="@{/df/edit/{id}(id=${dataFunction.id})}" >Editar</a>
+                                        <a class="delete btn btn-sm btn-danger" th:href="@{/df/delete/{id}(id=${dataFunction.id})}">Excluir</a>
                                     </div>
                                 </td>
                             </tr>
@@ -154,8 +154,8 @@
                                 <td th:text="${member.attribution.name}"></td>
                                 <td>
                                     <div class="btn-group pull-right">
-                                        <a class="btn btn-sm btn-primary" th:href="@{/edit/{id}(id=${member.id})}" >Editar</a>
-                                        <a class="delete btn btn-sm btn-danger" th:href="@{/delete/{id}(id=${member.id})}">Excluir</a>
+                                        <a class="btn btn-sm btn-primary" th:href="@{/member/edit/{id}(id=${member.id})}" >Editar</a>
+                                        <a class="delete btn btn-sm btn-danger" th:href="@{/member/delete/{id}(id=${member.id})}">Excluir</a>
                                     </div>
                                 </td>
                             </tr>
