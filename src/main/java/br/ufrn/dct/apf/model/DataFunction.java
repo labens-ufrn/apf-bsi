@@ -85,7 +85,6 @@ public class DataFunction implements Serializable {
      *
      * Source: <a href="http://www.softwaremetrics.com/fpafund.htm">http://www.softwaremetrics.com/fpafund.htm</a>
      *
-     * @author Taciano Morais Silva
      * @since 04/04/2019
      * @param name A data function's name.
      */
@@ -104,7 +103,6 @@ public class DataFunction implements Serializable {
      *
      * Source: <a href="http://www.softwaremetrics.com/fpafund.htm">http://www.softwaremetrics.com/fpafund.htm</a>
      *
-     * @author Taciano Morais Silva
      * @since 04/04/2019
      * @param name A data function's name.
      */
@@ -217,5 +215,10 @@ public class DataFunction implements Serializable {
         if (name == null) {
             return other.name == null;
         } else return name.equals(other.name);
+    }
+    
+    @Override
+    public String toString() {
+        return "DataFunction@" + this.id + "@"+ this.type +"[" + this.name + "]";
     }
 }

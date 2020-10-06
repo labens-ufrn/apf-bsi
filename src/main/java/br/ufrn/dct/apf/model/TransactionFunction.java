@@ -224,4 +224,9 @@ public class TransactionFunction implements Serializable {
             return false;
         return true;
     }
+    
+    @Override
+    public String toString() {
+        return "TransactionFunction@" + this.id + "@"+ this.type +"[" + this.name + "]";
+    }
 }

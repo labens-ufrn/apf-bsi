@@ -4,7 +4,8 @@ import java.util.List;
 
 import javax.validation.Valid;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -25,7 +26,7 @@ public class UserStoryController extends AbstractController {
     /**
      * Logger.
      */
-    private static final Logger LOGGER = Logger.getLogger(UserStoryController.class.getName());
+    private static final Logger logger = LogManager.getLogger(UserStoryController.class);
 
     @Autowired
     private UserStoryService service;
@@ -52,38 +53,51 @@ public class UserStoryController extends AbstractController {
 
         return mv;
     }
+    
+    @GetMapping("/us/edit/{id}")
+    public ModelAndView edit(@PathVariable("id") Long id) {
+
+        return add(service.findOne(id));
+    }
 
     @GetMapping("/us/list")
     public ModelAndView list() {
         ModelAndView mv = new ModelAndView("us/list");
-
         User current = getCurrentUser();
 
         List<Project> projects = projectService.findByUserId(current.getId());
 
         mv.addObject("projects", projects);
-
+        mv.addObject("message", "Baeldung");
         return mv;
     }
 
     @PostMapping("/us/save")
     public ModelAndView save(@Valid UserStory us, BindingResult result) {
-
+        ModelAndView modelAndView = new ModelAndView();
         if (result.hasErrors()) {
-            LOGGER.error("error.us.controller.save");
+            logger.error("error.us.controller.save");
+            modelAndView.addObject("errorMessage", "UserStory com erro!");
             return add(us);
         }
 
         User current = getCurrentUser();
+        
+        Project project = null;
+        
+        if (us.getProject() != null && us.getProject().getId() != null) {
+            project = projectService.findOne(us.getProject().getId());
+        } else {
+            List<Project> projects = projectService.findByName(current.getId(), us.getProject().getName());
+            project = projects.get(0);
+        }
 
-        List<Project> projects = projectService.findByName(current.getId(), us.getProject().getName());
-
-        us.setProject(projects.get(0));
+        us.setProject(project);
 
         service.save(us);
 
         UserStory newUS = new UserStory();
-        newUS.setProject(projects.get(0));
+        newUS.setProject(project);
 
         return add(newUS);
     }

@@ -5,9 +5,9 @@
 
 <head>
     <title>Home Page</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" th:href="@{/css/home.css}" />
     <link rel="stylesheet" type="text/css" th:href="@{/css/simple-sidebar.css}" />
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.bundle.min.js"></script>
@@ -35,25 +35,42 @@
                                         <tr>
                                             <th>ID</th>
                                             <th>Nome</th>
-                                            <th>Nº DF</th>
-                                            <th>Nº US</th>
+                                            <th>
+                                                <span id="th-us" data-placement="top" data-toggle="tooltip" 
+                                            data-original-title="User Stories">Nº US</span>
+                                            </th>
+                                            <th>
+                                                <span id="th-df" data-placement="top" data-toggle="tooltip" 
+                                            data-original-title="Funções de Dados">Nº DF</span>
+                                            </th>
+                                            <th>
+                                                <span id="th-tf" data-placement="top" data-toggle="tooltip" 
+                                            data-original-title="Funções de Transação">Nº TF</span>
+                                            </th>
                                             <th>
                                                 <span id="th-ci" data-placement="top" data-toggle="tooltip" 
-                                            data-original-title="Contagem Indicativa">Contagem</span>
+                                            data-original-title="Contagem Indicativa">Ci</span>
                                             </th>
-                                            <th>Team</th>
+                                            <th>
+                                                <span id="th-ce" data-placement="top" data-toggle="tooltip" 
+                                            data-original-title="Contagem Estimativa">Ce</span>
+                                            </th>
+                                            <th>Equipe</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr th:each="project : ${projects}">
                                             <td th:text="${project.id}"></td>
                                             <td th:text="${project.name}"></td>
-                                            <td th:text="${project.dataFunctions.size()}"></td>
                                             <td th:text="${project.userStories.size()}"></td>
-                                            <td th:text="${counter.calculeFunctionPoint(project)}">Started</td>
+                                            <td th:text="${project.dataFunctions.size()}"></td>
+                                            <td th:text="${project.transactionFunctions.size()}"></td>  
+                                            <td th:text="${icounter.calculeFunctionPoint(project)}"></td>
+                                            <td th:text="${ecounter.calculeFunctionPoint(project)} + ' PF'">PF</td>
                                             <td>
                                                 <ul>
-                                                    <li th:each="member : ${project.team}" th:text="${member.user.name}">user name</li>
+                                                    <li th:each="member : ${project.team}" th:text="${member.user.name} 
+                                                    + ' [' +${member.attribution} + ']'">user name</li>
                                                 </ul>
                                             </td>
                                         </tr>
@@ -78,7 +95,11 @@
             $("#wrapper").toggleClass("toggled");
         });
         
+        $('#th-df').tooltip();
+        $('#th-tf').tooltip();
+        $('#th-us').tooltip();
         $('#th-ci').tooltip();
+        $('#th-ce').tooltip();
     </script>
 </body>
 </html>

@@ -1,6 +1,6 @@
 <?xml version = "1.0" encoding = "UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="TestNGSpringIntegrationSuite" verbose="5" allow-return-values="true">
+<suite name="TestNGSpringIntegrationSuite" verbose="3" allow-return-values="true">
 
     <test name="TestNGSpringIntegration">
         <classes>
@@ -13,7 +13,9 @@
             <class name="br.ufrn.dct.apf.service.UserStoryServiceTest" />
             <class name="br.ufrn.dct.apf.service.DataFunctionServiceTest" />
             <class name="br.ufrn.dct.apf.service.TransactionFunctionServiceTest" />
+            <class name="br.ufrn.dct.apf.service.EstimateCountTest" />
             <class name="br.ufrn.dct.apf.service.IndicativeCountTest" />
+            <class name="br.ufrn.dct.apf.APFApplicationTest" />
             <class name="br.ufrn.dct.apf.ConceitosTest" />
         </classes>
     </test>

@@ -10,7 +10,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
-import br.ufrn.dct.apf.count.IndicativeCount;
+import br.ufrn.dct.apf.count.EstimativeCount;
 import br.ufrn.dct.apf.model.DataFunction;
 import br.ufrn.dct.apf.model.Project;
 import br.ufrn.dct.apf.model.User;
@@ -23,7 +23,7 @@ public class EstimateCountTest extends AbstractServiceTest {
 
     private SoftAssert softAssert;
 
-    IndicativeCount count;
+    EstimativeCount count;
 
     @Autowired
     private ProjectService projectService;
@@ -39,21 +39,19 @@ public class EstimateCountTest extends AbstractServiceTest {
     public void startTest() throws BusinessRuleException {
         softAssert = new SoftAssert();
 
-        count = new IndicativeCount();
+        count = new EstimativeCount();
 
         apf = createProjectAPF();
 
-        //Create User Manager
+        // Create User Manager
         manager = createUser("Taciano","Silva");
         userRepository.save(manager);
 
-        //Save Project with Manager
+        // Save Project with Manager
         projectService.save(apf, manager);
 
+        // Add User Stories
         addUserStoriesInAPF(apf);
-
-        //Update Project - Add User Stories
-        //apf = projectService.save(apf, manager);
 
         //Reload APF Project
         apf = projectService.findOne(apf.getId());
@@ -65,7 +63,7 @@ public class EstimateCountTest extends AbstractServiceTest {
         //userStoryService.delete(us1.getId());
         //userStoryService.delete(us2.getId());
         projectService.delete(apf.getId());
-        userRepository.delete(manager.getId());
+        userRepository.delete(manager);
         apf = null;
         manager = null;
     }
@@ -98,7 +96,7 @@ public class EstimateCountTest extends AbstractServiceTest {
         int fp = count.calculeFunctionPoint(apf);
 
         softAssert.assertNotNull(fp, "T01 - NotNull:");
-        softAssert.assertEquals(fp, 155, "T02 - Function Points: ");
+        softAssert.assertEquals(fp, 37, "T02 - Function Points: ");
 
         softAssert.assertAll();
     }
@@ -111,7 +109,7 @@ public class EstimateCountTest extends AbstractServiceTest {
         int fp = count.calculeFunctionPoint(us);
 
         softAssert.assertNotNull(fp, "T01 - NotNull:");
-        softAssert.assertEquals(fp, 35, "T02 - Function Points: ");
+        softAssert.assertEquals(fp, 7, "T02 - Function Points: ");
 
         softAssert.assertAll();
     }
@@ -124,7 +122,7 @@ public class EstimateCountTest extends AbstractServiceTest {
         int fp = count.calculeFunctionPoint(us);
 
         softAssert.assertNotNull(fp, "T01 - NotNull:");
-        softAssert.assertEquals(fp, 15, "T02 - Function Points: ");
+        softAssert.assertEquals(fp, 5, "T02 - Function Points: ");
 
         softAssert.assertAll();
     }
@@ -137,7 +135,7 @@ public class EstimateCountTest extends AbstractServiceTest {
         int fp = count.calculeFunctionPoint(us);
 
         softAssert.assertNotNull(fp, "T01 - NotNull:");
-        softAssert.assertEquals(fp, 50, "T02 - Function Points: ");
+        softAssert.assertEquals(fp, 12, "T02 - Function Points: ");
 
         softAssert.assertAll();
     }

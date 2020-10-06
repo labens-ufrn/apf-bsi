@@ -113,6 +113,16 @@ public class UserStory implements Serializable {
     public void setTransactionFunctions(Set<TransactionFunction> transactions) {
         this.transactions = transactions;
     }
+    
+    public void addTransaction(TransactionFunction transaction) {
+        if (transaction != null) {
+            transaction.setUserStory(this);
+        }
+
+        if (!transactions.contains(transaction)) {
+            transactions.add(transaction);
+        }
+    }
 
     @Override
     public int hashCode() {

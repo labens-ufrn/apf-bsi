@@ -16,33 +16,33 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import br.ufrn.dct.apf.dto.DataFunctionDTO;
+import br.ufrn.dct.apf.dto.TransactionFunctionDTO;
 import br.ufrn.dct.apf.model.Project;
 import br.ufrn.dct.apf.model.User;
 import br.ufrn.dct.apf.model.UserStory;
-import br.ufrn.dct.apf.service.DataFunctionService;
+import br.ufrn.dct.apf.service.TransactionFunctionService;
 import br.ufrn.dct.apf.service.ProjectService;
 
 @Controller
-public class DataFunctionController extends AbstractController {
+public class TransactionFunctionController extends AbstractController {
 
     /**
      * Logger.
      */
-    private static final Logger logger = LogManager.getLogger(DataFunctionController.class);
+    private static final Logger logger = LogManager.getLogger(TransactionFunctionController.class);
 
     @Autowired
-    private DataFunctionService service;
+    private TransactionFunctionService service;
 
     @Autowired
     private ProjectService projectService;
 
-    @GetMapping("/df/add/{projectId}")
-    public ModelAndView add(DataFunctionDTO df, @PathVariable("projectId") Long id) {
-
-        ModelAndView mv = new ModelAndView("df/add");
+    @GetMapping("/tf/add/{projectId}")
+    public ModelAndView add(TransactionFunctionDTO tf, @PathVariable("projectId") Long id) {
+        ModelAndView mv = new ModelAndView("tf/add");
+        
         Project project = projectService.findOne(id);
-        df.setProject(project);
+        tf.setProject(project);
         Set<UserStory> userStories = project.getUserStories();
         UserStory userStory = new UserStory();
 
@@ -50,22 +50,22 @@ public class DataFunctionController extends AbstractController {
         mv.addObject("userStories", userStories);
         mv.addObject("userStory", userStory);
 
-        mv.addObject("dfDTO", df);
+        mv.addObject("tfDTO", tf);
 
         return mv;
     }
 
-    @GetMapping("/df/add")
-    public ModelAndView add(DataFunctionDTO df) {
-        ModelAndView mv = new ModelAndView("df/add");
+    @GetMapping("/tf/add")
+    public ModelAndView add(TransactionFunctionDTO tf) {
+        ModelAndView mv = new ModelAndView("tf/add");
         setUserAuth(mv);
 
         Project project = new Project();
         Set<UserStory> userStories = new HashSet<>();
         UserStory userStory = new UserStory();
-        if (df != null && df.getProject() != null) {
-            project = projectService.findOne(df.getProject().getId());
-            df.setProject(project);
+        if (tf != null && tf.getProject() != null) {
+            project = projectService.findOne(tf.getProject().getId());
+            tf.setProject(project);
             userStories = project.getUserStories();
         }
 
@@ -73,14 +73,14 @@ public class DataFunctionController extends AbstractController {
         mv.addObject("userStories", userStories);
         mv.addObject("userStory", userStory);
 
-        mv.addObject("dfDTO", df);
+        mv.addObject("tfDTO", tf);
 
         return mv;
     }
 
-    @GetMapping("/df/list")
+    @GetMapping("/tf/list")
     public ModelAndView list() {
-        ModelAndView mv = new ModelAndView("df/list");
+        ModelAndView mv = new ModelAndView("tf/list");
 
         User current = getCurrentUser();
 
@@ -91,28 +91,28 @@ public class DataFunctionController extends AbstractController {
         return mv;
     }
 
-    @PostMapping("/df/save")
-    public ModelAndView save(@Valid DataFunctionDTO dfDto, BindingResult result) {
+    @PostMapping("/tf/save")
+    public ModelAndView save(@Valid TransactionFunctionDTO tfDto, BindingResult result) {
 
         if (result.hasErrors()) {
             logger.error("error.df.controller.save");
-            return add(dfDto);
+            return add(tfDto);
         }
 
         User current = getCurrentUser();
 
-        List<Project> projects = projectService.findByName(current.getId(), dfDto.getProject().getName());
+        List<Project> projects = projectService.findByName(current.getId(), tfDto.getProject().getName());
         Project p = null;
         if (!projects.isEmpty()) {
             p = projects.get(0);
-            dfDto.setProject(p);
+            tfDto.setProject(p);
         }
 
-        service.save(dfDto);
+        service.save(tfDto);
 
-        DataFunctionDTO newDF = new DataFunctionDTO();
-        newDF.setProject(p);
+        TransactionFunctionDTO newTF = new TransactionFunctionDTO();
+        newTF.setProject(p);
 
-        return add(newDF);
+        return add(newTF);
     }
 }
