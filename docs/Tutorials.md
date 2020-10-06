@@ -27,6 +27,11 @@ Lista de Links interessantes com Tutorias e informações de suporte para o proj
 
 * https://imasters.com.br/back-end/introducao-ao-framework-de-teste-do-spring-mvc-part-01
 
+### Servidor Apache Tomcat no Ubuntu
+
+* https://www.hostinger.com.br/tutoriais/como-instalar-o-tomcat
+* https://linuxize.com/post/how-to-install-tomcat-9-on-ubuntu-18-04/
+
 ### Padrão DTO
 
 * https://www.baeldung.com/entity-to-and-from-dto-for-a-java-spring-application
