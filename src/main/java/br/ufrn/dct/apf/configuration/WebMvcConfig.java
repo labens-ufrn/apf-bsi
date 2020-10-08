@@ -16,6 +16,9 @@ public class WebMvcConfig implements WebMvcConfigurer {
     @Value("${spring.datasource.url}")
     private String jdbcURl;
 
+    @Value("${spring.datasource.driverclassname}")
+    private String driverDB;
+
     @Value("${spring.datasource.username}")
     private String dbUsername;
 
@@ -30,10 +33,12 @@ public class WebMvcConfig implements WebMvcConfigurer {
     @Bean
     public DataSource getDataSource() {
         DataSourceBuilder<?> dataSourceBuilder = DataSourceBuilder.create();
-        dataSourceBuilder.driverClassName("com.mysql.jdbc.Driver");
+
+        dataSourceBuilder.driverClassName(driverDB);
         dataSourceBuilder.url(jdbcURl);
         dataSourceBuilder.username(dbUsername);
         dataSourceBuilder.password(dbPassword);
+
         return dataSourceBuilder.build();
     }
 }
