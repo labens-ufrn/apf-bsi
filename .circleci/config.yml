@@ -1,0 +1,59 @@
+version: 2.1
+
+jobs:
+  # init_mysql:
+  #   docker:
+  #     - image: mariadb
+  #       environment:
+  #         MYSQL_ROOT_USER: root
+  #         MYSQL_ROOT_PASSWORD: rootpw
+  #         MYSQL_DATABASE: apf_db
+  #   steps:
+  #     - checkout
+  #     - run:
+  #         # Our primary container isn't MYSQL so run a sleep command until it's ready.
+  #         name: Waiting for MySQL to be ready
+  #         command: |
+  #           for i in `seq 5`;
+  #           do
+  #             sleep 1
+  #           done
+  #     - run:
+  #         name: Install MySQL CLI; Import requirement data;
+  #         command: |
+  #           mysql -h 127.0.0.1 -u root -p rootpw < db/requirement.sql
+
+  build_project:
+    docker:
+      - image: circleci/openjdk:stretch
+    steps:
+      - checkout
+      - restore_cache:
+          name: Restore Cache of dependencies
+          keys:
+            - v1-dependencies-{{ checksum "pom.xml" }} # appends cache key with a hash of pom.xml file
+            - v1-dependencies- # fallback in case previous cache key is not found
+      - run:
+          name: Install Dependencies
+          command: |
+            mvn -Dmaven.test.skip=true install
+
+      - run:
+          name: Build
+          command: mvn install -DskipTests
+
+      - save_cache:
+          name: Save cache of Dependencies
+          paths:
+            - ~/.m2
+          key: v1-dependencies-{{ checksum "pom.xml" }}
+
+workflows:
+  build:
+    jobs:
+      - build_project
+
+        # filters:
+        #   branches:
+        #     only:
+        #       - master
