@@ -82,7 +82,7 @@
                                                 <a
                                                     class="btn btn-sm btn-primary"
                                                     th:href="@{/project/edit/{id}(id=${project.id})}">Editar</a>
-                                                <a th:id="${project.id}"
+                                                <a th:id="${project.id}" th:name="${project.name}"
                                                     class="delete btn btn-sm btn-danger confirModal">Excluir</a>
                                             </div>
                                         </td>
@@ -116,11 +116,12 @@
 											/* Guardando o ID do registro (foi colocado como um atributo n o botão) */
 
 											const id = $(this).attr("id");
+											const name = $(this).attr("name");
 
 											/* Adicionando o texto ao modal */
 											$("#texto-modal").text(
-													"Tem certeza que deseja deletar o registro #"
-															+ id + "?");
+													"Tem certeza que deseja excluir o projeto: "
+															+ id + " - "+ name + " ?");
 
 											/* Adicionando a URL para delete */
 											$("#link-delete")
