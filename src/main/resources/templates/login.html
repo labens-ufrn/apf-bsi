@@ -20,18 +20,18 @@
         <br />
 
         <form th:action="@{/login}" method="POST" class="form-signin">
-            <h3 class="form-signin-heading" th:text="Welcome"></h3>
+            <h3 class="form-signin-heading">Seja Bem-vindo!</h3>
             <br/>
 
-            <input type="text" id="email" name="email"  th:placeholder="Email"
+            <input type="text" id="email" name="email"  placeholder="Email"
                 class="form-control" /> <br/>
-            <input type="password"  th:placeholder="Password"
+            <input type="password"  placeholder="Senha"
                 id="password" name="password" class="form-control" /> <br />
 
             <div align="center" th:if="${param.error}">
-                <p style="font-size: 20; color: #FF1C19;">Email or Password invalid, please verify</p>
+                <p style="font-size: 20; color: #FF1C19;">Email ou senha inválida, tente novamente.</p>
             </div>
-            <button class="btn btn-lg btn-primary btn-block" name="Submit" value="Login" type="Submit" th:text="Login"></button>
+            <button class="btn btn-lg btn-primary btn-block" value="Login" type="submit">Login</button>
         </form>
         <div align="center" th:include="fragments/footer :: footer-login"></div>
     </div>

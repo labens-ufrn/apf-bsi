@@ -23,7 +23,7 @@ public class LoginController extends AbstractController {
 
     @Autowired
     private UserService userService;
-    
+
     @Autowired
     private ProjectService projectService;
 
@@ -31,10 +31,11 @@ public class LoginController extends AbstractController {
 
     private static final String REGISTRATION_VIEW = "registration";
 
-    @GetMapping(path = { "/", "/login" })
+    @GetMapping(path = {"/", "/login"})
     public ModelAndView login() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName(LOGIN_VIEW);
+
         return modelAndView;
     }
 
@@ -42,8 +43,10 @@ public class LoginController extends AbstractController {
     public ModelAndView registration() {
         ModelAndView modelAndView = new ModelAndView();
         User user = new User();
+
         modelAndView.addObject("user", user);
         modelAndView.setViewName(REGISTRATION_VIEW);
+
         return modelAndView;
     }
 
@@ -51,19 +54,19 @@ public class LoginController extends AbstractController {
     public ModelAndView createNewUser(@Valid User user, BindingResult bindingResult) {
         ModelAndView modelAndView = new ModelAndView();
         User userExists = userService.findUserByEmail(user.getEmail());
-        if (userExists != null) {
-            bindingResult.rejectValue("email", "error.user",
-                    "There is already a user registered with the email provided");
-        }
-        if (bindingResult.hasErrors()) {
-            modelAndView.setViewName(REGISTRATION_VIEW);
-        } else {
-            userService.save(user);
-            modelAndView.addObject("successMessage", "User has been registered successfully");
-            modelAndView.addObject("user", new User());
-            modelAndView.setViewName(REGISTRATION_VIEW);
 
+        if (userExists != null) {
+            bindingResult.rejectValue("email", "error.user", "Este email já está cadastrado.");
         }
+
+        if (!bindingResult.hasErrors()) {
+            userService.save(user);
+            modelAndView.addObject("successMessage", "Cadastro realizado com sucesso!");
+            modelAndView.addObject("user", new User());
+        }
+
+        modelAndView.setViewName(REGISTRATION_VIEW);
+
         return modelAndView;
     }
 
@@ -75,10 +78,12 @@ public class LoginController extends AbstractController {
         Authentication auth = context.getAuthentication();
 
         User user = userService.findUserByEmail(auth.getName());
+
         modelAndView.addObject("userName", user.getName() + " " + user.getLastName() + " (" + user.getEmail() + ")");
         modelAndView.addObject("authorities", getRoles(user));
         modelAndView.addObject("adminMessage", "Content Available Only for Users with Admin Role");
         modelAndView.setViewName("admin/home");
+
         return modelAndView;
     }
 
@@ -89,10 +94,10 @@ public class LoginController extends AbstractController {
         User user = getCurrentUser();
 
         mv.addObject("projects", projectService.findByUserId(user.getId()));
-        
+
         return mv;
     }
-    
+
     @GetMapping(path = "/dashboard")
     public ModelAndView dashboard() {
         ModelAndView mv = new ModelAndView("dashboard");
@@ -101,16 +106,14 @@ public class LoginController extends AbstractController {
         mv.addObject("projects", projectService.findByIsPrivateFalse());
         mv.addObject("icounter", new IndicativeCount());
         mv.addObject("ecounter", new EstimativeCount());
-        
+
         return mv;
     }
 
     // for 403 access denied page
     @GetMapping(path = "/access-denied")
     public ModelAndView accesssDenied() {
-
         ModelAndView model = new ModelAndView();
-
         User user = getCurrentUser();
 
         if (user != null) {
