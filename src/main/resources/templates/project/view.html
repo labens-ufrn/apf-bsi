@@ -1,61 +1,63 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
 <head>
-    <title>Projects List</title>
-    <meta charset="UTF-8" />
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <meta name="viewport" content="width=device-width" />
+  <title>Projetos</title>
+  <meta charset="UTF-8" />
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="viewport" content="width=device-width" />
 
-    <link rel="stylesheet" type="text/css" th:href="@{/css/home.css}" />
-    <link rel="stylesheet" type="text/css" th:href="@{/css/simple-sidebar.css}" />
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.bundle.min.js"></script>
+  <link rel="stylesheet" type="text/css" th:href="@{/css/home.css}" />
+  <link rel="stylesheet" type="text/css" th:href="@{/css/simple-sidebar.css}" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.bundle.min.js"></script>
 </head>
+
 <body>
-    <div th:replace="fragments/header :: header"></div>
-    <div id="wrapper" class="wrapper.toggled toggled" style="margin-top:50px">
-        <!-- Sidebar -->
-        <div th:replace="fragments/menu"></div>
-        <!-- /#sidebar-wrapper -->
+  <div th:replace="fragments/header :: header"></div>
+  <div id="wrapper" class="wrapper.toggled toggled" style="margin-top:50px">
+    <!-- Sidebar -->
+    <div th:replace="fragments/menu"></div>
+    <!-- /#sidebar-wrapper -->
 
-        <!-- Page Content -->
-        <div id="page-content-wrapper">
-            <div class="container-fluid">
+    <!-- Page Content -->
+    <div id="page-content-wrapper">
+      <div class="container-fluid">
 
-    <div class="panel panel-default">
-        <div class="panel-heading">
+        <div class="panel panel-default">
+          <div class="panel-heading">
             <strong>Detalhes do Projeto</strong>
-        </div>
-        <div class="panel-body">
+          </div>
+          <div class="panel-body">
             <div>
-                <div class="form-group row">
-                    <div class="col-md-5">
-                        <label>Id:</label>
-                        <span th:text="${project.id}">Id</span>
-                    </div>
+              <div class="form-group row">
+                <div class="col-md-5">
+                  <label>Id:</label>
+                  <span th:text="${project.id}">Id</span>
                 </div>
-                <div class="form-group row">
-                    <div class="col-md-4">
-                         <label>Nome:</label>
-                         <span th:text="${project.name}">Nome</span>
-                    </div>
+              </div>
+              <div class="form-group row">
+                <div class="col-md-4">
+                  <label>Nome:</label>
+                  <span th:text="${project.name}">Nome</span>
                 </div>
-                <div class="form-group row">
-                    <div class="col-md-10">
-                       <label>Descrição:</label>
-                       <span class="content" th:utext="${project.description}">Description</span>
-                    </div>
+              </div>
+              <div class="form-group row">
+                <div class="col-md-10">
+                  <label>Descrição:</label>
+                  <span class="content" th:utext="${project.description}">Description</span>
                 </div>
-                <div class="form-group row">
-                    <div class="col-md-4">
-                        <label>Data de Criação:</label>
-                        <span th:text="${#dates.format(project.createdOn, 'dd-MMM-yyyy')}">22-May-2016</span>
+              </div>
+              <div class="form-group row">
+                <div class="col-md-4">
+                  <label>Data de Criação:</label>
+                  <span th:text="${#dates.format(project.createdOn, 'dd-MMM-yyyy')}">22-May-2016</span>
                     </div>
                 </div>
             </div>
-            
+
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <strong>Data Functions</strong>
@@ -154,7 +156,7 @@
                                 <td th:text="${member.attribution.name}"></td>
                                 <td>
                                     <div class="btn-group pull-right">
-                                        <a class="btn btn-sm btn-primary" th:href="@{/member/edit/{id}(id=${member.id})}" >Editar</a>
+                                        <a class="btn btn-sm btn-primary" th:href="@{/member/edit/{id}(id=${member.id})}">Editar</a>
                                         <a class="delete btn btn-sm btn-danger" th:href="@{/member/delete/{id}(id=${member.id})}">Excluir</a>
                                     </div>
                                 </td>
@@ -164,7 +166,7 @@
                 </div>
                 </div>
                 <div class="panel-footer">
-                    <a class="btn btn-sm btn-success" th:href="@{/member/add/}" >Add Member</a>
+                    <a class="btn btn-sm btn-success" th:href="@{/member/add/}" >Add Membro</a>
                 </div>
             </div>
         </div>

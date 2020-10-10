@@ -1,79 +1,74 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
 <head>
-<title>Projects List</title>
-<meta charset="UTF-8" />
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<meta name="viewport" content="width=device-width" />
+  <title>Projetos</title>
+  <meta charset="UTF-8" />
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="viewport" content="width=device-width" />
 
-<link rel="stylesheet" type="text/css" th:href="@{/css/home.css}" />
-<link rel="stylesheet" type="text/css" th:href="@{/css/simple-sidebar.css}" />
-<link rel="stylesheet"
-    href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-<script
-    src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<script type="text/javascript" th:src="@{/js/confirm-bootstrap.js}"></script>
+  <link rel="stylesheet" type="text/css" th:href="@{/css/home.css}" />
+  <link rel="stylesheet" type="text/css" th:href="@{/css/simple-sidebar.css}" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script type="text/javascript" th:src="@{/js/confirm-bootstrap.js}"></script>
 </head>
+
 <body>
-    <div th:replace="fragments/header :: header"></div>
+  <div th:replace="fragments/header :: header"></div>
 
-    <div class="modal modal-delete" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Deletar Registro</h5>
-                    <button type="button" class="close" data-dismiss="modal"
-                        aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <p id="texto-modal"></p>
-                </div>
-                <div class="modal-footer">
-                    <a id="link-delete"><button type="button"
-                            class="btn btn-danger">Sim, quero deletar</button> </a>
-                    <button type="button" class="btn btn-secondary"
-                        data-dismiss="modal">Cancelar</button>
-                </div>
-            </div>
+  <div class="modal modal-delete" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Deletar Registro</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
         </div>
+        <div class="modal-body">
+          <p id="texto-modal"></p>
+        </div>
+        <div class="modal-footer">
+          <a id="link-delete"><button type="button" class="btn btn-danger">Sim, quero deletar</button> </a>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+        </div>
+      </div>
     </div>
+  </div>
 
-    <div id="wrapper" class="wrapper.toggled toggled" style="margin-top: 50px">
-        <!-- Sidebar -->
-        <div th:replace="fragments/menu"></div>
-        <!-- /#sidebar-wrapper -->
+  <div id="wrapper" class="wrapper.toggled toggled" style="margin-top: 50px">
+    <!-- Sidebar -->
+    <div th:replace="fragments/menu"></div>
+    <!-- /#sidebar-wrapper -->
 
-        <!-- Page Content -->
-        <div id="page-content-wrapper">
-            <div class="container-fluid">
+    <!-- Page Content -->
+    <div id="page-content-wrapper">
+      <div class="container-fluid">
 
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <strong>Projetos</strong>
-                    </div>
-                    <div class="panel-body">
-                        <div class="table-responsive">
-                            <table
-                                class="table table-sm table-striped table-hover table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th>ID</th>
-                                        <th>Nome</th>
-                                        <th>Descrição</th>
-                                        <th>Data</th>
-                                        <th></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr th:each="project : ${projects}">
-                                        <td th:text="${project.id}"></td>
-                                        <td th:text="${project.name}"></td>
-                                        <td th:text="${project.description}"></td>
-                                        <td
-                                            th:text="${#dates.format(project.createdOn, 'dd/MM/yyyy')}"></td>
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <strong>Projetos</strong>
+          </div>
+          <div class="panel-body">
+            <div class="table-responsive">
+              <table class="table table-sm table-striped table-hover table-bordered">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Nome</th>
+                    <th>Descrição</th>
+                    <th>Data</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr th:each="project : ${projects}">
+                    <td th:text="${project.id}"></td>
+                    <td th:text="${project.name}"></td>
+                    <td th:text="${project.description}"></td>
+                    <td th:text="${#dates.format(project.createdOn, 'dd/MM/yyyy')}"></td>
                                         <td>
                                             <div class="btn-group pull-right">
                                                 <a
@@ -94,46 +89,43 @@
 
                     <div class="panel-footer">
                         <a class="btn btn-sm btn-success"
-                            th:href="@{/project/add/}">Add Project</a>
+                            th:href="@{/project/add/}">Add projeto</a>
                     </div>
                 </div>
             </div>
             <!-- /#page-content-wrapper -->
-            <div th:include="fragments/footer :: footer-authenticated"
-                align="center"></div>
+            <div th:include="fragments/footer :: footer-authenticated" align="center"></div>
         </div>
     </div>
 
     <script type="text/javascript">
-					/* Iniciando documento jQuery */
-					$(document).ready(
-							function() {
+      /* Iniciando documento jQuery */
+      $(document).ready(
+        function () {
 
-								/* Adicionando ouvindo no clique do botão delete */
-								$(".delete").click(
-										function() {
+          /* Adicionando ouvindo no clique do botão delete */
+          $(".delete").click(
+            function () {
 
-											/* Guardando o ID do registro (foi colocado como um atributo n o botão) */
+              /* Guardando o ID do registro (foi colocado como um atributo n o botão) */
 
-											const id = $(this).attr("id");
+              const id = $(this).attr("id");
 
-											/* Adicionando o texto ao modal */
-											$("#texto-modal").text(
-													"Tem certeza que deseja deletar o registro #"
-															+ id + "?");
+              /* Adicionando o texto ao modal */
+              $("#texto-modal").text("Tem certeza que deseja deletar o registro #" + id + "?");
 
-											/* Adicionando a URL para delete */
-											$("#link-delete")
-													.attr(
-															"href",
-															"/apf/project/delete/"
-																	+ id);
+              /* Adicionando a URL para delete */
+              $("#link-delete")
+                .attr(
+                  "href",
+                  "/apf/project/delete/"
+                  + id);
 
-											/* Abrindo o Modal */
-											$('.modal-delete').modal()
-										})
-							})
-				</script>
+              /* Abrindo o Modal */
+              $('.modal-delete').modal()
+            })
+        })
+    </script>
 
 </body>
 </html>
