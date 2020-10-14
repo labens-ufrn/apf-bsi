@@ -61,3 +61,16 @@ INSERT INTO data_function (name,det,ret,type,description, project_id,user_story_
 '1 RET: Attribution. 2 DET: 2 (attrib)',
 (select project_id from project where name = 'APF Oficial'),
 null);
+
+INSERT INTO `apf_db`.`transaction_function`
+(`det`,
+`ftr`,
+`name`,
+`type`,
+`project_id`)
+VALUES
+(5,
+1,
+'Add Project',
+'TYPE_EI',
+103);
