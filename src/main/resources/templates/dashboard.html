@@ -1,99 +1,99 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
-  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="pt-BR">
 
 <head>
   <title>Dashboard</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <link rel="stylesheet" type="text/css" th:href="@{/css/home.css}" />
-  <link rel="stylesheet" type="text/css" th:href="@{/css/simple-sidebar.css}" />
+  <link rel="stylesheet" type="text/css" th:href="@{/css/home.css}"/>
+  <link rel="stylesheet" type="text/css" th:href="@{/css/simple-sidebar.css}"/>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.bundle.min.js"></script>
 </head>
 
 <body>
-  <div th:replace="fragments/header :: header"></div>
-  <div id="wrapper" class="wrapper.toggled toggled" style="margin-top: 50px">
-    <!-- Sidebar -->
-    <div th:replace="fragments/menu"></div>
-    <!-- /#sidebar-wrapper -->
+<div th:replace="fragments/header :: header"></div>
+<div id="wrapper" class="wrapper.toggled toggled" style="margin-top: 50px">
+  <!-- Sidebar -->
+  <div th:replace="fragments/menu"></div>
+  <!-- /#sidebar-wrapper -->
 
-    <!-- Page Content -->
-    <div id="page-content-wrapper">
-      <div class="container-fluid">
-        <div class="panel-group">
-          <div class="panel panel-primary">
-            <div class="panel-heading">
-              <strong>Projetos Públicos</strong>
-            </div>
-            <div class="panel-body">
-              <div class="table-responsive">
-                <table class="table table-sm table-striped table-hover table-bordered">
-                  <thead>
-                    <tr>
-                      <th>ID</th>
-                      <th>Nome</th>
-                      <th><span id="th-us" data-placement="top" data-toggle="tooltip"
-                          data-original-title="User Stories">Nº
-                          US</span></th>
-                      <th><span id="th-df" data-placement="top" data-toggle="tooltip"
-                          data-original-title="Funções de Dados">Nº
-                          DF</span></th>
-                      <th><span id="th-tf" data-placement="top" data-toggle="tooltip"
-                          data-original-title="Funções de Transação">Nº TF</span></th>
-                      <th><span id="th-ci" data-placement="top" data-toggle="tooltip"
-                          data-original-title="Contagem Indicativa">Ci</span></th>
-                      <th><span id="th-ce" data-placement="top" data-toggle="tooltip"
-                          data-original-title="Contagem Estimativa">Ce</span></th>
-                      <th>Equipe</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr th:each="project : ${projects}">
-                      <td th:text="${project.id}"></td>
-                      <td th:text="${project.name}"></td>
-                      <td th:text="${project.userStories.size()}"></td>
-                      <td th:text="${project.dataFunctions.size()}"></td>
-                      <td th:text="${project.transactionFunctions.size()}"></td>
-                      <td th:text="${icounter.calculeFunctionPoint(project)}"></td>
-                      <td th:text="${ecounter.calculeFunctionPoint(project)} + ' PF'">PF</td>
-                      <td>
-                        <ul>
-                          <li th:each="member : ${project.team}"
-                            th:text="${member.user.name} + ' [' +${member.attribution} + ']'">user
-                            name</li>
-                        </ul>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-            <p class="admin-message-text text-center" th:utext="${adminMessage}"></p>
-            <a href="#menu-toggle" class="btn btn-default" id="menu-toggle">Toggle
-              Menu</a>
+  <!-- Page Content -->
+  <div id="page-content-wrapper">
+    <div class="container-fluid">
+      <div class="panel-group">
+        <div class="panel panel-primary">
+          <div class="panel-heading">
+            <strong>Projetos Públicos</strong>
           </div>
+          <div class="panel-body">
+            <div class="table-responsive">
+              <table class="table table-sm table-striped table-hover table-bordered">
+                <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Nome</th>
+                  <th><span id="th-us" data-placement="top" data-toggle="tooltip"
+                            data-original-title="User Stories">Nº
+                          US</span></th>
+                  <th><span id="th-df" data-placement="top" data-toggle="tooltip"
+                            data-original-title="Funções de Dados">Nº
+                          DF</span></th>
+                  <th><span id="th-tf" data-placement="top" data-toggle="tooltip"
+                            data-original-title="Funções de Transação">Nº TF</span></th>
+                  <th><span id="th-ci" data-placement="top" data-toggle="tooltip"
+                            data-original-title="Contagem Indicativa">Ci</span></th>
+                  <th><span id="th-ce" data-placement="top" data-toggle="tooltip"
+                            data-original-title="Contagem Estimativa">Ce</span></th>
+                  <th>Equipe</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="project : ${projects}">
+                  <td th:text="${project.id}"></td>
+                  <td th:text="${project.name}"></td>
+                  <td th:text="${project.userStories.size()}"></td>
+                  <td th:text="${project.dataFunctions.size()}"></td>
+                  <td th:text="${project.transactionFunctions.size()}"></td>
+                  <td th:text="${icounter.calculeFunctionPoint(project)}"></td>
+                  <td th:text="${ecounter.calculeFunctionPoint(project)} + ' PF'">PF</td>
+                  <td>
+                    <ul>
+                      <li th:each="member : ${project.team}"
+                          th:text="${member.user.name} + ' [' +${member.attribution} + ']'">user
+                        name
+                      </li>
+                    </ul>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <p class="admin-message-text text-center" th:utext="${adminMessage}"></p>
+          <a href="#menu-toggle" class="btn btn-default" id="menu-toggle">Toggle
+            Menu</a>
         </div>
       </div>
     </div>
-    <!-- /#page-content-wrapper -->
-    <div th:include="fragments/footer :: footer-authenticated" align="center"></div>
   </div>
+  <!-- /#page-content-wrapper -->
+  <div th:include="fragments/footer :: footer-authenticated" align="center"></div>
+</div>
 
-  <!-- Menu Toggle Script -->
-  <script>
-    $("#menu-toggle").click(function (e) {
-      e.preventDefault();
-      $("#wrapper").toggleClass("toggled");
-    });
+<!-- Menu Toggle Script -->
+<script>
+  $("#menu-toggle").click(function (e) {
+    e.preventDefault();
+    $("#wrapper").toggleClass("toggled");
+  });
 
-    $('#th-df').tooltip();
-    $('#th-tf').tooltip();
-    $('#th-us').tooltip();
-    $('#th-ci').tooltip();
-    $('#th-ce').tooltip();
-  </script>
+  $('#th-df').tooltip();
+  $('#th-tf').tooltip();
+  $('#th-us').tooltip();
+  $('#th-ci').tooltip();
+  $('#th-ce').tooltip();
+</script>
 </body>
 
 </html>

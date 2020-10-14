@@ -3,12 +3,12 @@
 
 <head>
   <title>Users List</title>
-  <meta charset="UTF-8" />
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-  <meta name="viewport" content="width=device-width" />
+  <meta charset="UTF-8"/>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="viewport" content="width=device-width"/>
 
-  <link rel="stylesheet" type="text/css" th:href="@{/css/home.css}" />
-  <link rel="stylesheet" type="text/css" th:href="@{/css/simple-sidebar.css}" />
+  <link rel="stylesheet" type="text/css" th:href="@{/css/home.css}"/>
+  <link rel="stylesheet" type="text/css" th:href="@{/css/simple-sidebar.css}"/>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -16,58 +16,58 @@
 </head>
 
 <body>
-  <div th:replace="fragments/header :: header"></div>
-  <div id="wrapper" class="wrapper.toggled toggled" style="margin-top: 50px">
-    <!-- Sidebar -->
-    <div th:replace="fragments/menu"></div>
-    <!-- /#sidebar-wrapper -->
+<div th:replace="fragments/header :: header"></div>
+<div id="wrapper" class="wrapper.toggled toggled" style="margin-top: 50px">
+  <!-- Sidebar -->
+  <div th:replace="fragments/menu"></div>
+  <!-- /#sidebar-wrapper -->
 
-    <!-- Page Content -->
-    <div id="page-content-wrapper">
-      <div class="container-fluid">
+  <!-- Page Content -->
+  <div id="page-content-wrapper">
+    <div class="container-fluid">
 
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <strong>Usuários</strong>
-          </div>
-          <div class="panel-body">
-            <div class="table-responsive">
-              <table class="table table-sm table-striped table-hover table-bordered">
-                <thead>
-                  <tr>
-                    <th>ID</th>
-                    <th>Nome</th>
-                    <th>Sobrenome</th>
-                    <th>Email</th>
-                    <th>Permissões</th>
-                    <th></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr th:each="usuario : ${user}">
-                    <td th:text="${usuario.id}"></td>
-                    <td th:text="${usuario.name}"></td>
-                    <td th:text="${usuario.lastName}"></td>
-                    <td th:text="${usuario.email}"></td>
-                    <td th:text="${usuario.roles}"></td>
-                    <td>
-                      <div class="btn-group pull-right">
-                        <a class="btn btn-sm btn-primary" th:href="@{/user/edit/{id}(id=${usuario.id})}">Editar</a>
-                        <a class="delete btn btn-sm btn-danger"
-                          th:href="@{/admin/user/delete/{id}(id=${usuario.id})}">Excluir</a>
-                      </div>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <strong>Usuários</strong>
+        </div>
+        <div class="panel-body">
+          <div class="table-responsive">
+            <table class="table table-sm table-striped table-hover table-bordered">
+              <thead>
+              <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Sobrenome</th>
+                <th>Email</th>
+                <th>Permissões</th>
+                <th></th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr th:each="usuario : ${user}">
+                <td th:text="${usuario.id}"></td>
+                <td th:text="${usuario.name}"></td>
+                <td th:text="${usuario.lastName}"></td>
+                <td th:text="${usuario.email}"></td>
+                <td th:text="${usuario.roles}"></td>
+                <td>
+                  <div class="btn-group pull-right">
+                    <a class="btn btn-sm btn-primary" th:href="@{/user/edit/{id}(id=${usuario.id})}">Editar</a>
+                    <a class="delete btn btn-sm btn-danger"
+                       th:href="@{/admin/user/delete/{id}(id=${usuario.id})}">Excluir</a>
+                  </div>
+                </td>
+              </tr>
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
-      <!-- /#page-content-wrapper -->
-      <div th:include="fragments/footer :: footer-authenticated" align="center"></div>
     </div>
+    <!-- /#page-content-wrapper -->
+    <div th:include="fragments/footer :: footer-authenticated" align="center"></div>
   </div>
+</div>
 </body>
 
 </html>

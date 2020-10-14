@@ -3,8 +3,8 @@
 
 <head>
   <title>Início</title>
-  <link rel="stylesheet" type="text/css" th:href="@{/css/home.css}" />
-  <link rel="stylesheet" type="text/css" th:href="@{/css/simple-sidebar.css}" />
+  <link rel="stylesheet" type="text/css" th:href="@{/css/home.css}"/>
+  <link rel="stylesheet" type="text/css" th:href="@{/css/simple-sidebar.css}"/>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -12,59 +12,59 @@
 </head>
 
 <body>
-  <div th:replace="fragments/header :: header"></div>
-  <div id="wrapper" class="wrapper.toggled toggled" style="margin-top: 50px">
-    <!-- Sidebar -->
-    <div th:replace="fragments/menu"></div>
-    <!-- /#sidebar-wrapper -->
+<div th:replace="fragments/header :: header"></div>
+<div id="wrapper" class="wrapper.toggled toggled" style="margin-top: 50px">
+  <!-- Sidebar -->
+  <div th:replace="fragments/menu"></div>
+  <!-- /#sidebar-wrapper -->
 
-    <!-- Page Content -->
-    <div id="page-content-wrapper">
-      <div class="container-fluid">
-        <div class="panel-group">
-          <div class="panel panel-primary">
-            <div class="panel-heading">
-              <span th:utext="${userName}"></span>
-            </div>
-            <div class="panel-heading">
-              <strong>Projetos</strong>
-            </div>
-            <div class="panel-body">
-              <div class="table-responsive">
-                <table class="table table-sm table-striped table-hover table-bordered">
-                  <thead>
-                    <tr>
-                      <th>ID</th>
-                      <th>Nome</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr th:each="project : ${projects}">
-                      <td th:text="${project.id}"></td>
-                      <td th:text="${project.name}"></td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-            <p class="admin-message-text text-center" th:utext="${adminMessage}"></p>
-            <a href="#menu-toggle" class="btn btn-default" id="menu-toggle">Toggle
-              Menu</a>
+  <!-- Page Content -->
+  <div id="page-content-wrapper">
+    <div class="container-fluid">
+      <div class="panel-group">
+        <div class="panel panel-primary">
+          <div class="panel-heading">
+            <span th:utext="${userName}"></span>
           </div>
+          <div class="panel-heading">
+            <strong>Projetos</strong>
+          </div>
+          <div class="panel-body">
+            <div class="table-responsive">
+              <table class="table table-sm table-striped table-hover table-bordered">
+                <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Nome</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="project : ${projects}">
+                  <td th:text="${project.id}"></td>
+                  <td th:text="${project.name}"></td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <p class="admin-message-text text-center" th:utext="${adminMessage}"></p>
+          <a href="#menu-toggle" class="btn btn-default" id="menu-toggle">Toggle
+            Menu</a>
         </div>
       </div>
     </div>
-    <!-- /#page-content-wrapper -->
-    <div th:include="fragments/footer :: footer-authenticated" align="center"></div>
   </div>
+  <!-- /#page-content-wrapper -->
+  <div th:include="fragments/footer :: footer-authenticated" align="center"></div>
+</div>
 
-  <!-- Menu Toggle Script -->
-  <script>
-    $("#menu-toggle").click(function (e) {
-      e.preventDefault();
-      $("#wrapper").toggleClass("toggled");
-    });
-  </script>
+<!-- Menu Toggle Script -->
+<script>
+  $("#menu-toggle").click(function (e) {
+    e.preventDefault();
+    $("#wrapper").toggleClass("toggled");
+  });
+</script>
 </body>
 
 </html>
