@@ -1,75 +1,75 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-    xmlns:th="http://www.thymeleaf.org"
-    xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <title>Admin Home Page</title>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/home.css}" />
-    <link rel="stylesheet" type="text/css" th:href="@{/css/simple-sidebar.css}" />
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.bundle.min.js"></script>
+  <title>Admin Home Page</title>
+  <link rel="stylesheet" type="text/css" th:href="@{/css/home.css}"/>
+  <link rel="stylesheet" type="text/css" th:href="@{/css/simple-sidebar.css}"/>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.bundle.min.js"></script>
 </head>
 
 <body>
-    <div th:replace="fragments/header :: header"></div>
-    <div id="wrapper" class="wrapper.toggled toggled" style="margin-top:50px">
-        <!-- Sidebar -->
-        <div id="sidebar-wrapper">
-            <ul class="sidebar-nav">
-                <li class="sidebar-brand">
-                    <a href="#">
-                        Start Bootstrap
-                    </a>
-                </li>
-                <li>
-                    <a href="#">Dashboard</a>
-                </li>
-                <li>
-                    <a th:href="@{/admin/project}">Project</a>
-                </li>
-                <li>
-                    <a th:href="@{/admin/user}">User</a>
-                </li>
-                <li>
-                    <a th:href="@{/home}">Home Usuário</a>
-                </li>
-                <li>
-                    <a href="#">Contact</a>
-                </li>
-            </ul>
-        </div>
-        <!-- /#sidebar-wrapper -->
+<div th:replace="fragments/header :: header"></div>
+<div id="wrapper" class="wrapper.toggled toggled" style="margin-top:50px">
+  <!-- Sidebar -->
+  <div id="sidebar-wrapper">
+    <ul class="sidebar-nav">
+      <li class="sidebar-brand">
+        <a href="#">
+          Analisador de Ponto de Função
+        </a>
+      </li>
+      <li>
+        <a href="#">Dashboard</a>
+      </li>
+      <li>
+        <a th:href="@{/admin/project}">Projeto</a>
+      </li>
+      <li>
+        <a th:href="@{/admin/user}">Usuário</a>
+      </li>
+      <li>
+        <a th:href="@{/home}">Home Usuário</a>
+      </li>
+      <li>
+        <a href="#">Contato</a>
+      </li>
+    </ul>
+  </div>
+  <!-- /#sidebar-wrapper -->
 
-        <!-- Page Content -->
-        <div id="page-content-wrapper">
-            <div class="container-fluid">
-                <div class="panel-group">
-                    <div class="panel panel-primary">
-                        <div class="panel-heading">
-                            <span th:utext="${userName}"></span>
-                        </div >
-                        <div class="panel-body">
-                            <img th:src="@{/images/beer.jpg}" class="img-responsive center-block" width="400" height="400" alt="Beer" />
-                        </div>
-                        <p class="admin-message-text text-center" th:utext="${adminMessage}"></p>
-                        <a href="#menu-toggle" class="btn btn-default" id="menu-toggle">Toggle Menu</a>
-                    </div>
-                </div>
-            </div>
+  <!-- Page Content -->
+  <div id="page-content-wrapper">
+    <div class="container-fluid">
+      <div class="panel-group">
+        <div class="panel panel-primary">
+          <div class="panel-heading">
+            <span th:utext="${userName}"></span>
+          </div>
+          <div class="panel-body">
+            <img th:src="@{/images/beer.jpg}" class="img-responsive center-block" width="400" height="400"
+                 alt="Beer"/>
+          </div>
+          <p class="admin-message-text text-center" th:utext="${adminMessage}"></p>
+          <a href="#menu-toggle" class="btn btn-default" id="menu-toggle">Toggle Menu</a>
         </div>
-        <!-- /#page-content-wrapper -->
-        <div th:include="fragments/footer :: footer-authenticated" align="center"></div>
+      </div>
     </div>
+  </div>
+  <!-- /#page-content-wrapper -->
+  <div th:include="fragments/footer :: footer-authenticated" align="center"></div>
+</div>
 
-     <!-- Menu Toggle Script -->
-    <script>
-    $("#menu-toggle").click(function(e) {
-        e.preventDefault();
-        $("#wrapper").toggleClass("toggled");
-    });
-    </script>
+<!-- Menu Toggle Script -->
+<script>
+  $("#menu-toggle").click(function (e) {
+    e.preventDefault();
+    $("#wrapper").toggleClass("toggled");
+  });
+</script>
 </body>
+
 </html>

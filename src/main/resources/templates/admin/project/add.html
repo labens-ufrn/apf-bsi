@@ -1,60 +1,65 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
 <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <meta name="viewport" content="width=device-width" />
-    <title>Project Registration</title>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"></link>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <meta charset="UTF-8"/>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="viewport" content="width=device-width"/>
+  <title>Adicionar Projeto</title>
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"/>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
+
 <body>
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <strong>Cadastro de Projetos</strong>
-        </div>
-        <div class="panel-body">
-            <form class="form-horizontal" th:object="${project}" th:action="@{/project/save}" method="POST" style="margin: 10px">
-                <div class="form-group">
-                    <fieldset>
-                        <div class="form-group row">
-                            <div class="alert alert-danger" th:if="${#fields.hasAnyErrors()}">
-                                <div th:each="detailedError : ${#fields.detailedErrors()}">
-                                    <span th:text="${detailedError.message}"></span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <div class="col-md-1">
-                                <input type="text" class="form-control input-sm" id="id" th:field="*{id}" readOnly="readonly"/>
-                            </div>
-                         </div>
-                        <div class="form-group row">
-                            <div class="col-md-4" th:classappend="${#fields.hasErrors('name')}? 'has-error'">
-                                <label>Nome</label>
-                                <input type="text" class="form-control input-sm" th:field="*{name}" autofocus="autofocus" placeholder="Informe o nome" maxlength="50"/>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <div class="col-md-4" th:classappend="${#fields.hasErrors('description')}? 'has-error'">
-                                <label>Descrição</label>
-                                <input type="text" class="form-control input-sm" th:field="*{description}" maxlength="150" placeholder="Informe a descrição"/>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <div class="col-md-2" th:classappend="${#fields.hasErrors('created')}? 'has-error'">
-                                <label>Data</label>
-                                <input type="date" class="form-control input-sm" th:field="*{created}"/>
-                            </div>
-                        </div>
-                    </fieldset>
-                </div>
-                <div class="form-group row">
-                    <button type="submit" class="btn btn-sm btn-primary">Salvar</button>
-                    <a th:href="@{/}" class="btn btn-sm btn-default">Cancelar</a>
-                </div>
-            </form>
-        </div>
-    </div>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <strong>Cadastro de Projetos</strong>
+  </div>
+  <div class="panel-body">
+    <form class="form-horizontal" th:object="${project}" th:action="@{/project/save}" method="POST"
+          style="margin: 10px">
+      <div class="form-group">
+        <fieldset>
+          <div class="form-group row">
+            <div class="alert alert-danger" th:if="${#fields.hasAnyErrors()}">
+              <div th:each="detailedError : ${#fields.detailedErrors()}">
+                <span th:text="${detailedError.message}"></span>
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-md-1">
+              <input type="text" class="form-control input-sm" id="id" th:field="*{id}" readOnly="readonly"/>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-md-4" th:classappend="${#fields.hasErrors('name')}? 'has-error'">
+              <label>Nome</label>
+              <input type="text" class="form-control input-sm" th:field="*{name}" autofocus="autofocus"
+                     placeholder="Informe o nome" maxlength="50"/>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-md-4" th:classappend="${#fields.hasErrors('description')}? 'has-error'">
+              <label>Descrição</label>
+              <input type="text" class="form-control input-sm" th:field="*{description}" maxlength="150"
+                     placeholder="Informe a descrição"/>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-md-2" th:classappend="${#fields.hasErrors('created')}? 'has-error'">
+              <label>Data</label>
+              <input type="date" class="form-control input-sm" th:field="*{created}"/>
+            </div>
+          </div>
+        </fieldset>
+      </div>
+      <div class="form-group row">
+        <button type="submit" class="btn btn-sm btn-primary">Salvar</button>
+        <a th:href="@{/}" class="btn btn-sm btn-default">Cancelar</a>
+      </div>
+    </form>
+  </div>
+</div>
 </body>
 </html>

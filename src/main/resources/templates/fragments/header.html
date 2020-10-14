@@ -1,45 +1,40 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
-  <head></head>
-  <body>
-    <div class="navbar navbar-inverse navbar-fixed-top" th:fragment="header">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="#">Analisador de Ponto de Função</a>
-        </div>
-        <div class="navbar-collapse collapse">
-          <ul class="nav navbar-nav">
-            <li th:classappend="${module == 'home' ? 'active' : ''}">
-              <a href="#" th:href="@{/home}">Home</a>
-            </li>
-            <li th:classappend="${module == 'contact' ? 'active' : ''}">
-              <a href="#" th:href="@{/contact}">Contact</a>
-            </li>
-          </ul>
-          <ul class="nav navbar-nav navbar-right">
-<!--           <li th:if="${#authorization.expression('!isAuthenticated()')}"> -->
-            <li>
-              <a href="/signin" th:href="@{/signin}">
-                <span class="glyphicon glyphicon-log-in" aria-hidden="true"></span>&nbsp;Sign in
-              </a>
-            </li>
-<!--             <li th:if="${#authorization.expression('isAuthenticated()')}"> -->
-            <li>
-              <a href="/logout" th:href="@{#}" onclick="$('#form').submit();">
-                <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>&nbsp;Logout
-              </a>
-             <form style="visibility: hidden" id="form" method="post" action="#" th:action="@{/logout}"></form>
-            </li>
-          </ul>
-        </div>
-      </div>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head></head>
+
+<body>
+<div class="navbar navbar-inverse navbar-fixed-top" th:fragment="header">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">Analisador de Ponto de Função</a>
     </div>
-  </body>
+    <div class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li th:classappend="${module == 'home' ? 'active' : ''}">
+          <a href="#" th:href="@{/home}">Início</a>
+        </li>
+        <li th:classappend="${module == 'contact' ? 'active' : ''}">
+          <a href="#" th:href="@{/contat}">Contato</a>
+        </li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+
+        <li>
+          <a href="/logout" th:href="@{#}" onclick="$('#form').submit();">
+            <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>
+            Sair
+          </a>
+          <form style="visibility: hidden" id="form" method="post" action="#" th:action="@{/logout}"></form>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+</body>
 </html>

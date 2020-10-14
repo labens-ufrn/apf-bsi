@@ -36,22 +36,22 @@ public class User implements Serializable {
     private Long id;
 
     @Column(name = "email")
-    @Email(message = "*Please provide a valid Email")
-    @NotEmpty(message = "*Please provide an email")
+    @Email(message = "Email inválido!")
+    @NotEmpty(message = "Digite seu email!")
     private String email;
 
     @Column(name = "password")
-    @Length(min = 5, message = "*Your password must have at least 5 characters")
-    @NotEmpty(message = "*Please provide your password")
+    @Length(min = 5, message = "Sua senha precisa ser acima de 5 caracteres")
+    @NotEmpty(message = "Digite sua senha")
     @Transient
     private String password;
 
     @Column(name = "name")
-    @NotEmpty(message = "*Please provide your name")
+    @NotEmpty(message = "Digite seu nome")
     private String name;
 
     @Column(name = "last_name")
-    @NotEmpty(message = "*Please provide your last name")
+    @NotEmpty(message = "Digite seu sobrenome")
     private String lastName;
 
     @Column(name = "active")
@@ -59,12 +59,10 @@ public class User implements Serializable {
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE})
     @JoinTable(name = "user_role",
-            joinColumns = {
-                @JoinColumn(name = "user_id")
-            },
-            inverseJoinColumns = {
-                    @JoinColumn(name = "role_id")
-            })
+            joinColumns = { @JoinColumn(name = "user_id") },
+            inverseJoinColumns = { @JoinColumn(name = "role_id") }
+    )
+
     private Set<Role> roles;
 
     public Long getId() {

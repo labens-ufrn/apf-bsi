@@ -1,118 +1,125 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
 <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <meta name="viewport" content="width=device-width" />
-    <title>Data Function Addiction</title>
+  <meta charset="UTF-8"/>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="viewport" content="width=device-width"/>
+  <title>Adicionar ponto por função</title>
 
-    <link rel="stylesheet" type="text/css" th:href="@{/css/home.css}" />
-    <link rel="stylesheet" type="text/css" th:href="@{/css/simple-sidebar.css}" />
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <!-- script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.bundle.min.js"></script>
-    <!--Import https://www.devbridge.com/sourcery/components/jquery-autocomplete/#-->
-    <script type="text/javascript" th:src="@{/js/jquery-3.2.0.min.js}"></script>
-    <script type="text/javascript" th:src="@{/js/jquery.autocomplete.js}"></script>
-    <script>
-      $(document).ready(function() {
-        $('#autocomplete-input').autocomplete({
-          serviceUrl: '/apf/project/suggestion',
-          paramName: 'searchstr',
-          minChars: 1,
-          autoSelectFirst: true,
-          onSelect: function (suggestion) {
-              window.location= '/apf/df/add/' + suggestion.data;
-          }
-        });
+  <link rel="stylesheet" type="text/css" th:href="@{/css/home.css}"/>
+  <link rel="stylesheet" type="text/css" th:href="@{/css/simple-sidebar.css}"/>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <!-- script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.bundle.min.js"></script>
+  <!--Import https://www.devbridge.com/sourcery/components/jquery-autocomplete/#-->
+  <script type="text/javascript" th:src="@{/js/jquery-3.2.0.min.js}"></script>
+  <script type="text/javascript" th:src="@{/js/jquery.autocomplete.js}"></script>
+  <script>
+    $(document).ready(function () {
+      $('#autocomplete-input').autocomplete({
+        serviceUrl: '/apf/project/suggestion',
+        paramName: 'searchstr',
+        minChars: 1,
+        autoSelectFirst: true,
+        onSelect: function (suggestion) {
+          window.location = '/apf/df/add/' + suggestion.data;
+        }
       });
-    </script>
+    });
+  </script>
 </head>
-<body>
-    <div th:replace="fragments/header :: header"></div>
-    <div id="wrapper" class="wrapper.toggled toggled" style="margin-top:50px">
-        <!-- Sidebar -->
-        <div th:replace="fragments/menu"></div>
-        <!-- /#sidebar-wrapper -->
 
-    <!-- Page Content -->
-    <div id="page-content-wrapper">
-        <div class="container-fluid">
-            <div id="painelDF" class="panel panel-default">
-                <div class="panel-heading">
-                  <strong>Cadastro de Funções de Dados</strong>
-                </div>
-              <div class="panel-body">
-                  <form class="form-horizontal" th:object="${dfDTO}" th:action="@{/df/save}" method="POST" style="margin: 10px">
-                    <div class="form-group">
-                        <fieldset>
-                            <div class="form-group row">
-                                <div class="alert alert-danger" th:if="${#fields.hasAnyErrors()}">
-                                    <div th:each="detailedError : ${#fields.detailedErrors()}">
-                                        <span th:text="${detailedError.message}"></span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <div class="col-md-4" th:classappend="${#fields.hasErrors('project.name')}? 'has-error'">
-                                    <div class="input-field col s12">
-                                        <label for="autocomplete-input">Projeto</label>
-                                        <input type="text" id="autocomplete-input" class="form-control input-sm autocomplete-suggestion" th:field="*{project.name}">
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div id="divUS" class="form-group row">
-                                <div id="divUS2" class="col-md-4" th:classappend="${#fields.hasErrors('userStory.id')}? 'has-error'">
-                                    <label>User Story</label>
-                                    <select id="usSelect" class="form-control" th:field="${userStory.id}">
-                                        <option value="0">Selecione um User Story</option>
-                                        <option th:each="us : ${userStories}" th:value="${us.id}" th:text="${us.name}"></option>
-                                    </select>
-                                </div>
-                            </div>
-                            
-                            <div class="form-group row">
-                                <div class="col-md-4" th:classappend="${#fields.hasErrors('name')}? 'has-error'">
-                                    <label>Nome</label>
-                                    <input type="text" class="form-control input-sm" th:field="*{name}" autofocus="autofocus" placeholder="Informe o nome" maxlength="50"/>
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <div class="col-md-2" th:classappend="${#fields.hasErrors('type')}? 'has-error'">
-                                    <label>Tipo</label>
-                                    <select th:field="*{type}" class="form-control input-sm">
-                                        <option th:value="'TYPE_ILF'" th:text="ALI"></option>
-                                        <option th:value="'TYPE_EIF'" th:text="AIE"></option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <div class="col-md-2" th:classappend="${#fields.hasErrors('recordElementTypes')}? 'has-error'">
-                                    <label>Record Element Types</label>
-                                    <input type="number" class="form-control input-sm" th:field="*{recordElementTypes}" maxlength="50" placeholder="Informe o Tipo"/>
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <div class="col-md-2" th:classappend="${#fields.hasErrors('dataElementTypes')}? 'has-error'">
-                                    <label>Data Element Types</label>
-                                    <input type="number" class="form-control input-sm" th:field="*{dataElementTypes}" maxlength="50" placeholder="Informe o Tipo"/>
-                                </div>
-                            </div>
-                        </fieldset>
-                    </div>
-                    <div class="form-group row">
-                        <button type="submit" class="btn btn-sm btn-primary">Salvar</button>
-                        <a th:href="@{/home}" class="btn btn-sm btn-default">Cancelar</a>
-                    </div>
-                </form>
-              </div>
-            </div>
+<body>
+<div th:replace="fragments/header :: header"></div>
+<div id="wrapper" class="wrapper.toggled toggled" style="margin-top:50px">
+  <!-- Sidebar -->
+  <div th:replace="fragments/menu"></div>
+  <!-- /#sidebar-wrapper -->
+
+  <!-- Page Content -->
+  <div id="page-content-wrapper">
+    <div class="container-fluid">
+      <div id="painelDF" class="panel panel-default">
+        <div class="panel-heading">
+          <strong>Cadastro de Funções de Dados</strong>
         </div>
-        <!-- /#page-content-wrapper -->
-        <div th:include="fragments/footer :: footer-authenticated" align="center"></div>
+        <div class="panel-body">
+          <form class="form-horizontal" th:object="${dfDTO}" th:action="@{/df/save}" method="POST"
+                style="margin: 10px">
+            <div class="form-group">
+              <fieldset>
+                <div class="form-group row">
+                  <div class="alert alert-danger" th:if="${#fields.hasAnyErrors()}">
+                    <div th:each="detailedError : ${#fields.detailedErrors()}">
+                      <span th:text="${detailedError.message}"></span>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <div class="col-md-4" th:classappend="${#fields.hasErrors('project.name')}? 'has-error'">
+                    <div class="input-field col s12">
+                      <label for="autocomplete-input">Projeto</label>
+                      <input type="text" id="autocomplete-input" class="form-control input-sm autocomplete-suggestion"
+                             th:field="*{project.name}">
+                    </div>
+                  </div>
+                </div>
+
+                <div id="divUS" class="form-group row">
+                  <div id="divUS2" class="col-md-4" th:classappend="${#fields.hasErrors('userStory.id')}? 'has-error'">
+                    <label>User Story</label>
+                    <select id="usSelect" class="form-control" th:field="${userStory.id}">
+                      <option value="0">Selecione um User Story</option>
+                      <option th:each="us : ${userStories}" th:value="${us.id}" th:text="${us.name}"></option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <div class="col-md-4" th:classappend="${#fields.hasErrors('name')}? 'has-error'">
+                    <label>Nome</label>
+                    <input type="text" class="form-control input-sm" th:field="*{name}" autofocus="autofocus"
+                           placeholder="Informe o nome" maxlength="50"/>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <div class="col-md-2" th:classappend="${#fields.hasErrors('type')}? 'has-error'">
+                    <label>Tipo</label>
+                    <select th:field="*{type}" class="form-control input-sm">
+                      <option th:value="'TYPE_ILF'" th:text="ALI"></option>
+                      <option th:value="'TYPE_EIF'" th:text="AIE"></option>
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <div class="col-md-2" th:classappend="${#fields.hasErrors('recordElementTypes')}? 'has-error'">
+                    <label>Record Element Types</label>
+                    <input type="number" class="form-control input-sm" th:field="*{recordElementTypes}" maxlength="50"
+                           placeholder="Informe o Tipo"/>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <div class="col-md-2" th:classappend="${#fields.hasErrors('dataElementTypes')}? 'has-error'">
+                    <label>Data Element Types</label>
+                    <input type="number" class="form-control input-sm" th:field="*{dataElementTypes}" maxlength="50"
+                           placeholder="Informe o Tipo"/>
+                  </div>
+                </div>
+              </fieldset>
+            </div>
+            <div class="form-group row">
+              <button type="submit" class="btn btn-sm btn-primary">Salvar</button>
+              <a th:href="@{/home}" class="btn btn-sm btn-default">Cancelar</a>
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
-    </div>
+    <!-- /#page-content-wrapper -->
+    <div th:include="fragments/footer :: footer-authenticated" align="center"></div>
+  </div>
+</div>
 </body>
 </html>
