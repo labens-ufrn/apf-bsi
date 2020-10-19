@@ -6,15 +6,15 @@ import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
+import static java.util.Objects.isNull;
 
 /**
  * The Project class represents Software Design objects with their basic elements:
- *  name, description, user stories list, data function list (database),
- *  and list of transaction functions (requirements).
+ * name, description, user stories list, data function list (database),
+ * and list of transaction functions (requirements).
  * We follow an agile methodology based on XP and YP (easYProcess).
+ *
  * @author Taciano Morais Silva
  * @version 1.0
  * @since 17/10/2017, 22h51m
@@ -61,7 +61,7 @@ public class Project implements Serializable {
 
     @OneToMany(mappedBy = "project", targetEntity = DataFunction.class, orphanRemoval = true, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<DataFunction> dataFunctions = new HashSet<>();
-    
+
     @OneToMany(mappedBy = "project", targetEntity = TransactionFunction.class, orphanRemoval = true, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<TransactionFunction> transactions = new HashSet<>();
 
@@ -114,9 +114,7 @@ public class Project implements Serializable {
     }
 
     public void addMember(Member member) {
-        if (!team.contains(member)) {
-            team.add(member);
-        }
+        team.add(member);
     }
 
     public Set<UserStory> getUserStories() {
@@ -134,11 +132,11 @@ public class Project implements Serializable {
     public void setDataFunctions(Set<DataFunction> dataFunctions) {
         this.dataFunctions = dataFunctions;
     }
-    
+
     public Set<TransactionFunction> getTransactionFunctions() {
         return transactions;
     }
-    
+
     public void setTransactionFunctions(Set<TransactionFunction> transactions) {
         this.transactions = transactions;
     }
@@ -178,9 +176,21 @@ public class Project implements Serializable {
             return other.name == null;
         } else return name.equals(other.name);
     }
-    
+
     @Override
     public String toString() {
         return "Project@" + this.id + "[" + this.name + "]";
+    }
+
+    public boolean isMemberOfProject(User user) {
+        Member member = getMemberFromUser(user);
+
+        return !isNull(member);
+    }
+
+    public Member getMemberFromUser(User user) {
+        return this.team.stream()
+        .filter(m -> m.getUser().equals(user))
+        .findFirst().orElse(null);
     }
 }

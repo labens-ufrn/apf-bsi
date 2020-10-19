@@ -22,7 +22,7 @@ public class Attribution implements Serializable {
      * Regra para definir permissões membros de um projeto.
      */
     public static final String PROJECT_MANAGER = "PROJECT MANAGER";
-    
+    public static final String PROJECT_DEV = "PROJECT DEV";
     public static final String PROJECT_MEMBER = "PROJECT MEMBER";
 
     @Id

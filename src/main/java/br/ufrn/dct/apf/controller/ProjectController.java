@@ -1,26 +1,20 @@
 package br.ufrn.dct.apf.controller;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.validation.Valid;
-
+import br.ufrn.dct.apf.model.Project;
+import br.ufrn.dct.apf.model.User;
+import br.ufrn.dct.apf.service.BusinessRuleException;
+import br.ufrn.dct.apf.service.ProjectService;
+import br.ufrn.dct.apf.utils.BusinessExceptions;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-
-import br.ufrn.dct.apf.model.Project;
-import br.ufrn.dct.apf.model.User;
-import br.ufrn.dct.apf.service.BusinessRuleException;
-import br.ufrn.dct.apf.service.ProjectService;
+import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 public class ProjectController extends AbstractController {
@@ -31,7 +25,7 @@ public class ProjectController extends AbstractController {
     private static final Logger logger = LogManager.getLogger(ProjectController.class);
 
     @Autowired
-    private ProjectService service;
+    private ProjectService projectService;
 
     @GetMapping("/project")
     public ModelAndView findAll() {
@@ -40,7 +34,7 @@ public class ProjectController extends AbstractController {
         setUserAuth(mv);
         User current = getCurrentUser();
 
-        mv.addObject("projects", service.findByUserId(current.getId()));
+        mv.addObject("projects", projectService.findByUserId(current.getId()));
 
         return mv;
     }
@@ -59,7 +53,7 @@ public class ProjectController extends AbstractController {
         ModelAndView mv = new ModelAndView("project/view");
         setUserAuth(mv);
 
-        Project project = service.findOne(id);
+        Project project = projectService.findOne(id);
         mv.addObject("project", project);
 
         return mv;
@@ -67,14 +61,12 @@ public class ProjectController extends AbstractController {
 
     @GetMapping("/project/edit/{id}")
     public ModelAndView edit(@PathVariable("id") Long id) {
-
-        return add(service.findOne(id));
+        return add(projectService.findOne(id));
     }
 
     @GetMapping("/project/delete/{id}")
     public ModelAndView delete(@PathVariable("id") Long id) {
-
-        service.delete(id);
+        projectService.delete(id);
 
         return findAll();
     }
@@ -88,11 +80,19 @@ public class ProjectController extends AbstractController {
         }
 
         User user = getCurrentUser();
+
         try {
-            service.save(project, user);
+            projectService.save(project, user);
         } catch (BusinessRuleException e) {
             logger.error("error.project.controller.save", e);
-            modelAndView.addObject("errorMessage", "User has been registered successfully");
+
+            if (e == BusinessExceptions.WITHOUT_ATTRIBUTION) {
+                modelAndView.addObject("errorMessage", "Seu perfil de membro não [e permitido!");
+            } else if (e == BusinessExceptions.MEMBER_NOT_EXISTS) {
+                modelAndView.addObject("errorMessage", "Você não é membro do projeto!");
+            } else {
+                modelAndView.addObject("errorMessage", "Ops! Houve um problema! :/");
+            }
         }
 
         return findAll();
@@ -103,17 +103,18 @@ public class ProjectController extends AbstractController {
     /**
      * the rest controller which is requested by the autocomplete input field
      * instead of the countries here could also be made a DB request
+     *
      * @param searchstr String de busca de projetos.
      * @return A {@link ProjectSuggestionWrapper} object.
      */
     @GetMapping(value = "/project/suggestion", produces = "application/json")
     @ResponseBody
     public ProjectSuggestionWrapper autocompleteSuggestions(@RequestParam("searchstr") String searchstr) {
-        logger.debug("searchstr = "+ searchstr);
+        logger.debug("searchstr = " + searchstr);
 
         List<ProjectSuggestion> suggestions = new ArrayList<>();
         User current = getCurrentUser();
-        List<Project> projects = service.findByName(current.getId(), searchstr);
+        List<Project> projects = projectService.findByName(current.getId(), searchstr);
 
         for (Project project : projects) {
             ProjectSuggestion ps = new ProjectSuggestion(project.getName());

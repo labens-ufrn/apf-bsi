@@ -153,4 +153,9 @@ public class User implements Serializable {
             return other.id == null;
         } else return id.equals(other.id);
     }
+
+    @Override
+    public String toString() {
+        return "User@" + this.id + "[" + this.name + "]";
+    }
 }

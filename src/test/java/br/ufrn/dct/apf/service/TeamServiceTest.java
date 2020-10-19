@@ -4,6 +4,7 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Set;
 
+import br.ufrn.dct.apf.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.ContextConfiguration;
@@ -13,11 +14,6 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
-import br.ufrn.dct.apf.model.Attribution;
-import br.ufrn.dct.apf.model.Member;
-import br.ufrn.dct.apf.model.Project;
-import br.ufrn.dct.apf.model.User;
-import br.ufrn.dct.apf.model.UserStory;
 import br.ufrn.dct.apf.repository.AttributionRepository;
 
 @ContextConfiguration("/spring-test-beans.xml")
@@ -66,10 +62,10 @@ public class TeamServiceTest extends AbstractTestNGSpringContextTests {
         dev2.setPassword("12345");
 
         projectOwner = new Attribution();
-        projectOwner.setName("PROJECT_OWNER");
+        projectOwner.setName(Attribution.PROJECT_MANAGER);
 
         projectDev = new Attribution();
-        projectDev.setName("PROJECT_DEV");
+        projectDev.setName(Attribution.PROJECT_DEV);
 
         attribRepository.save(projectOwner);
         attribRepository.save(projectDev);
@@ -116,9 +112,9 @@ public class TeamServiceTest extends AbstractTestNGSpringContextTests {
     @Test
     public void findOne() {
 
-        List<Member> members = memberService.findByProjectIdAndUserId(p1.getId(), analista.getId());
+        Member member = memberService.getMember(p1.getId(), analista.getId());
 
-        Long id = members.get(0).getId();
+        Long id = member.getId();
 
         Member found = memberService.findOne(id);
 
@@ -133,7 +129,7 @@ public class TeamServiceTest extends AbstractTestNGSpringContextTests {
         softAssert.assertEquals(found.getAttribution().getName(), Attribution.PROJECT_MANAGER, "T07 - Equals:");
 
         Attribution attribManager = attribRepository.findById(1).orElse(null);
-        Attribution attribOwner = attribRepository.findByName("PROJECT_OWNER");
+        Attribution attribOwner = attribRepository.findByName(Attribution.PROJECT_MANAGER);
 
         softAssert.assertTrue(found.getAttribution().equals(attribManager), "T08 - Equals:");
         softAssert.assertFalse(found.getAttribution().equals(attribOwner), "T09 - Equals:");
