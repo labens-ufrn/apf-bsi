@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import br.ufrn.dct.apf.model.Member;
 import br.ufrn.dct.apf.repository.MemberRepository;
 
+import static java.util.Objects.isNull;
+
 @Service
 public class MemberService extends AbstractService {
 
@@ -24,24 +26,24 @@ public class MemberService extends AbstractService {
 
     public Member save(Member member) throws BusinessRuleException {
         checkMemberNull(member);
-        Member memberDB = getMember(member);
-        if (memberDB == null) {
+
+        if (isMember(member.getProject().getId(), member.getUser().getId())) {
             return repository.saveAndFlush(member);
         }
-        return memberDB;
+
+        return member;
     }
 
-    private Member getMember(Member member) {
-        List<Member> team = repository.findByProjectIdAndUserId(
-                    member.getProject().getId(), member.getUser().getId());
-        if (team.isEmpty()) {
-            return null;
-        }
-        return team.get(0);
+    public Member getMember(Long projectId, Long memberId) {
+        return repository.findByProjectIdAndUserId(projectId, memberId);
     }
 
-    public List<Member> findByProjectIdAndUserId(Long projectId, Long userId) {
-        return repository.findByProjectIdAndUserId(projectId, userId);
+    public Boolean isMember(Long projectId, Long memberId) {
+        return getMember(projectId, memberId) != null;
+    }
+
+    public List<Member> getMembersByProject(Long projectId) {
+        return repository.findByProjectId(projectId);
     }
 
     public void delete(Long id) {
@@ -49,7 +51,7 @@ public class MemberService extends AbstractService {
     }
 
     private void checkMemberNull(Member member) throws BusinessRuleException {
-        if (checkNull(member) || checkNull(member.getProject()) || checkNull(member.getUser())) {
+        if (isNull(member) || isNull(member.getProject()) || isNull(member.getUser())) {
             throw new BusinessRuleException("error.member.service.member.is.null");
         }
     }

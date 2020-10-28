@@ -4,6 +4,7 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Set;
 
+import br.ufrn.dct.apf.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.ContextConfiguration;
@@ -14,11 +15,6 @@ import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
-import br.ufrn.dct.apf.model.Attribution;
-import br.ufrn.dct.apf.model.Member;
-import br.ufrn.dct.apf.model.Project;
-import br.ufrn.dct.apf.model.User;
-import br.ufrn.dct.apf.model.UserStory;
 import br.ufrn.dct.apf.repository.AttributionRepository;
 import br.ufrn.dct.apf.repository.UserRepository;
 
