@@ -55,6 +55,12 @@ public class ProjectService extends AbstractService {
 
     public Project save(Project project, User owner) throws BusinessRuleException {
         logger.info("save " + project);
+        if (isNull(project)) {
+            throw BusinessExceptions.PROJECT_IS_NULL;
+        }
+        if (isNull(owner)) {
+            throw BusinessExceptions.MEMBER_IS_NULL;
+        }
 
         if (isNull(project.getId())) {
             addMember(project, owner, Attribution.PROJECT_MANAGER);
@@ -93,7 +99,7 @@ public class ProjectService extends AbstractService {
         if (!isNull(project.getId()) && !isNull(user.getId())) {
             Attribution attributionToCheck = attributionRepository.findByName(attribution);
 
-            hasRule = memberOfUser != null && memberOfUser.getAttribution() == attributionToCheck;
+            hasRule = memberOfUser != null && memberOfUser.getAttribution().equals(attributionToCheck);
         }
 
         return hasRule;
