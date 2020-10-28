@@ -19,7 +19,7 @@ import java.util.List;
 public class UserController extends AbstractController {
 
     @Autowired
-    private UserService service;
+    private UserService userService;
 
     @Autowired
     private RoleRepository roleRepository;
@@ -33,7 +33,7 @@ public class UserController extends AbstractController {
 
         setUserAuth(mv);
 
-        mv.addObject("user", service.findOne(current.getId()));
+        mv.addObject("user", userService.findOne(current.getId()));
 
         return mv;
     }
@@ -41,7 +41,7 @@ public class UserController extends AbstractController {
     @GetMapping("/user/edit/{id}")
     public ModelAndView editProfile(@PathVariable("id") Long id) {
 
-        return update(service.findOne(id));
+        return update(userService.findOne(id));
     }
 
     @GetMapping("/user/update")
@@ -57,7 +57,7 @@ public class UserController extends AbstractController {
     public ModelAndView saveProfile(@Valid User user, BindingResult result) {
         ModelAndView modelAndView = new ModelAndView();
 
-        service.edit(user);
+        userService.edit(user);
 
         modelAndView.addObject("successMessage", "User has been registered successfully");
         modelAndView.addObject("user", new User());
@@ -72,7 +72,7 @@ public class UserController extends AbstractController {
 
         setUserAuth(mv);
 
-        mv.addObject("users", service.findAll());
+        mv.addObject("users", userService.findAll());
 
         return mv;
     }
@@ -90,19 +90,19 @@ public class UserController extends AbstractController {
 
     @GetMapping("/admin/user/edit/{id}")
     public ModelAndView edit(@PathVariable("id") Long id) {
-        return add(service.findOne(id));
+        return add(userService.findOne(id));
     }
 
     @GetMapping("/admin/user/delete/{id}")
     public ModelAndView delete(@PathVariable("id") Long id) {
-        service.delete(id);
+        userService.delete(id);
         return findAll();
     }
 
     @PostMapping("/admin/user/save")
     public ModelAndView save(@Valid User user, BindingResult result) {
         ModelAndView modelAndView = new ModelAndView();
-        User userExists = service.findUserByEmail(user.getEmail());
+        User userExists = userService.findUserByEmail(user.getEmail());
         if (userExists != null) {
             result.rejectValue("email", "error.user", "There is already a user registered with the email provided");
         }
@@ -110,7 +110,7 @@ public class UserController extends AbstractController {
             result.reject("erro!", result.getAllErrors().toArray(), "Erro ao salvar usuário");
             findAll();
         } else {
-            service.save(user);
+            userService.save(user);
             modelAndView.addObject("successMessage", "User has been registered successfully");
             modelAndView.addObject("user", new User());
         }

@@ -22,8 +22,12 @@ public class UserStoryService extends AbstractService {
         return repository.findById(id).orElse(null);
     }
 
-    public UserStory save(UserStory userStory) {
-        return repository.saveAndFlush(userStory);
+    public void save(UserStory userStory) {
+        if (userStory.getId() != null) {
+            repository.save(userStory);
+        } else {
+            repository.saveAndFlush(userStory);
+        }
     }
 
     public void delete(Long id) {

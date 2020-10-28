@@ -53,10 +53,9 @@ public class UserStoryController extends AbstractController {
 
         return mv;
     }
-    
+
     @GetMapping("/us/edit/{id}")
     public ModelAndView edit(@PathVariable("id") Long id) {
-
         return add(service.findOne(id));
     }
 
@@ -69,6 +68,7 @@ public class UserStoryController extends AbstractController {
 
         mv.addObject("projects", projects);
         mv.addObject("message", "Baeldung");
+
         return mv;
     }
 
@@ -82,9 +82,9 @@ public class UserStoryController extends AbstractController {
         }
 
         User current = getCurrentUser();
-        
-        Project project = null;
-        
+
+        Project project;
+
         if (us.getProject() != null && us.getProject().getId() != null) {
             project = projectService.findOne(us.getProject().getId());
         } else {
