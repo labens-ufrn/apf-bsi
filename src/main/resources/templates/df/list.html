@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Data Functions</title>
+
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="viewport" content="width=device-width"/>
+  <link rel="stylesheet" type="text/css" th:href="@{/css/simple-sidebar.css}"/>
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div th:replace="fragments/header :: header"></div>
+
+<div class="modal modal-delete" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Deletar Registro</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p id="texto-modal"></p>
+      </div>
+      <div class="modal-footer">
+        <a id="link-delete">
+          <button type="button" class="btn btn-danger">Sim, quero deletar</button>
+        </a>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="wrapper" class="wrapper.toggled toggled" style="margin-top: 50px">
+  <!-- Sidebar -->
+  <div th:replace="fragments/menu"></div>
+  <!-- /#sidebar-wrapper -->
+
+  <!-- Page Content -->
+  <div id="page-content-wrapper">
+    <div class="container-fluid">
+
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <strong>Data Functions</strong>
+        </div>
+        <div class="panel-body">
+          <div class="table-responsive">
+            <table class="table table-sm table-striped table-hover table-bordered">
+              <thead>
+              <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Descrição</th>
+                <th></th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr th:each="df : ${dfs}" th:attr="onclick=|viewDetailsDf('${df.id}')|">
+                <td th:text="${df.id}"></td>
+                <td th:text="${df.name}"></td>
+                <td th:text="${df.description}"></td>
+                <td>
+                  <div class="btn-group pull-right">
+                    <a th:href="@{/df/edit/{id}(id=${df.id})}" class="btn btn-sm btn-primary">Editar</a>
+<!--                    <a th:id="${df.id}" class="delete btn btn-sm btn-danger confirModal">Excluir</a>-->
+                  </div>
+                </td>
+              </tr>${df.id}
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="panel-footer">
+          <a class="btn btn-sm btn-success"
+             th:href="@{/project/add/}">Add Data Function</a>
+        </div>
+      </div>
+    </div>
+    <!-- /#page-content-wrapper -->
+    <div th:include="fragments/footer :: footer-authenticated" align="center"></div>
+  </div>
+</div>
+
+<script type="text/javascript">
+  function viewDetailsDf(id) {
+    window.location = `details/${id}`;
+  }
+</script>
+</body>
+</html>

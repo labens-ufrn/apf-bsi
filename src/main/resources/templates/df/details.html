@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Detalhes do Data Function</title>
+
+  <link rel="stylesheet" type="text/css" th:href="@{/css/simple-sidebar.css}"/>
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+<div th:replace="fragments/header :: header"></div>
+
+<div id="wrapper" class="wrapper.toggled toggled" style="margin-top: 50px">
+  <!-- Sidebar -->
+  <div th:replace="fragments/menu"></div>
+  <!-- /#sidebar-wrapper -->
+
+  <!-- Page Content -->
+  <div id="page-content-wrapper">
+    <div class="container-fluid">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <strong th:text="${df.name}"></strong>
+        </div>
+        <div class="panel-body">
+          <div>
+            <span>Id:</span>
+            <span th:text="${df.id}"></span>
+          </div>
+          <div>
+            <span>Nome:</span>
+            <span th:text="${df.name}"></span>
+          </div>
+          <div>
+            <span>Descrição:</span>
+            <span th:text="${df.description}"></span>
+          </div>
+          <div>
+            <span>Projeto:</span>
+            <span th:text="${df.project.name}"></span>
+          </div>
+          <div th:if="${df.userStory != null}">
+            <span>User Story:</span>
+            <span th:text="${df.userStory.name}"></span>
+          </div>
+          <div>
+            <span>Tipo:</span>
+            <span th:text="${df.type}"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

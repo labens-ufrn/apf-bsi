@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="pt">
 
 <head>
   <meta charset="UTF-8"/>
@@ -17,13 +17,13 @@
   <script type="text/javascript" th:src="@{/js/jquery-3.2.0.min.js}"></script>
   <script type="text/javascript" th:src="@{/js/jquery.autocomplete.js}"></script>
   <script>
-    $(document).ready(function () {
+    $(document).ready(() => {
       $('#autocomplete-input').autocomplete({
         serviceUrl: '/apf/project/suggestion',
         paramName: 'searchstr',
         minChars: 1,
         autoSelectFirst: true,
-        onSelect: function (suggestion) {
+        onSelect: (suggestion) => {
           window.location = '/apf/df/add/' + suggestion.data;
         }
       });
@@ -70,7 +70,7 @@
                 <div id="divUS" class="form-group row">
                   <div id="divUS2" class="col-md-4" th:classappend="${#fields.hasErrors('userStory.id')}? 'has-error'">
                     <label>User Story</label>
-                    <select id="usSelect" class="form-control" th:field="${userStory.id}">
+                    <select th:disabled="${dfDTO.project.name == null}" id="usSelect" class="form-control" th:field="${userStory.id}">
                       <option value="0">Selecione um User Story</option>
                       <option th:each="us : ${userStories}" th:value="${us.id}" th:text="${us.name}"></option>
                     </select>
