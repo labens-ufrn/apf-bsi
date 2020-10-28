@@ -10,6 +10,10 @@ package br.ufrn.dct.apf.service;
 public class BusinessRuleException extends Exception {
 
     /**
+     *
+     */
+    private static final long serialVersionUID = 1258935537927107428L;
+    /**
      * Parameters for error messages.
      */
     private final String[] parameters;
