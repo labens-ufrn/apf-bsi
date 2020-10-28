@@ -11,7 +11,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import br.ufrn.dct.apf.repository.AttributionRepository;
-import br.ufrn.dct.apf.repository.MemberRepository;
 import br.ufrn.dct.apf.repository.ProjectRepository;
 
 import static java.util.Objects.isNull;
@@ -54,7 +53,7 @@ public class ProjectService extends AbstractService {
     }
 
     public Project save(Project project, User owner) throws BusinessRuleException {
-        logger.info("save " + project);
+        logger.info(() -> "projectService.save: " + project + ", owner" + owner);
         if (isNull(project)) {
             throw BusinessExceptions.PROJECT_IS_NULL;
         }
@@ -81,8 +80,6 @@ public class ProjectService extends AbstractService {
     }
 
     private void checkIsOwnerMember(Project project, User user) throws BusinessRuleException {
-        logger.info("checkMember " + project + " - " + user);
-
         if (!project.isMemberOfProject(user)) {
             throw BusinessExceptions.MEMBER_NOT_EXISTS;
         }
