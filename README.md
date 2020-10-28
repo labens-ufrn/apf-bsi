@@ -63,9 +63,10 @@ Para executar o projeto, será necessário instalar os seguintes programas:
 Código abaixo:
 
 1. Criação das bases de dados e usuário
+
 ```sql
-    CREATE DATABASE apf_db;
-    CREATE DATABASE apf_db_test;
+    CREATE DATABASE apf_db CHARACTER SET UTF8 COLLATE utf8_bin;
+    CREATE DATABASE apf_db_test CHARACTER SET UTF8 COLLATE utf8_bin;
 
     CREATE USER 'apf_user'@'localhost' IDENTIFIED BY '12345';
 
@@ -73,7 +74,8 @@ Código abaixo:
     GRANT ALL ON apf_db_test.* TO 'apf_user'@'localhost';
 ```
 
-2. Povoamento do Banco de Dados
+2.Povoamento do Banco de Dados
+
 ```sql
     INSERT INTO role VALUES (1,'ADMIN');
     INSERT INTO role VALUES (2,'USER');
@@ -81,17 +83,20 @@ Código abaixo:
     INSERT INTO attribution VALUES (1,'PROJECT MANAGER');
     INSERT INTO attribution VALUES (2,'PROJECT MEMBER');
 ```
+
 ## Padrões de Codificação do Editor
+
 * Insert spaces for tabs
 * Tab policy para Spaces only
 * Indentation size: 4
 * Tab size: 4
 
-
 <a id="des"></a> 
 
 # Desenvolvimento
+
 Para iniciar o desenvolvimento, é necessário clonar o projeto do GitHub num diretório de sua preferência:
+
 ```bash
 cd "diretório de sua preferência"
 git clone https://github.com/labens-ufrn/apf-bsi.git
@@ -103,14 +108,17 @@ git clone https://github.com/labens-ufrn/apf-bsi.git
 
 Esse projeto faz uso do framework spring-boot que encapsula todas as dependências no arquivo jar.
 Para o build do projeto, execute os comandos abaixo:
+
 ```java
 mvn clean
 mvn install
 Vá para o diretório /target
 java -jar apf-bsi-0.0.1-SNAPSHOT.jar
+
 ```
 O comando irá baixar todas as dependências do projeto e criar um diretório target com os artefatos construídos, que incluem o arquivo jar do projeto. Além disso, serão executados os testes unitários, e se algum falhar, o Maven exibirá essa informação no console.
 Se tudo ocorreu como esperado vai conseguir acessar estes endereços com sucesso.
+
 ```bash
 http://localhost:8080/apf/
 http://localhost:8080/apf/login
@@ -120,7 +128,9 @@ http://localhost:8080/apf/registration
 <a id="tes"></a> 
 
 # Testes
+
 Para rodar os testes, utilize o comando abaixo:
+
 ```java
 mvn test
 ```
@@ -132,12 +142,12 @@ mvn test
 ```bash
 MIT
 ```
+
 <a id="ref"></a> 
 
 # Referências
 
 Desenvolvido a partir do tutorial e do código linkado abaixo:
-
 
 * https://medium.com/@gustavo.ponce.ch/spring-boot-spring-mvc-spring-security-mysql-a5d8545d837d
 * https://github.com/gustavoponce7/SpringSecurityLoginTutorial
@@ -145,7 +155,9 @@ Desenvolvido a partir do tutorial e do código linkado abaixo:
 * https://github.com/lowrin/spring-boot-input-autocomplete-example
 
 ## Tutoriais
-- Na página [Tutoriais](docs/Tutorials.md) temos a lista de tutoriais consultados.
-## Artigos
-- Na página [Artigos](docs/referencias.md) temos a lista de artigos consultados.
 
+* Na página [Tutoriais](docs/Tutorials.md) temos a lista de tutoriais consultados.
+
+## Artigos
+
+* Na página [Artigos](docs/referencias.md) temos a lista de artigos consultados.
