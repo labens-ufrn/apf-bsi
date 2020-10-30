@@ -10,7 +10,6 @@ import br.ufrn.dct.apf.model.Project;
 import br.ufrn.dct.apf.model.TransactionFunction;
 import br.ufrn.dct.apf.model.UserStory;
 import br.ufrn.dct.apf.service.BusinessRuleException;
-import br.ufrn.dct.apf.service.ProjectService;
 
 public class EstimativeCount extends AbstractFunctionPointCount {
     
