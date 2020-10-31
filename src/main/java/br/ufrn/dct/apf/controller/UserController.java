@@ -25,16 +25,13 @@ public class UserController extends AbstractController {
     private RoleRepository roleRepository;
 
     @GetMapping("/user")
-    public ModelAndView profile() {
-
-        ModelAndView mv = new ModelAndView("user/profile");
+    public ModelAndView profile(ModelAndView mv) {
+        mv.setViewName("user/profile");
 
         User current = getCurrentUser();
-
         setUserAuth(mv);
-
+        
         mv.addObject("user", userService.findOne(current.getId()));
-
         return mv;
     }
 
@@ -56,13 +53,22 @@ public class UserController extends AbstractController {
     @PostMapping("/user/save")
     public ModelAndView saveProfile(@Valid User user, BindingResult result) {
         ModelAndView modelAndView = new ModelAndView();
+        String plainPassword = user.getPassword();
+        checkEmailExists(user, result);
+        if (result.hasErrors()) {
+            result.reject("erro!", result.getAllErrors().toArray(), "Erro ao editar usuário!");
+            modelAndView.addObject("errorMessage", "User has not been updated.");
+            modelAndView.setViewName("user/edit");
+            return modelAndView;
+        } else {
+            userService.edit(user);
+            loadUserAuth(user.getEmail(), plainPassword);
 
-        userService.edit(user);
+            modelAndView.addObject("successMessage", "User has been registered successfully");
+            modelAndView.addObject("user", new User());
+        }
 
-        modelAndView.addObject("successMessage", "User has been registered successfully");
-        modelAndView.addObject("user", new User());
-
-        return profile();
+        return profile(modelAndView);
     }
 
     @GetMapping("/admin/user")
@@ -102,10 +108,7 @@ public class UserController extends AbstractController {
     @PostMapping("/admin/user/save")
     public ModelAndView save(@Valid User user, BindingResult result) {
         ModelAndView modelAndView = new ModelAndView();
-        User userExists = userService.findUserByEmail(user.getEmail());
-        if (userExists != null) {
-            result.rejectValue("email", "error.user", "There is already a user registered with the email provided");
-        }
+        checkEmailExists(user, result);
         if (result.hasErrors()) {
             result.reject("erro!", result.getAllErrors().toArray(), "Erro ao salvar usuário");
             findAll();
@@ -116,5 +119,12 @@ public class UserController extends AbstractController {
         }
 
         return findAll();
+    }
+
+    private void checkEmailExists(User user, BindingResult result) {
+        User userExists = userService.findUserByEmail(user.getEmail());
+        if (userExists != null && !userExists.getId().equals(user.getId())) {
+            result.rejectValue("email", "error.user", "There is already a user registered with the email provided");
+        }
     }
 }
