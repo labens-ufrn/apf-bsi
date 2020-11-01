@@ -19,14 +19,15 @@ Requisito                     | Descrição   | Ator |
 ---------                     | ----------- | ---------- |
 RF001 - Cadastrar Usuário   | O usuário pode cadastra-se informando nome, sobrenome, e-mail e senha. O username é o e-mail, e o usuário criado não tem atribuição em nenhum projeto. A conta do usuário é ativada desde o cadastro. | Usuário, Administrador |
 RF002 - Login de Usuário   | O usuário o e-mail e senha e é direcionado para a tela inicial com a lista de seus projetos. | Usuário, Administrador |
-RF003 - Editar Usuário   | O usuário pode editar qualquer dos seus atributos: nome, sobrenome, e-mail e senha. | Usuário, Administrador |
-RF004 - Excluir Usuário   | O usuário não pode excluir sua conta, apenas o administrador. | Usuário, Administrador |
-RF005 - Adicionar Projeto     | Cadastra um projeto que representa um software em desenvolvimento. Um projeto tem os atributos id, nome, descrição, data de criação, se é privado ou publico, se está ativo, a equipe (conjunto de membros), lista de Funções de Dados, lista de Funções de Transação e a lista de User Stories. | Gerente, Administrador |
-RF006 - Detalhar Projeto      | Detalha todos os dados de um projeto. | Gerente, Membro, Administrador |
-RF007 - Consultar Projeto     | Lista todos os projetos de um determinado usuário. | Gerente, Membro, Administrador |
-RF008 - Editar Projeto        | Edita os seguintes dados de um projeto: nome, descrição, data de criação, se é privado ou publico,e se está ativo. | Gerente, Administrador |
-RF009 - Excluir Projeto       | Exclui um projeto e apaga todos os seus dados (funções de dados, funções de transição, lista de user stories). | Gerente, Administrador |
-RF010 - Arquivar Projeto      | Arquivar um projeto coloca ele como inativo e não será mais apresentado na tela inicial do usuário. O usuário poderá listar os projetos arquivados. | Gerente, Administrador |
+RF003 - Consultar Usuário     | Lista todos os usuários. Caso o usuário seja comum, exibe apenas o profile do usuário. | Membro, Administrador |
+RF004 - Editar Usuário   | O usuário pode editar qualquer dos seus atributos: nome, sobrenome, e-mail e senha. | Usuário, Administrador |
+RF005 - Excluir Usuário   | O usuário não pode excluir sua conta, apenas o administrador. | Usuário, Administrador |
+RF006 - Adicionar Projeto     | Cadastra um projeto que representa um software em desenvolvimento. Um projeto tem os atributos id, nome, descrição, data de criação, se é privado ou publico, se está ativo, a equipe (conjunto de membros), lista de Funções de Dados, lista de Funções de Transação e a lista de User Stories. | Gerente, Administrador |
+RF007 - Detalhar Projeto      | Detalha todos os dados de um projeto. | Gerente, Membro, Administrador |
+RF008 - Consultar Projeto     | Lista todos os projetos de um determinado usuário. | Gerente, Membro, Administrador |
+RF009 - Editar Projeto        | Edita os seguintes dados de um projeto: nome, descrição, data de criação, se é privado ou publico,e se está ativo. | Gerente, Administrador |
+RF010 - Excluir Projeto       | Exclui um projeto e apaga todos os seus dados (funções de dados, funções de transição, lista de user stories). | Gerente, Administrador |
+RF011 - Arquivar Projeto      | Arquivar um projeto coloca ele como inativo e não será mais apresentado na tela inicial do usuário. O usuário poderá listar os projetos arquivados. | Gerente, Administrador |
 
 ## Lista de Requisitos Não-Funcionais
 
