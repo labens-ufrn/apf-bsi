@@ -2,29 +2,11 @@
 <h1 align="center">
 ANALISADOR DE PONTOS DE FUNÇÃO 
 </h1>
- 
-<!-- Badge_Grade -->
-<p align="center">
-  <img alt="GitHub language count" src="https://img.shields.io/github/languages/count/lukemorales/rocketshoes-react-native.svg">
-
-  <a href="https://www.codacy.com/app/lukemorales/rocketshoes-react-native?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=lukemorales/rocketshoes-react-native&amp;utm_campaign=Badge_Grade">
-    <img alt="Codacy grade" src="https://img.shields.io/codacy/grade/e4cc1482460841bdaa99c2e75e01f0bc.svg">
-  </a>
-
-  <img alt="Repository size" src="https://img.shields.io/github/repo-size/lukemorales/rocketshoes-react-native.svg">
-  <a href="https://github.com/lukemorales/rocketshoes-react-native/commits/master">
-    <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/lukemorales/rocketshoes-react-native.svg">
-  </a>
-  <a href="https://github.com/lukemorales/rocketshoes-react-native/issues">
-    <img alt="Repository issues" src="https://img.shields.io/github/issues/lukemorales/rocketshoes-react-native.svg">
-  </a>
-  <img alt="GitHub" src="https://img.shields.io/github/license/lukemorales/rocketshoes-react-native.svg">
-</p>
 
 <!-- Descrição -->
 <h4 align="center">
 Sistema para a contagem e análise dos pontos de função para estimar o tamanho funcional de um software.
-</h4><br><br>
+</h4><br>
 
  <!-- Links dos tópicos -->
 <p align="center"></p>
@@ -35,35 +17,33 @@ Sistema para a contagem e análise dos pontos de função para estimar o tamanho
 <a href="#bui">Build e Execução</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
 <a href="#tes">Testes</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
 <a href="#lic">Licença</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-  <a href="#ref">Referências</a>
+<a href="#ref">Referências</a>
 </p>
-<br>
-<a id="sobre"></a> 
 
+<br>
+
+<a id="sobre"></a> 
 # Sobre o Projeto
 Sistema para facilitar a contagem na análise por pontos de função (APF) desenvolvido para ser utilizado nas disciplinas de Engenharia de Software do curso de Bacharelado em Sistemas de Informação do CERES/UFRN.
 
 <a id="doc"></a> 
-
 # Documentação
 * [Documento de Visão](docs/docVisao.md)
-* [Plano de Iteração]()
-* [Lista de User Stories]()
-* [Contagem de Tamanho Funcional com Análise por Pontos de Função]()
+* [Plano de Iteração](docs/docPlanIteracao.md)
+* [Lista de User Stories](docs/docListUserStorie.md)
+* [Contagem de Tamanho Funcional com Análise por Pontos de Função](docs/docContTamAPF.md)
 
 <a id="pre"></a> 
-
 # Pré-requisitos
 Para executar o projeto, será necessário instalar os seguintes programas:
-* JDK 8: Necessário para executar o projeto Java.
+* JDK 11: Necessário para executar o projeto Java.
 * Maven: Necessário para realizar o build do projeto Java.
-* Eclipse ou Vscode + extensões Java: Para o desenvolvimento do Projeto.
-* MariaDB ou MySql: para persistência no Banco de Dados
+* Eclipse ou Vscode + extenssões: Java Extension Pack e Spring Boot Tools : Para o desenvolvimento do Projeto.
+* MySql ou MariaDb: para persistência no Banco de Dados
 * Criação do Banco de Dados dev e test(apf_db e apf_db_test) e Usuário(apf_user) com sua devidas permissões.
 Código abaixo:
 
 1. Criação das bases de dados e usuário
-
 ```sql
     CREATE DATABASE apf_db CHARACTER SET UTF8 COLLATE utf8_bin;
     CREATE DATABASE apf_db_test CHARACTER SET UTF8 COLLATE utf8_bin;
@@ -75,7 +55,6 @@ Código abaixo:
 ```
 
 2.Povoamento do Banco de Dados
-
 ```sql
     INSERT INTO role VALUES (1,'ADMIN');
     INSERT INTO role VALUES (2,'USER');
@@ -85,7 +64,6 @@ Código abaixo:
 ```
 
 ## Padrões de Codificação do Editor
-
 * Insert spaces for tabs
 * Tab policy para Spaces only
 * Indentation size: 4
