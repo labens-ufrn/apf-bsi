@@ -113,6 +113,4 @@ public class Member implements Serializable {
             return other.user == null;
         } else return user.equals(other.user);
     }
-
-
 }

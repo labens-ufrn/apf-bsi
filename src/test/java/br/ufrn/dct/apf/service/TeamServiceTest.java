@@ -61,15 +61,6 @@ public class TeamServiceTest extends AbstractTestNGSpringContextTests {
         dev2.setEmail("dev2@gmai.com");
         dev2.setPassword("12345");
 
-        projectOwner = new Attribution();
-        projectOwner.setName(Attribution.PROJECT_MANAGER);
-
-        projectDev = new Attribution();
-        projectDev.setName(Attribution.PROJECT_DEV);
-
-        attribRepository.save(projectOwner);
-        attribRepository.save(projectDev);
-
         userService.save(analista);
         userService.save(desenvolvedor);
 
@@ -89,8 +80,6 @@ public class TeamServiceTest extends AbstractTestNGSpringContextTests {
         projectService.delete(p1.getId());
         userService.delete(analista.getId());
         userService.delete(desenvolvedor.getId());
-        attribRepository.deleteById(projectOwner.getId());
-        attribRepository.deleteById(projectDev.getId());
         p1 = null;
     }
 
@@ -129,20 +118,19 @@ public class TeamServiceTest extends AbstractTestNGSpringContextTests {
         softAssert.assertEquals(found.getAttribution().getName(), Attribution.PROJECT_MANAGER, "T07 - Equals:");
 
         Attribution attribManager = attribRepository.findById(1).orElse(null);
-        Attribution attribOwner = attribRepository.findByName(Attribution.PROJECT_MANAGER);
+        Attribution attribMember = attribRepository.findByName(Attribution.PROJECT_MEMBER);
 
         softAssert.assertTrue(found.getAttribution().equals(attribManager), "T08 - Equals:");
-        softAssert.assertFalse(found.getAttribution().equals(attribOwner), "T09 - Equals:");
+        softAssert.assertFalse(found.getAttribution().equals(attribMember), "T09 - Equals:");
         softAssert.assertFalse(found.getAttribution().equals(null), "T10 - Equals:");
-        softAssert.assertTrue(projectOwner.equals(projectOwner), "T11 - Equals:");
-        softAssert.assertTrue(projectOwner.equals(attribOwner), "T12 - Equals:");
+        //softAssert.assertTrue(attribMember.equals(attribManager), "T11 - Equals:");
 
         List<Attribution> atts = attribRepository.findAll();
 
         softAssert.assertNotNull(atts, "T13 - NotNull:");
-        softAssert.assertEquals(atts.size(), 4, "T14 - Equals:");
+        softAssert.assertEquals(atts.size(), 2, "T14 - Equals:");
 
-        softAssert.assertNotNull(attribOwner.hashCode(), "T15 - Equals:");
+        softAssert.assertNotNull(attribMember.hashCode(), "T15 - Equals:");
 
         softAssert.assertAll();
     }
