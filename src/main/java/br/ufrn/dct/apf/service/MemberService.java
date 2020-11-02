@@ -40,12 +40,12 @@ public class MemberService extends AbstractService {
         return memberDB;
     }
 
-    public Member getMember(Long projectId, Long memberId) {
-        return repository.findByProjectIdAndUserId(projectId, memberId);
+    public Member getMember(Long projectId, Long userId) {
+        return repository.findByProjectIdAndUserId(projectId, userId);
     }
 
-    public Boolean isMember(Long projectId, Long memberId) {
-        return getMember(projectId, memberId) != null;
+    public Boolean isMember(Long projectId, Long userId) {
+        return getMember(projectId, userId) != null;
     }
 
     public List<Member> getMembersByProject(Long projectId) {
