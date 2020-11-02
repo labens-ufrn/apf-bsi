@@ -16,9 +16,26 @@
 
 <div th:replace="fragments/header-login :: header"></div>
 
+
+
 <div class="container" style="margin-top: 50px">
   <br/>
-
+  <div>
+    <h2 data-th-text="#{label.welcome}"></h2>
+      <p data-th-text="#{label.content}"></p>
+      <p th:text="#{label.changeLang} + ':'"></p>
+      <ul>
+          <li>
+              <a th:href="@{/login?lang=en_US}" data-th-text="#{label.lang.en-us}"></a>
+          </li>
+          <li>
+              <a th:href="@{/login?lang=pt_BR}" data-th-text="#{label.lang.pt-br}"></a>
+          </li>
+          <li>
+              <a th:href="@{/login?lang=es_ES}" data-th-text="#{label.lang.es-es}"></a>
+          </li>
+      </ul>
+  </div>
   <form th:action="@{/login}" method="POST" class="form-signin">
     <h3 class="form-signin-heading">Seja Bem-vindo!</h3>
     <br/>
