@@ -37,7 +37,6 @@ public class TeamServiceTest extends AbstractTestNGSpringContextTests {
     private Project p1;
     private User analista, desenvolvedor, dev2;
     private Member m1, m2;
-    private Attribution projectOwner, projectDev;
 
     @BeforeMethod
     public void startTest() throws BusinessRuleException {
