@@ -25,23 +25,19 @@ public class UserStoryControllerTest extends AbstractControllerTest {
     @Autowired
     private MockMvc mockMvc;
     
-    @Autowired
+    @MockBean
     private UserStoryService userStoryService;
-    
-    @MockBean
-    private UserStoryService service;
-    
-    @MockBean
-    private UserService userService;
     
     @MockBean
     private ProjectService projectService;
     
-    //@Test
+    @MockBean
+    private UserService userService;
+
+    @Test
     public void listFromService() throws Exception {
-       List<UserStory> value = new ArrayList<>();
-       System.err.println(userStoryService);
-       when(userStoryService.findAll()).thenReturn(value);
+       //List<UserStory> value = new ArrayList<>();
+       //when(userStoryService.findAll()).thenReturn(value);
         
         mockMvc.perform(get("/us/list"))
         .andDo(print())
