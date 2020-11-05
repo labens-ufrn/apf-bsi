@@ -16,20 +16,22 @@
 
 <div th:replace="fragments/header-login :: header"></div>
 
+
+
 <div class="container" style="margin-top: 50px">
   <br/>
-
   <form th:action="@{/login}" method="POST" class="form-signin">
-    <h3 class="form-signin-heading">Seja Bem-vindo!</h3>
+    <h3 class="form-signin-heading" th:text="#{login.welcome}">Seja Bem-vindo!</h3>
     <br/>
-    <input type="text" id="email" name="email" placeholder="Email" class="form-control"/> <br/> <input
-    type="password" id="password" name="password" placeholder="Senha" class="form-control"/> <br/>
+    <input type="text" id="email" name="email" th:placeholder="#{login.input.email.placeholder}" class="form-control"/> <br/> <input
+    type="password" id="password" name="password" th:placeholder="#{login.input.password.placeholder}" class="form-control"/> <br/>
 
     <div align="center" th:if="${param.error}">
       <p style="font-size: 20; color: #FF1C19;">Email ou senha inválida, tente novamente.</p>
     </div>
 
-    <button class="btn btn-lg btn-primary btn-block" value="Login" type="submit">Login</button>
+    <button class="btn btn-lg btn-primary btn-block" value="Login" type="submit"
+            th:text="#{login.btn.enter}">Login</button>
   </form>
   <div align="center" th:include="fragments/footer :: footer-login"></div>
 </div>

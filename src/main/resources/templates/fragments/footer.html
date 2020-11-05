@@ -4,20 +4,16 @@
 </head>
 <body>
   <div th:fragment="footer-login">
-
     <div class="container">
-
       <footer>
         <!-- this is footer -->
-        © 2017-2019 APF - BSI
+        © 2017-2020 APF-BSI - LABENS/DCT/UFRN
       </footer>
     </div>
   </div>
 
   <div th:fragment="footer-authenticated">
-
     <div class="container">
-
       <footer>
         <!-- this is footer
         © 2017 APF - BSI <span sec:authorize="isAuthenticated()"> |
@@ -26,7 +22,7 @@
             th:href="@{/logout}">Sign Out</a>
         </span> -->
 
-        © 2017 APF - BSI | Logado com: <span th:utext="${userName}"></span> | Permissões: <span
+        © 2017-2020 APF-BSI - LABENS/DCT/UFRN <br> Logado com: <span th:utext="${userName}"></span> | Permissões: <span
         th:utext="${authorities}"></span> | <span><a
         th:href="@{/logout}">Sair</a></span>
       </footer>

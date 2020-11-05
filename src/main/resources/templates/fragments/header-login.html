@@ -12,16 +12,25 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand">Analisador de Pontos de Função</a>
+      <a class="navbar-brand" th:text="#{app.name}">Analisador de Pontos de Função</a>
     </div>
     <div class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
+          <a th:href="@{/login?lang=pt_BR}" data-th-text="'🇧🇷 ' + #{label.lang.pt-br}"></a>
+        </li>
+        <li>
+          <a th:href="@{/login?lang=en_US}" data-th-text="'🇺🇸 ' + #{label.lang.en-us}"></a>
+        </li>
+        <li>
+          <a th:href="@{/login?lang=es_ES}" data-th-text="'🇪🇸 ' + #{label.lang.es-es}"></a>
+        </li>
+        <li>
           <a href="/registration" th:href="@{/registration}">
             <span class="glyphicon glyphicon-log-in" aria-hidden="true"></span>
-            Cadastre-se
+            <span th:text="#{app.registration}">Cadastre-se</span>
           </a>
         </li>
       </ul>
