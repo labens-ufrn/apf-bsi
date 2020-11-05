@@ -3,6 +3,8 @@ package br.ufrn.dct.apf.controller;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -20,12 +22,23 @@ public abstract class AbstractController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private AuthenticationManager authManager;
+
     protected void setUserAuth(ModelAndView modelAndView) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByEmail(auth.getName());
 
         modelAndView.addObject("userName", user.getName() + " " + user.getLastName() + " (" + user.getEmail() + ")");
         modelAndView.addObject("authorities", getRoles(user));
+    }
+
+    protected void loadUserAuth(String email, String password) {
+        UsernamePasswordAuthenticationToken authReq = 
+            new UsernamePasswordAuthenticationToken(email, password);
+	    Authentication auth = authManager.authenticate(authReq);
+	    SecurityContext sc = SecurityContextHolder.getContext();
+	    sc.setAuthentication(auth);
     }
 
     protected String getUsername() {
