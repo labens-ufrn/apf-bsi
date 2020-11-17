@@ -37,7 +37,6 @@ public class TeamServiceTest extends AbstractTestNGSpringContextTests {
     private Project p1;
     private User analista, desenvolvedor, dev2;
     private Member m1, m2;
-    private Attribution projectOwner, projectDev;
 
     @BeforeMethod
     public void startTest() throws BusinessRuleException {
@@ -61,15 +60,6 @@ public class TeamServiceTest extends AbstractTestNGSpringContextTests {
         dev2.setEmail("dev2@gmai.com");
         dev2.setPassword("12345");
 
-        projectOwner = new Attribution();
-        projectOwner.setName(Attribution.PROJECT_MANAGER);
-
-        projectDev = new Attribution();
-        projectDev.setName(Attribution.PROJECT_DEV);
-
-        attribRepository.save(projectOwner);
-        attribRepository.save(projectDev);
-
         userService.save(analista);
         userService.save(desenvolvedor);
 
@@ -89,8 +79,6 @@ public class TeamServiceTest extends AbstractTestNGSpringContextTests {
         projectService.delete(p1.getId());
         userService.delete(analista.getId());
         userService.delete(desenvolvedor.getId());
-        attribRepository.deleteById(projectOwner.getId());
-        attribRepository.deleteById(projectDev.getId());
         p1 = null;
     }
 
@@ -129,20 +117,19 @@ public class TeamServiceTest extends AbstractTestNGSpringContextTests {
         softAssert.assertEquals(found.getAttribution().getName(), Attribution.PROJECT_MANAGER, "T07 - Equals:");
 
         Attribution attribManager = attribRepository.findById(1).orElse(null);
-        Attribution attribOwner = attribRepository.findByName(Attribution.PROJECT_MANAGER);
+        Attribution attribMember = attribRepository.findByName(Attribution.PROJECT_MEMBER);
 
         softAssert.assertTrue(found.getAttribution().equals(attribManager), "T08 - Equals:");
-        softAssert.assertFalse(found.getAttribution().equals(attribOwner), "T09 - Equals:");
+        softAssert.assertFalse(found.getAttribution().equals(attribMember), "T09 - Equals:");
         softAssert.assertFalse(found.getAttribution().equals(null), "T10 - Equals:");
-        softAssert.assertTrue(projectOwner.equals(projectOwner), "T11 - Equals:");
-        softAssert.assertTrue(projectOwner.equals(attribOwner), "T12 - Equals:");
+        //softAssert.assertTrue(attribMember.equals(attribManager), "T11 - Equals:");
 
         List<Attribution> atts = attribRepository.findAll();
 
         softAssert.assertNotNull(atts, "T13 - NotNull:");
-        softAssert.assertEquals(atts.size(), 4, "T14 - Equals:");
+        softAssert.assertEquals(atts.size(), 2, "T14 - Equals:");
 
-        softAssert.assertNotNull(attribOwner.hashCode(), "T15 - Equals:");
+        softAssert.assertNotNull(attribMember.hashCode(), "T15 - Equals:");
 
         softAssert.assertAll();
     }
@@ -231,6 +218,13 @@ public class TeamServiceTest extends AbstractTestNGSpringContextTests {
         softAssert.assertAll();
     }
 
+    @Test(expectedExceptions = BusinessRuleException.class, 
+          expectedExceptionsMessageRegExp = "error.member.service.member.is.null")
+    public void saveMemberNull() throws BusinessRuleException {
+        Member isNull = null;
+        memberService.save(isNull);
+    }
+
     @Test
     public void saveMember() throws BusinessRuleException {
 
@@ -287,6 +281,8 @@ public class TeamServiceTest extends AbstractTestNGSpringContextTests {
         softAssert.assertTrue(team2.contains(t02), "T05.4 - True:");
         softAssert.assertTrue(team2.contains(m1), "T05.5 - True:");
         softAssert.assertTrue(team2.contains(m2), "T05.6 - True:");
+        softAssert.assertTrue(memberService.isMember(p1.getId(), m1.getUser().getId()), "T05.7 - True:");
+        softAssert.assertTrue(memberService.isMember(p1.getId(), m2.getUser().getId()), "T05.8 - True:");
 
         List<Project> projectByDev = projectService.findByUserId(desenvolvedor.getId());
         softAssert.assertEquals(projectByDev.size(), 1, "T06 - Equals:");
@@ -297,6 +293,9 @@ public class TeamServiceTest extends AbstractTestNGSpringContextTests {
 
         Project project = projectByDev.get(0);
         softAssert.assertEquals(project.getId(), p1.getId(), "T07 - Equals:");
+
+        List<Member> listMembers = memberService.getMembersByProject(p1.getId());
+        softAssert.assertEquals(listMembers.size(), 2, "T08 - Equals:");
 
         memberService.delete(m1.getId());
         memberService.delete(m2.getId());

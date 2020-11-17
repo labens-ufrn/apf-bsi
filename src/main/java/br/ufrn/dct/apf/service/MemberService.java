@@ -24,22 +24,28 @@ public class MemberService extends AbstractService {
         return repository.findById(id).orElse(null);
     }
 
+    /**
+     * Checks whether the member object is already part of the team, if not, the object is saved. 
+     * If the member is already linked to the project, it returns the member instance.
+     * @param member A member instance with no id.
+     * @return the member instance.
+     * @throws BusinessRuleException If the parameter is null.
+     */
     public Member save(Member member) throws BusinessRuleException {
         checkMemberNull(member);
-
-        if (isMember(member.getProject().getId(), member.getUser().getId())) {
+        Member memberDB = getMember(member.getProject().getId(), member.getUser().getId());
+        if (isNull(memberDB)) {
             return repository.saveAndFlush(member);
         }
-
-        return member;
+        return memberDB;
     }
 
-    public Member getMember(Long projectId, Long memberId) {
-        return repository.findByProjectIdAndUserId(projectId, memberId);
+    public Member getMember(Long projectId, Long userId) {
+        return repository.findByProjectIdAndUserId(projectId, userId);
     }
 
-    public Boolean isMember(Long projectId, Long memberId) {
-        return getMember(projectId, memberId) != null;
+    public Boolean isMember(Long projectId, Long userId) {
+        return getMember(projectId, userId) != null;
     }
 
     public List<Member> getMembersByProject(Long projectId) {
