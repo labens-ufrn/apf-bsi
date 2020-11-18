@@ -1,0 +1,28 @@
+version: "3.3"
+services:
+  db:
+    image: mariadb
+    environment:
+      MYSQL_DATABASE: mariadb
+      MYSQL_ROOT_USER: root
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_ROOT_HOST: '%'
+    volumes:
+      - ./data:/var/lib/mysql
+    ports:
+      - 5432:5432
+      - 3306:3306
+
+  # phpmyadmin:
+  #   image: phpmyadmin/phpmyadmin
+  #   container_name: phpmyadmin
+  #   environment:
+  #     PMA_ARBITRARY: 1
+  #     PMA_HOST: db
+  #     PMA_PORT: 3306
+  #     MYSQL_ROOT_USER: root
+  #     MYSQL_PASSWORD: root
+  #   ports:
+  #     - 8080:80
+  #   links:
+  #     - db
