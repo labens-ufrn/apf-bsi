@@ -44,27 +44,30 @@ Para executar o projeto, será necessário instalar os seguintes programas:
 * Criação do Banco de Dados dev e test(apf_db e apf_db_test) e Usuário(apf_user) com sua devidas permissões.
 Código abaixo:
 
-1. Criação das bases de dados e usuário
-
-```sql
-    CREATE DATABASE apf_db CHARACTER SET UTF8 COLLATE utf8_bin;
-    CREATE DATABASE apf_db_test CHARACTER SET UTF8 COLLATE utf8_bin;
-
-    CREATE USER 'apf_user'@'localhost' IDENTIFIED BY '12345';
-
-    GRANT ALL ON apf_db.* TO 'apf_user'@'localhost';
-    GRANT ALL ON apf_db_test.* TO 'apf_user'@'localhost';
-```
-
-2.Povoamento do Banco de Dados
-
-```sql
-    INSERT INTO role VALUES (1,'ADMIN');
-    INSERT INTO role VALUES (2,'USER');
-
-    INSERT INTO attribution VALUES (1,'PROJECT MANAGER');
-    INSERT INTO attribution VALUES (2,'PROJECT MEMBER');
-```
+1.  Criação das bases de dados e usuário
+    ```sql
+        CREATE DATABASE apf_db CHARACTER SET UTF8 COLLATE utf8_bin;
+        CREATE DATABASE apf_db_test CHARACTER SET UTF8 COLLATE utf8_bin;
+    
+        CREATE USER 'apf_user'@'localhost' IDENTIFIED BY '12345';
+    
+        GRANT ALL ON apf_db.* TO 'apf_user'@'localhost';
+        GRANT ALL ON apf_db_test.* TO 'apf_user'@'localhost';
+    ```
+2.  Rode o projeto
+    ```shell script
+    mvn install
+    mvn spring-boot:run
+    ```
+    
+3.  Povoamento do Banco de Dados
+    ```sql
+        INSERT INTO role VALUES (1,'ADMIN');
+        INSERT INTO role VALUES (2,'USER');
+    
+        INSERT INTO attribution VALUES (1,'PROJECT MANAGER');
+        INSERT INTO attribution VALUES (2,'PROJECT MEMBER');
+    ```
 
 ## Padrões de Codificação do Editor
 
