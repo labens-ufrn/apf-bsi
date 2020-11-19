@@ -1,12 +1,12 @@
 package br.ufrn.dct.apf.controller;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
-import javax.validation.Valid;
-
+import br.ufrn.dct.apf.dto.DataFunctionDTO;
 import br.ufrn.dct.apf.model.DataFunction;
+import br.ufrn.dct.apf.model.Project;
+import br.ufrn.dct.apf.model.User;
+import br.ufrn.dct.apf.model.UserStory;
+import br.ufrn.dct.apf.service.DataFunctionService;
+import br.ufrn.dct.apf.service.ProjectService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,12 +16,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
-import br.ufrn.dct.apf.dto.DataFunctionDTO;
-import br.ufrn.dct.apf.model.Project;
-import br.ufrn.dct.apf.model.User;
-import br.ufrn.dct.apf.model.UserStory;
-import br.ufrn.dct.apf.service.DataFunctionService;
-import br.ufrn.dct.apf.service.ProjectService;
+
+import javax.validation.Valid;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Controller
 public class DataFunctionController extends AbstractController {
@@ -78,15 +77,21 @@ public class DataFunctionController extends AbstractController {
         return mv;
     }
 
-//    @GetMapping("/df/list")
-//    public ModelAndView list() {
+//    @GetMapping("/df/list/{projectId}")
+//    public ModelAndView list(@PathVariable("projectId") Long projectId) throws BusinessRuleException {
 //        ModelAndView mv = new ModelAndView("df/list");
 //
-//        User current = getCurrentUser();
+//        User currentUser = getCurrentUser();
+//        Project project = projectService.findOne(projectId);
 //
-//        List<Project> projects = projectService.findByUserId(current.getId());
+//        if (!project.isMemberOfProject(currentUser)) {
+//            throw MEMBER_NOT_EXISTS;
+//        }
 //
-//        mv.addObject("projects", projects);
+//        List<DataFunction> dfs = dataFunctionService.findByProject(projectId);
+//
+//        mv.addObject("project", project);
+//        mv.addObject("dfs", dfs);
 //
 //        return mv;
 //    }
@@ -126,17 +131,4 @@ public class DataFunctionController extends AbstractController {
 
         return mv;
     }
-
-    // Consultar se precisa ser por projeto ou time a busca
-    @GetMapping("/df/list")
-    public ModelAndView list() {
-        ModelAndView mv = new ModelAndView("df/list");
-
-        List<DataFunction> dfs = dataFunctionService.findAll();
-
-        mv.addObject("dfs", dfs);
-
-        return mv;
-    }
-
 }

@@ -83,6 +83,7 @@
                     </td>
                     <td>
                       <div class="btn-group pull-right">
+                        <a class="btn btn-sm btn-primary" th:href="@{/df/details/{id}(id=${dataFunction.id})}">Detalhes</a>
                         <a class="btn btn-sm btn-primary" th:href="@{/df/edit/{id}(id=${dataFunction.id})}">Editar</a>
                         <a class="delete btn btn-sm btn-danger" th:href="@{/df/delete/{id}(id=${dataFunction.id})}">Excluir</a>
                       </div>
@@ -121,8 +122,7 @@
                     <td>
                       <div class="btn-group pull-right">
                         <a class="btn btn-sm btn-primary" th:href="@{/us/edit/{id}(id=${userstory.id})}">Editar</a>
-                        <a class="delete btn btn-sm btn-danger"
-                           th:href="@{/us/delete/{id}(id=${userstory.id})}">Excluir</a>
+                        <a class="delete btn btn-sm btn-danger" th:href="@{/us/delete/{id}(id=${userstory.id})}">Excluir</a>
                       </div>
                     </td>
                   </tr>
@@ -179,5 +179,10 @@
     <div th:include="fragments/footer :: footer-authenticated" align="center"></div>
   </div>
 </div>
+<script type="text/javascript">
+  function viewDetailsDf(id) {
+    window.location = `details/${id}`;
+  }
+</script>
 </body>
 </html>

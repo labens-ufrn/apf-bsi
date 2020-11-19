@@ -64,4 +64,8 @@ public class DataFunctionService extends AbstractService {
     public void delete(Long id) {
         dataFunctionRepository.deleteById(id);
     }
+
+    public List<DataFunction> findByProject(Long projectId) {
+        return dataFunctionRepository.findByProject(projectId);
+    }
 }
