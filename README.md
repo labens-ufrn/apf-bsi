@@ -15,6 +15,7 @@ Sistema para a contagem e análise dos pontos de função para estimar o tamanho
 <a href="#pre">Pré-requisitos</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
 <a href="#des">Desenvolvimento</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
 <a href="#bui">Build e Execução</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+<a href="#sonar">Sonar</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
 <a href="#tes">Testes</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
 <a href="#lic">Licença</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#ref">Referências</a>
@@ -111,7 +112,6 @@ http://localhost:8080/apf/registration
 ```
 
 <a id="tes"></a> 
-
 # Testes
 
 Para rodar os testes, utilize o comando abaixo:
@@ -120,9 +120,21 @@ Para rodar os testes, utilize o comando abaixo:
 mvn test
 ```
 
-<a id="lic"></a> 
+<a id="sonar"></a> 
+# SonarQube
 
-# licença
+[Relatório Sonar](https://sonarcloud.io/dashboard?id=labens-ufrn_apf-bsi)
+
+```bash
+mvn sonar:sonar \
+  -Dsonar.projectKey=labens-ufrn_apf-bsi \
+  -Dsonar.organization=labens-github \
+  -Dsonar.host.url=https://sonarcloud.io \
+  -Dsonar.login=e8cdc627333ac78462d2b9a4df0f92eab30a38bf
+```
+
+<a id="lic"></a> 
+# Licença
 
 ```bash
 MIT
