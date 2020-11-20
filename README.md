@@ -1,14 +1,12 @@
 <!-- Título -->
-<h1 align="center">
-ANALISADOR DE PONTOS DE FUNÇÃO 
-</h1>
+# Analisador de Pontos de Função
 
 <!-- Descrição -->
-<h4 align="center">
-Sistema para a contagem e análise dos pontos de função para estimar o tamanho funcional de um software.
-</h4><br><br>
+Sistema para a contagem na análise dos pontos de função (APF) para estimar o **Tamanho Funcional** de um software. O sistema foi pensado para facilitar a contagem na análise por pontos de função (APF) desenvolvido para ser utilizado nas disciplinas de Engenharia de Software do curso de Bacharelado em Sistemas de Informação do CERES/UFRN.
 
  <!-- Links dos tópicos -->
+[Documentação](https://github.com/labens-ufrn/apf-bsi/tree/develop#documenta%C3%A7%C3%A3o)
+
 <p align="center"></p>
 <a href="#sobre">Sobre o Projeto</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
 <a href="#doc">Documentação</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
@@ -19,19 +17,16 @@ Sistema para a contagem e análise dos pontos de função para estimar o tamanho
 <a href="#lic">Licença</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#ref">Referências</a>
 </p>
-<br>
-<a id="sobre"></a> 
-
-# Sobre o Projeto
-Sistema para facilitar a contagem na análise por pontos de função (APF) desenvolvido para ser utilizado nas disciplinas de Engenharia de Software do curso de Bacharelado em Sistemas de Informação do CERES/UFRN.
 
 <a id="doc"></a> 
 
 # Documentação
+
 * [Documento de Visão](docs/docVisao.md)
 * [Plano de Iteração](docs/docPlanIteracao.md)
 * [Lista de User Stories](docs/docListUserStorie.md)
 * [Contagem de Tamanho Funcional com Análise por Pontos de Função](docs/docContTamAPF.md)
+* [Catalogo de Bugs](docs/bugs.md)
 
 <a id="pre"></a> 
 
