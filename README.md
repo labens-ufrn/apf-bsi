@@ -55,11 +55,6 @@ Código abaixo:
 
 ## 2. Rode o projeto
 
-```properties
-    mvn install
-    mvn spring-boot:run
-```
-
 ```bash
     mvn install
     mvn spring-boot:run
