@@ -22,7 +22,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
     @Value("${spring.datasource.url}")
     private String jdbcURl;
 
-    @Value("${spring.datasource.driverClassName}")
+    @Value("${spring.datasource.driver-class-name}")
     private String driverDB;
 
     @Value("${spring.datasource.username}")
