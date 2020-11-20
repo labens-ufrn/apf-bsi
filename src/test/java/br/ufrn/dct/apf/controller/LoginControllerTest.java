@@ -15,6 +15,9 @@ import br.ufrn.dct.apf.service.UserService;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import javax.sql.DataSource;
+
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.hamcrest.Matchers.containsString;
 
@@ -22,6 +25,9 @@ import static org.hamcrest.Matchers.containsString;
 public class LoginControllerTest extends AbstractControllerTest {
 
     private SoftAssert softAssert;
+
+    @MockBean
+    private DataSource dataSource;
 
     @BeforeMethod
     public void startTest() {

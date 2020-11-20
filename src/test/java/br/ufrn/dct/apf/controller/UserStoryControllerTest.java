@@ -8,6 +8,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.sql.DataSource;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -33,6 +35,9 @@ public class UserStoryControllerTest extends AbstractControllerTest {
     
     @MockBean
     private UserService userService;
+
+    @MockBean
+    private DataSource dataSource;
 
     @Test
     public void listFromService() throws Exception {
