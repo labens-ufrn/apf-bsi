@@ -43,32 +43,37 @@ Código abaixo:
 
 ## 1. Criação das bases de dados e usuário
 
-    ```sql
-        CREATE DATABASE apf_db CHARACTER SET UTF8 COLLATE utf8_bin;
-        CREATE DATABASE apf_db_test CHARACTER SET UTF8 COLLATE utf8_bin;
-    
-        CREATE USER 'apf_user'@'localhost' IDENTIFIED BY '12345';
-    
-        GRANT ALL ON apf_db.* TO 'apf_user'@'localhost';
-        GRANT ALL ON apf_db_test.* TO 'apf_user'@'localhost';
-    ```
+```sql
+    CREATE DATABASE apf_db CHARACTER SET UTF8 COLLATE utf8_bin;
+    CREATE DATABASE apf_db_test CHARACTER SET UTF8 COLLATE utf8_bin;
+
+    CREATE USER 'apf_user'@'localhost' IDENTIFIED BY '12345';
+
+    GRANT ALL ON apf_db.* TO 'apf_user'@'localhost';
+    GRANT ALL ON apf_db_test.* TO 'apf_user'@'localhost';
+```
 
 ## 2. Rode o projeto
 
-    ```shell script
+```properties
     mvn install
     mvn spring-boot:run
-    ```
+```
+
+```bash
+    mvn install
+    mvn spring-boot:run
+```
 
 ## 3. Povoamento do Banco de Dados
 
-    ```sql
-        INSERT INTO role VALUES (1,'ADMIN');
-        INSERT INTO role VALUES (2,'USER');
-    
-        INSERT INTO attribution VALUES (1,'PROJECT MANAGER');
-        INSERT INTO attribution VALUES (2,'PROJECT MEMBER');
-    ```
+```sql
+    INSERT INTO role VALUES (1,'ADMIN');
+    INSERT INTO role VALUES (2,'USER');
+
+    INSERT INTO attribution VALUES (1,'PROJECT MANAGER');
+    INSERT INTO attribution VALUES (2,'PROJECT MEMBER');
+```
 
 # Padrões de Codificação do Editor
 
@@ -83,10 +88,10 @@ Código abaixo:
 
 Para iniciar o desenvolvimento, é necessário clonar o projeto do GitHub num diretório de sua preferência:
 
-    ```bash
-        cd "diretório de sua preferência"
-        git clone https://github.com/labens-ufrn/apf-bsi.git
-    ```
+```bash
+    cd "diretório de sua preferência"
+    git clone https://github.com/labens-ufrn/apf-bsi.git
+```
 
 <a id="bui"></a> 
 
@@ -95,20 +100,20 @@ Para iniciar o desenvolvimento, é necessário clonar o projeto do GitHub num di
 Esse projeto faz uso do framework spring-boot que encapsula todas as dependências no arquivo jar.
 Para o build do projeto, execute os comandos abaixo:
 
-    ```bash
-        mvn clean
-        mvn install
-        Vá para o diretório /target
-        java -jar apf-bsi-0.0.1-SNAPSHOT.jar
-    ```
+```bash
+    mvn clean
+    mvn install
+    Vá para o diretório /target
+    java -jar apf-bsi-0.0.1-SNAPSHOT.jar
+```
 O comando irá baixar todas as dependências do projeto e criar um diretório target com os artefatos construídos, que incluem o arquivo jar do projeto. Além disso, serão executados os testes unitários, e se algum falhar, o Maven exibirá essa informação no console.
 Se tudo ocorreu como esperado vai conseguir acessar estes endereços com sucesso.
 
-    ```url
-        http://localhost:8080/apf/
-        http://localhost:8080/apf/login
-        http://localhost:8080/apf/registration
-    ```
+```url
+    http://localhost:8080/apf/
+    http://localhost:8080/apf/login
+    http://localhost:8080/apf/registration
+```
 
 <a id="tes"></a> 
 
@@ -116,19 +121,19 @@ Se tudo ocorreu como esperado vai conseguir acessar estes endereços com sucesso
 
 Para rodar os testes, utilize o comando abaixo:
 
-    ```bash
-        mvn test
-    ```
+```bash
+    mvn test
+```
 
-<a id="lic"></a> 
+<a id="lic"></a>
 
 # licença
 
-    ```bash
-        MIT
-    ```
+```bash
+    MIT
+```
 
-<a id="ref"></a> 
+<a id="ref"></a>
 
 # Referências
 
