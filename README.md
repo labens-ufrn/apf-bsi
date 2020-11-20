@@ -8,14 +8,13 @@ Sistema para a contagem na análise dos pontos de função (APF) para estimar o 
 [Documentação](https://github.com/labens-ufrn/apf-bsi/tree/develop#documenta%C3%A7%C3%A3o)
 
 <p align="center"></p>
-<a href="#sobre">Sobre o Projeto</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-<a href="#doc">Documentação</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-<a href="#pre">Pré-requisitos</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-<a href="#des">Desenvolvimento</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-<a href="#bui">Build e Execução</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-<a href="#tes">Testes</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-<a href="#lic">Licença</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-  <a href="#ref">Referências</a>
+    <a href="#doc">Documentação</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+    <a href="#pre">Pré-requisitos</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+    <a href="#des">Desenvolvimento</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+    <a href="#bui">Build e Execução</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+    <a href="#tes">Testes</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+    <a href="#lic">Licença</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+    <a href="#ref">Referências</a>
 </p>
 
 <a id="doc"></a> 
@@ -31,15 +30,19 @@ Sistema para a contagem na análise dos pontos de função (APF) para estimar o 
 <a id="pre"></a> 
 
 # Pré-requisitos
+
 Para executar o projeto, será necessário instalar os seguintes programas:
+
 * JDK 11: Necessário para executar o projeto Java.
-* Maven: Necessário para realizar o build do projeto Java.	* Maven: Necessário para realizar o build do projeto Java.
+* Maven: Necessário para realizar o build do projeto Java.
 * Eclipse ou Vscode + extenssões: Java Extension Pack e Spring Boot Tools : Para o desenvolvimento do Projeto.
-* MariaDB ou MySql: para persistência no Banco de Dados	* MySql ou MariaDb: para persistência no Banco de Dados
+* MariaDB ou MySql: para persistência no Banco de Dados
 * Criação do Banco de Dados dev e test(apf_db e apf_db_test) e Usuário(apf_user) com sua devidas permissões.
+
 Código abaixo:
 
-1.  Criação das bases de dados e usuário
+## 1. Criação das bases de dados e usuário
+
     ```sql
         CREATE DATABASE apf_db CHARACTER SET UTF8 COLLATE utf8_bin;
         CREATE DATABASE apf_db_test CHARACTER SET UTF8 COLLATE utf8_bin;
@@ -49,13 +52,16 @@ Código abaixo:
         GRANT ALL ON apf_db.* TO 'apf_user'@'localhost';
         GRANT ALL ON apf_db_test.* TO 'apf_user'@'localhost';
     ```
-2.  Rode o projeto
+
+## 2. Rode o projeto
+
     ```shell script
     mvn install
     mvn spring-boot:run
     ```
-    
-3.  Povoamento do Banco de Dados
+
+## 3. Povoamento do Banco de Dados
+
     ```sql
         INSERT INTO role VALUES (1,'ADMIN');
         INSERT INTO role VALUES (2,'USER');
@@ -64,7 +70,7 @@ Código abaixo:
         INSERT INTO attribution VALUES (2,'PROJECT MEMBER');
     ```
 
-## Padrões de Codificação do Editor
+# Padrões de Codificação do Editor
 
 * Insert spaces for tabs
 * Tab policy para Spaces only
@@ -77,10 +83,10 @@ Código abaixo:
 
 Para iniciar o desenvolvimento, é necessário clonar o projeto do GitHub num diretório de sua preferência:
 
-```bash
-cd "diretório de sua preferência"
-git clone https://github.com/labens-ufrn/apf-bsi.git
-```
+    ```bash
+        cd "diretório de sua preferência"
+        git clone https://github.com/labens-ufrn/apf-bsi.git
+    ```
 
 <a id="bui"></a> 
 
@@ -89,21 +95,20 @@ git clone https://github.com/labens-ufrn/apf-bsi.git
 Esse projeto faz uso do framework spring-boot que encapsula todas as dependências no arquivo jar.
 Para o build do projeto, execute os comandos abaixo:
 
-```java
-mvn clean
-mvn install
-Vá para o diretório /target
-java -jar apf-bsi-0.0.1-SNAPSHOT.jar
-
-```
+    ```bash
+        mvn clean
+        mvn install
+        Vá para o diretório /target
+        java -jar apf-bsi-0.0.1-SNAPSHOT.jar
+    ```
 O comando irá baixar todas as dependências do projeto e criar um diretório target com os artefatos construídos, que incluem o arquivo jar do projeto. Além disso, serão executados os testes unitários, e se algum falhar, o Maven exibirá essa informação no console.
 Se tudo ocorreu como esperado vai conseguir acessar estes endereços com sucesso.
 
-```bash
-http://localhost:8080/apf/
-http://localhost:8080/apf/login
-http://localhost:8080/apf/registration
-```
+    ```url
+        http://localhost:8080/apf/
+        http://localhost:8080/apf/login
+        http://localhost:8080/apf/registration
+    ```
 
 <a id="tes"></a> 
 
@@ -111,17 +116,17 @@ http://localhost:8080/apf/registration
 
 Para rodar os testes, utilize o comando abaixo:
 
-```java
-mvn test
-```
+    ```bash
+        mvn test
+    ```
 
 <a id="lic"></a> 
 
 # licença
 
-```bash
-MIT
-```
+    ```bash
+        MIT
+    ```
 
 <a id="ref"></a> 
 
