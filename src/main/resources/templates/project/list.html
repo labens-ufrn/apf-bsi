@@ -18,27 +18,34 @@
 <body>
 <div th:replace="fragments/header :: header"></div>
 
-<div class="modal modal-delete" tabindex="-1" role="dialog">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Deletar Registro</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <p id="texto-modal"></p>
-      </div>
-      <div class="modal-footer">
-        <a id="link-delete">
-          <button type="button" class="btn btn-danger">Sim, quero deletar</button>
-        </a>
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+<!-- DIALOG DELETE PROJECT-->
+<form method="POST" th:action="@{/project/delete/{id}(id=${project.id})}" th:if="${project != null}">
+  <div id="modal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <span class="modal-title">Excluir projeto</span>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <span th:text="${'Tem certeza que deseja excluir o projeto ' + project.id + ' - ' + project.name+ '?'}"></span>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-danger">Sim, quero deletar</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+        </div>
       </div>
     </div>
+
+    <script type="text/javascript">
+      $(document).ready(() => {
+        $('#modal').modal('show');
+      })
+    </script>
   </div>
-</div>
+</form>
 
 <div id="wrapper" class="wrapper.toggled toggled" style="margin-top: 50px">
   <!-- Sidebar -->
@@ -80,6 +87,7 @@
                       class="btn btn-sm btn-primary"
                       th:href="@{/project/edit/{id}(id=${project.id})}">Editar</a>
                     <a th:id="${project.id}"
+                       th:href="@{/project/delete/{id}(id=${project.id})}"
                        class="delete btn btn-sm btn-danger confirModal">Excluir</a>
                   </div>
                 </td>
@@ -99,35 +107,5 @@
     <div th:include="fragments/footer :: footer-authenticated" align="center"></div>
   </div>
 </div>
-
-<script type="text/javascript">
-  /* Iniciando documento jQuery */
-  $(document).ready(
-    function () {
-
-      /* Adicionando ouvindo no clique do botão delete */
-      $(".delete").click(
-        function () {
-
-          /* Guardando o ID do registro (foi colocado como um atributo n o botão) */
-
-          const id = $(this).attr("id");
-
-          /* Adicionando o texto ao modal */
-          $("#texto-modal").text("Tem certeza que deseja deletar o registro #" + id + "?");
-
-          /* Adicionando a URL para delete */
-          $("#link-delete")
-            .attr(
-              "href",
-              "/apf/project/delete/"
-              + id);
-
-          /* Abrindo o Modal */
-          $('.modal-delete').modal()
-        })
-    })
-</script>
-
 </body>
 </html>
