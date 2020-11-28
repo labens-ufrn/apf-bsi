@@ -15,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
+import static java.util.Objects.isNull;
 
 @Controller
 public class ProjectController extends AbstractController {
@@ -65,10 +66,28 @@ public class ProjectController extends AbstractController {
     }
 
     @GetMapping("/project/delete/{id}")
-    public ModelAndView delete(@PathVariable("id") Long id) {
-        projectService.delete(id);
+    public ModelAndView deleteView(@PathVariable("id") Long id) {
+        ModelAndView mv = new ModelAndView("project/list");
 
-        return findAll();
+        User current = getCurrentUser();
+        List<Project> projects = projectService.findByUserId(current.getId());
+        Project project = projectService.findOne(id);
+
+        mv.addObject("projects", projects);
+        mv.addObject("project", project);
+        mv.addObject("showModalDelete", true);
+
+        return mv;
+    }
+
+    @PostMapping("/project/delete/{id}")
+    public String delete(@PathVariable("id") Long id) {
+        // @TODO validar permissões
+        if (!isNull(projectService.findOne(id))) {
+            projectService.delete(id);
+        }
+
+        return "redirect:/project";
     }
 
     @PostMapping("/project/save")
@@ -123,7 +142,7 @@ public class ProjectController extends AbstractController {
         }
 
         // truncate the list to the first n, max 20 elements
-        int n = suggestions.size() > 20 ? 20 : suggestions.size();
+        int n = Math.min(suggestions.size(), 20);
         List<ProjectSuggestion> sulb = new ArrayList<>(suggestions.subList(0, n));
 
         ProjectSuggestionWrapper sw = new ProjectSuggestionWrapper();
