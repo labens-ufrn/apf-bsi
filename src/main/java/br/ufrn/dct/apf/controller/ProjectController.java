@@ -1,7 +1,7 @@
 package br.ufrn.dct.apf.controller;
 
+import br.ufrn.dct.apf.dto.UserDTO;
 import br.ufrn.dct.apf.model.Project;
-import br.ufrn.dct.apf.model.User;
 import br.ufrn.dct.apf.service.BusinessRuleException;
 import br.ufrn.dct.apf.service.ProjectService;
 import br.ufrn.dct.apf.utils.BusinessExceptions;
@@ -33,7 +33,7 @@ public class ProjectController extends AbstractController {
 
         ModelAndView mv = new ModelAndView("project/list");
         setUserAuth(mv);
-        User current = getCurrentUser();
+        UserDTO current = getCurrentUser();
 
         mv.addObject("projects", projectService.findByUserId(current.getId()));
 
@@ -69,7 +69,7 @@ public class ProjectController extends AbstractController {
     public ModelAndView deleteView(@PathVariable("id") Long id) {
         ModelAndView mv = new ModelAndView("project/list");
 
-        User current = getCurrentUser();
+        UserDTO current = getCurrentUser();
         List<Project> projects = projectService.findByUserId(current.getId());
         Project project = projectService.findOne(id);
 
@@ -98,7 +98,7 @@ public class ProjectController extends AbstractController {
             return add(project);
         }
 
-        User user = getCurrentUser();
+        UserDTO user = getCurrentUser();
 
         try {
             projectService.save(project, user);
@@ -132,7 +132,7 @@ public class ProjectController extends AbstractController {
         logger.debug("searchstr = " + searchstr);
 
         List<ProjectSuggestion> suggestions = new ArrayList<>();
-        User current = getCurrentUser();
+        UserDTO current = getCurrentUser();
         List<Project> projects = projectService.findByName(current.getId(), searchstr);
 
         for (Project project : projects) {

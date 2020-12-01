@@ -4,6 +4,7 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Set;
 
+import br.ufrn.dct.apf.dto.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.ContextConfiguration;
@@ -16,7 +17,6 @@ import org.testng.asserts.SoftAssert;
 import br.ufrn.dct.apf.model.DataFunction;
 import br.ufrn.dct.apf.model.Member;
 import br.ufrn.dct.apf.model.Project;
-import br.ufrn.dct.apf.model.User;
 import br.ufrn.dct.apf.model.UserStory;
 import br.ufrn.dct.apf.service.BusinessRuleException;
 import br.ufrn.dct.apf.service.ProjectService;
@@ -53,21 +53,21 @@ public class ConceitosTest extends AbstractTestNGSpringContextTests {
 
         System.out.println("Criando o usuário ...");
 
-        User analista = new User();
+        UserDTO analista = new UserDTO();
         analista.setName("Taciano");
         analista.setLastName("Silva");
         analista.setEmail("tacianosilva@gmai.com");
         analista.setPassword("12345");
         analista.setActive(1);
 
-        User developer = new User();
+        UserDTO developer = new UserDTO();
         developer.setName("Zé");
         developer.setLastName("Silva");
         developer.setEmail("zesilva@gmai.com");
         developer.setPassword("12345");
         developer.setActive(1);
 
-        User developerMaria = new User();
+        UserDTO developerMaria = new UserDTO();
         developerMaria.setName("Maria");
         developerMaria.setLastName("Silva");
         developerMaria.setEmail("mariasilva@gmai.com");

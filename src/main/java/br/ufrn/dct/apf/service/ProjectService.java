@@ -2,11 +2,12 @@ package br.ufrn.dct.apf.service;
 
 import java.util.List;
 
+import br.ufrn.dct.apf.dto.UserDTO;
 import br.ufrn.dct.apf.model.*;
 import br.ufrn.dct.apf.utils.BusinessExceptions;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
@@ -20,11 +21,14 @@ public class ProjectService extends AbstractService {
 
     private static final Logger logger = LogManager.getLogger(ProjectService.class);
 
-    @Autowired
-    private ProjectRepository projectRepository;
+    private final ProjectRepository projectRepository;
 
-    @Autowired
-    private AttributionRepository attributionRepository;
+    private final AttributionRepository attributionRepository;
+
+    public ProjectService(@Qualifier("projectRepository") ProjectRepository projectRepository, @Qualifier("attributionRepository") AttributionRepository attributionRepository) {
+        this.projectRepository = projectRepository;
+        this.attributionRepository = attributionRepository;
+    }
 
     public List<Project> findAll() {
         return projectRepository.findAll();
@@ -46,13 +50,13 @@ public class ProjectService extends AbstractService {
         return projectRepository.findByIsPrivateFalse();
     }
 
-    public Project addMember(Project project, User newMember, User owner) throws BusinessRuleException {
+    public Project addMember(Project project, UserDTO newMember, UserDTO owner) throws BusinessRuleException {
         addMember(project, newMember, Attribution.PROJECT_MEMBER);
 
         return save(project, owner);
     }
 
-    public Project save(Project project, User owner) throws BusinessRuleException {
+    public Project save(Project project, UserDTO owner) throws BusinessRuleException {
         logger.info(() -> "projectService.save: " + project + ", owner" + owner);
         if (isNull(project)) {
             throw BusinessExceptions.PROJECT_IS_NULL;
@@ -72,19 +76,19 @@ public class ProjectService extends AbstractService {
         return projectRepository.saveAndFlush(project);
     }
 
-    private void addMember(Project project, User user, String attr) {
+    private void addMember(Project project, UserDTO user, String attr) {
         Attribution attribution = attributionRepository.findByName(attr);
-        Member manager = Member.factoryFromProjectAndUser(project, user, attribution);
+        Member manager = Member.factoryFromProjectAndUser(project, user.convertToEntity(), attribution);
 
         project.addMember(manager);
     }
 
-    private void checkIsOwnerMember(Project project, User user) throws BusinessRuleException {
-        if (!project.isMemberOfProject(user)) {
+    private void checkIsOwnerMember(Project project, UserDTO user) throws BusinessRuleException {
+        if (!project.isMemberOfProject(user.convertToEntity())) {
             throw BusinessExceptions.MEMBER_NOT_EXISTS;
         }
 
-        if (!hasAttribution(project, user, Attribution.PROJECT_MANAGER)) {
+        if (!hasAttribution(project, user.convertToEntity(), Attribution.PROJECT_MANAGER)) {
             throw BusinessExceptions.WITHOUT_ATTRIBUTION;
         }
     }

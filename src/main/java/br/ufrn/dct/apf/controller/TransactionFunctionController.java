@@ -6,6 +6,7 @@ import java.util.Set;
 
 import javax.validation.Valid;
 
+import br.ufrn.dct.apf.dto.UserDTO;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +41,7 @@ public class TransactionFunctionController extends AbstractController {
     @GetMapping("/tf/add/{projectId}")
     public ModelAndView add(TransactionFunctionDTO tf, @PathVariable("projectId") Long id) {
         ModelAndView mv = new ModelAndView("tf/add");
-        
+
         Project project = projectService.findOne(id);
         tf.setProject(project);
         Set<UserStory> userStories = project.getUserStories();
@@ -82,7 +83,7 @@ public class TransactionFunctionController extends AbstractController {
     public ModelAndView list() {
         ModelAndView mv = new ModelAndView("tf/list");
 
-        User current = getCurrentUser();
+        UserDTO current = getCurrentUser();
 
         List<Project> projects = projectService.findByUserId(current.getId());
 
@@ -99,7 +100,7 @@ public class TransactionFunctionController extends AbstractController {
             return add(tfDto);
         }
 
-        User current = getCurrentUser();
+        UserDTO current = getCurrentUser();
 
         List<Project> projects = projectService.findByName(current.getId(), tfDto.getProject().getName());
         Project p = null;

@@ -2,6 +2,7 @@ package br.ufrn.dct.apf.service;
 
 import java.util.List;
 
+import br.ufrn.dct.apf.dto.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.ContextConfiguration;
@@ -20,35 +21,29 @@ public class UserServiceTest extends AbstractTestNGSpringContextTests {
     private SoftAssert softAssert;
 
     @Autowired
-    private UserService service;
+    private UserService userService;
 
-    private User user1;
+    private UserDTO user1;
 
     @BeforeMethod
     public void startTest() {
         softAssert = new SoftAssert();
 
-        user1 = new User();
+        user1 = new UserDTO("Taciano Silva", "Silva", "tacianosilva@gmail.com", "12345", 1);
 
-        user1.setName("Taciano Silva");
-        user1.setLastName("Silva");
-        user1.setEmail("tacianosilva@gmail.com");
-        user1.setPassword("12345");
-        user1.setActive(1);
-
-        service.save(user1);
+        userService.save(user1);
     }
 
     @AfterMethod
     public void endTest() {
         softAssert = null;
-        service.delete(user1.getId());
+        userService.delete(user1.getId());
         user1 = null;
     }
 
     @Test
     public void findAll() {
-        List<User> usuarios = service.findAll();
+        List<UserDTO> usuarios = userService.findAll();
 
         softAssert.assertNotNull(usuarios, "T01 - NotNull:");
         softAssert.assertEquals(usuarios.size(), 1, "T02 - Equals:");
@@ -60,7 +55,7 @@ public class UserServiceTest extends AbstractTestNGSpringContextTests {
     public void findOne() {
         Long id = user1.getId();
 
-        User found = service.findOne(id);
+        UserDTO found = userService.findOne(id);
 
         softAssert.assertNotNull(found, "T01 - NotNull:");
 
@@ -68,7 +63,6 @@ public class UserServiceTest extends AbstractTestNGSpringContextTests {
         softAssert.assertEquals(found.getLastName(), user1.getLastName(), "T04 - Equals:");
         softAssert.assertEquals(found.getEmail(), user1.getEmail(), "T05 - Equals:");
 
-        softAssert.assertNotNull(found.getActive(), "T06 - NotNull:");
         softAssert.assertEquals(found.getActive(), user1.getActive(), "T07 - Equals:");
 
         softAssert.assertAll();
@@ -78,14 +72,13 @@ public class UserServiceTest extends AbstractTestNGSpringContextTests {
     public void findUserByEmail() {
         String email = user1.getEmail();
 
-        User found = service.findUserByEmail(email);
+        UserDTO found = userService.findUserByEmail(email);
 
         softAssert.assertNotNull(found, "T01 - NotNull:");
 
         softAssert.assertEquals(found.getName(), user1.getName(), "T03 - Equals:");
         softAssert.assertEquals(found.getLastName(), user1.getLastName(), "T04 - Equals:");
         softAssert.assertEquals(found.getEmail(), user1.getEmail(), "T05 - Equals:");
-        softAssert.assertNotNull(found.getActive(), "T06 - NotNull:");
         softAssert.assertEquals(found.getActive(), user1.getActive(), "T07 - Equals:");
 
         softAssert.assertAll();
@@ -93,20 +86,14 @@ public class UserServiceTest extends AbstractTestNGSpringContextTests {
 
     @Test
     public void save() {
-        User user2 = new User();
+        UserDTO user2 = new UserDTO("Zé", "Brasil", "zebrasil@gmail.com", "345", 1);
 
-        user2.setName("Zé");
-        user2.setLastName("Brasil");
-        user2.setEmail("zebrasil@gmail.com");
-        user2.setPassword("345");
-        user2.setActive(1);
-
-        service.save(user2);
+        userService.save(user2);
 
         Long id2 = user2.getId();
 
-        User found = service.findOne(id2);
-        List<User> usuarios = service.findAll();
+        UserDTO found = userService.findOne(id2);
+        List<UserDTO> usuarios = userService.findAll();
 
         softAssert.assertNotNull(id2, "T01 - NotNull:");
         softAssert.assertNotNull(found, "T02 - NotNull:");
@@ -118,10 +105,9 @@ public class UserServiceTest extends AbstractTestNGSpringContextTests {
         softAssert.assertEquals(found.getLastName(), user2.getLastName(), "T06 - Equals:");
         softAssert.assertEquals(found.getEmail(), user2.getEmail(), "T07 - Equals:");
 
-        softAssert.assertNotNull(found.getActive(), "T08 - NotNull:");
         softAssert.assertEquals(found.getActive(), user2.getActive(), "T08 - Equals:");
 
-        service.delete(id2);
+        userService.delete(id2);
 
         softAssert.assertAll();
     }
@@ -130,7 +116,7 @@ public class UserServiceTest extends AbstractTestNGSpringContextTests {
     public void update() {
         Long id = user1.getId();
 
-        User update = service.findOne(id);
+        UserDTO update = userService.findOne(id);
 
         update.setName("Marcos");
         update.setLastName("Morais");
@@ -138,9 +124,9 @@ public class UserServiceTest extends AbstractTestNGSpringContextTests {
         // Simular o não preenchimento da senha
         update.setPassword("");
 
-        service.edit(update);
+        userService.edit(update);
 
-        User found = service.findOne(id);
+        UserDTO found = userService.findOne(id);
 
         softAssert.assertNotNull(found, "T01 - NotNull:");
         softAssert.assertEquals(found.getName(), "Marcos", "T02 - Equals:");
@@ -152,22 +138,22 @@ public class UserServiceTest extends AbstractTestNGSpringContextTests {
 
         softAssert.assertEquals(found.getPassword(), user1.getPassword(), "T08 - Equals:");
 
-        update = service.findOne(id);
+        update = userService.findOne(id);
         // Simular o não preenchimento da senha com null
         update.setPassword(null);
-        service.edit(update);
+        userService.edit(update);
 
-        found = service.findOne(id);
+        found = userService.findOne(id);
         softAssert.assertEquals(found.getPassword(), user1.getPassword(), "T09 - Equals:");
 
-        User old = service.findOne(id);
+        UserDTO old = userService.findOne(id);
         String oldPassword = old.getPassword();
         // Simular o preenchimento da senha
         old.setPassword("123456");
 
-        service.edit(old);
+        userService.edit(old);
 
-        User found2 = service.findOne(id);
+        UserDTO found2 = userService.findOne(id);
 
         softAssert.assertNotNull(found2, "T10 - NotNull:");
         softAssert.assertEquals(found2.getName(), "Marcos", "T11 - Equals:");
@@ -190,23 +176,21 @@ public class UserServiceTest extends AbstractTestNGSpringContextTests {
         user3.setPassword("123");
         user3.setActive(1);
 
-        service.save(user3);
+        userService.save(user3.convertToDTO());
 
-        Long id3 = user3.getId();
+        UserDTO found = userService.findUserByEmail(user3.getEmail());
+        List<UserDTO> usuarios = userService.findAll();
 
-        User found = service.findOne(id3);
-        List<User> usuarios = service.findAll();
-
-        softAssert.assertNotNull(id3, "T01 - NotNull:");
         softAssert.assertNotNull(found, "T02 - NotNull:");
+        softAssert.assertNotNull(found.getId(), "T01 - NotNull:");
 
         softAssert.assertNotNull(usuarios, "T03 - NotNull:");
         softAssert.assertEquals(usuarios.size(), 2, "T04 - Equals:");
 
-        service.delete(id3);
+        userService.delete(found.getId());
 
-        found = service.findOne(id3);
-        usuarios = service.findAll();
+        found = userService.findOne(found.getId());
+        usuarios = userService.findAll();
 
         softAssert.assertNull(found, "T05 - NotNull:");
 

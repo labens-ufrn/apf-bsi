@@ -2,7 +2,9 @@ package br.ufrn.dct.apf.service;
 
 import java.util.Set;
 
+import br.ufrn.dct.apf.dto.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.ContextConfiguration;
 import org.testng.annotations.AfterMethod;
@@ -29,11 +31,11 @@ public class EstimateCountTest extends AbstractServiceTest {
     private ProjectService projectService;
 
     @Autowired
-    private UserRepository userRepository;
+    private UserService userService;
 
     private Project apf;
 
-    private User manager;
+    private UserDTO manager;
 
     @BeforeMethod
     public void startTest() throws BusinessRuleException {
@@ -45,7 +47,7 @@ public class EstimateCountTest extends AbstractServiceTest {
 
         // Create User Manager
         manager = createUser("Taciano","Silva");
-        userRepository.save(manager);
+        userService.save(manager);
 
         // Save Project with Manager
         projectService.save(apf, manager);
@@ -63,7 +65,7 @@ public class EstimateCountTest extends AbstractServiceTest {
         //userStoryService.delete(us1.getId());
         //userStoryService.delete(us2.getId());
         projectService.delete(apf.getId());
-        userRepository.delete(manager);
+        userService.delete(manager.getId());
         apf = null;
         manager = null;
     }
@@ -76,7 +78,7 @@ public class EstimateCountTest extends AbstractServiceTest {
         for (UserStory userStory : uss) {
             int fp = count.calculeFunctionPoint(userStory);
             softAssert.assertNotNull(fp, "T01 - NotNull: " + userStory.getName());
-            
+
             Set<DataFunction> data = userStory.getDataFunctions();
             for (DataFunction df : data) {
                 int fpdf = count.calculeFunctionPoint(df);
@@ -139,13 +141,13 @@ public class EstimateCountTest extends AbstractServiceTest {
 
         softAssert.assertAll();
     }
-    
+
     @Test(expectedExceptions = BusinessRuleException.class, expectedExceptionsMessageRegExp = "error.count.indicative.datafunction.not.exists")
     public void countDataFunctionNull() throws BusinessRuleException {
         DataFunction df = null;
         count.calculeFunctionPoint(df);
     }
-    
+
     @Test(expectedExceptions = BusinessRuleException.class, expectedExceptionsMessageRegExp = "error.count.indicative.datafunction.not.exists")
     public void countDataFunctionNotExists() throws BusinessRuleException {
         DataFunction df = DataFunction.createEIF("Nome");

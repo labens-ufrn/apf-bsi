@@ -4,8 +4,10 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Set;
 
+import br.ufrn.dct.apf.dto.UserDTO;
 import br.ufrn.dct.apf.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
@@ -31,30 +33,32 @@ public class TeamServiceTest extends AbstractTestNGSpringContextTests {
     @Autowired
     private MemberService memberService;
 
+    @Qualifier("attributionRepository")
     @Autowired
     private AttributionRepository attribRepository;
 
     private Project p1;
-    private User analista, desenvolvedor, dev2;
+    private UserDTO analista;
+    private UserDTO desenvolvedor;
     private Member m1, m2;
 
     @BeforeMethod
     public void startTest() throws BusinessRuleException {
         softAssert = new SoftAssert();
 
-        analista = new User();
+        analista = new UserDTO();
         analista.setName("Taciano");
         analista.setLastName("Morais Silva");
         analista.setEmail("tacianosilva@gmai.com");
         analista.setPassword("12345");
 
-        desenvolvedor = new User();
+        desenvolvedor = new UserDTO();
         desenvolvedor.setName("Zé");
         desenvolvedor.setLastName("Silva");
         desenvolvedor.setEmail("zesilva@gmai.com");
         desenvolvedor.setPassword("12345");
 
-        dev2 = new User();
+        UserDTO dev2 = new UserDTO();
         dev2.setName("dev2");
         dev2.setLastName("Silva");
         dev2.setEmail("dev2@gmai.com");
@@ -136,15 +140,14 @@ public class TeamServiceTest extends AbstractTestNGSpringContextTests {
 
     @Test
     public void save() throws BusinessRuleException {
-
         m1 = new Member();
-        m1.setUser(analista);
+        m1.setUser(analista.convertToEntity());
         m1.setProject(p1);
         m1.setAttribution(attribRepository.findByName(Attribution.PROJECT_MANAGER));
         m1.setCreatedOn(GregorianCalendar.getInstance().getTime());
 
         m2 = new Member();
-        m2.setUser(desenvolvedor);
+        m2.setUser(desenvolvedor.convertToEntity());
         m2.setProject(p1);
         m2.setAttribution(attribRepository.findByName(Attribution.PROJECT_MEMBER));
         m2.setCreatedOn(GregorianCalendar.getInstance().getTime());
@@ -218,7 +221,7 @@ public class TeamServiceTest extends AbstractTestNGSpringContextTests {
         softAssert.assertAll();
     }
 
-    @Test(expectedExceptions = BusinessRuleException.class, 
+    @Test(expectedExceptions = BusinessRuleException.class,
           expectedExceptionsMessageRegExp = "error.member.service.member.is.null")
     public void saveMemberNull() throws BusinessRuleException {
         Member isNull = null;
@@ -229,13 +232,13 @@ public class TeamServiceTest extends AbstractTestNGSpringContextTests {
     public void saveMember() throws BusinessRuleException {
 
         m1 = new Member();
-        m1.setUser(analista);
+        m1.setUser(analista.convertToEntity());
         m1.setProject(p1);
         m1.setAttribution(attribRepository.findByName(Attribution.PROJECT_MEMBER));
         m1.setCreatedOn(GregorianCalendar.getInstance().getTime());
 
         m2 = new Member();
-        m2.setUser(desenvolvedor);
+        m2.setUser(desenvolvedor.convertToEntity());
         m2.setProject(p1);
         m2.setAttribution(attribRepository.findByName(Attribution.PROJECT_MEMBER));
         m2.setCreatedOn(GregorianCalendar.getInstance().getTime());
@@ -306,10 +309,9 @@ public class TeamServiceTest extends AbstractTestNGSpringContextTests {
     /**
      * Teste baseado na discussão no link:
      * https://codereview.stackexchange.com/questions/129358/unit-testing-equals-hashcode-and-comparator-asserting-contracts
-     * @throws BusinessRuleException
      */
     @Test
-    public void equalsAndHashcode() throws BusinessRuleException {
+    public void equalsAndHashcode() {
         Member m1, m2, m3;
 
         Project p2 = new Project();
@@ -320,19 +322,19 @@ public class TeamServiceTest extends AbstractTestNGSpringContextTests {
         p2.setCreatedOn(GregorianCalendar.getInstance().getTime());
 
         m1 = new Member();
-        m1.setUser(analista);
+        m1.setUser(analista.convertToEntity());
         m1.setProject(p1);
         m1.setAttribution(attribRepository.findByName(Attribution.PROJECT_MEMBER));
         m1.setCreatedOn(GregorianCalendar.getInstance().getTime());
 
         m2 = new Member();
-        m2.setUser(analista);
+        m2.setUser(analista.convertToEntity());
         m2.setProject(p1);
         m2.setAttribution(attribRepository.findByName(Attribution.PROJECT_MEMBER));
         m2.setCreatedOn(GregorianCalendar.getInstance().getTime());
 
         m3 = new Member();
-        m3.setUser(analista);
+        m3.setUser(analista.convertToEntity());
         m3.setProject(p1);
         m3.setAttribution(attribRepository.findByName(Attribution.PROJECT_MEMBER));
         m3.setCreatedOn(GregorianCalendar.getInstance().getTime());
@@ -362,15 +364,15 @@ public class TeamServiceTest extends AbstractTestNGSpringContextTests {
         softAssert.assertFalse(m1.equals(m3), "T12 - Equals:TestDifferent");
 
         m1.setId(55L);
-        m1.setUser(analista);
+        m1.setUser(analista.convertToEntity());
         m1.setProject(p1);
 
         m2.setId(56L);
-        m2.setUser(desenvolvedor);
+        m2.setUser(desenvolvedor.convertToEntity());
         m2.setProject(p1);
 
         m3.setId(55L);
-        m3.setUser(desenvolvedor);
+        m3.setUser(desenvolvedor.convertToEntity());
         m3.setProject(p1);
 
         softAssert.assertFalse(m1.equals(m2), "T13 - Equals:TestDifferent");

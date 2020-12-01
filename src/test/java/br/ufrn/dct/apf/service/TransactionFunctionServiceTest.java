@@ -2,6 +2,7 @@ package br.ufrn.dct.apf.service;
 
 import java.util.List;
 
+import br.ufrn.dct.apf.dto.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.ContextConfiguration;
@@ -13,9 +14,7 @@ import org.testng.asserts.SoftAssert;
 import br.ufrn.dct.apf.dto.TransactionFunctionDTO;
 import br.ufrn.dct.apf.model.Project;
 import br.ufrn.dct.apf.model.TransactionFunction;
-import br.ufrn.dct.apf.model.User;
 import br.ufrn.dct.apf.model.UserStory;
-import br.ufrn.dct.apf.repository.UserRepository;
 
 @ContextConfiguration("/spring-test-beans.xml")
 @DataJpaTest
@@ -25,12 +24,12 @@ public class TransactionFunctionServiceTest extends AbstractServiceTest {
 
     @Autowired
     private ProjectService projectService;
-    
+
     @Autowired
     private UserStoryService userStoryService;
 
     @Autowired
-    private UserRepository userRepository;
+    private UserService userService;
 
     @Autowired
     private TransactionFunctionService transService;
@@ -38,11 +37,9 @@ public class TransactionFunctionServiceTest extends AbstractServiceTest {
     private Project p1;
 
     private TransactionFunction tf1, tf2, tf3, tf4;
-    
-    private TransactionFunctionDTO tfDto1, tfDto2, tfDto3, tfDto4;
 
-    private User manager;
-    
+    private UserDTO manager;
+
     private UserStory us;
 
     @BeforeMethod
@@ -50,31 +47,31 @@ public class TransactionFunctionServiceTest extends AbstractServiceTest {
         softAssert = new SoftAssert();
 
         p1 = new Project();
-        
+
         p1 = createProject("DF Project Example", "Data Function Project Example");
 
         manager = createUser("User", "DF");
-        userRepository.save(manager);
+        userService.save(manager);
 
         projectService.save(p1, manager);
-        
+
         us = new UserStory("US DF", "UserStory para DF");
         us.setProject(p1);
         userStoryService.save(us);
 
-        tfDto1 = createEI("EE1", 1, 10);
+        TransactionFunctionDTO tfDto1 = createEI("EE1", 1, 10);
         tfDto1.setProject(p1);
         tfDto1.setUserStory(us);
 
-        tfDto2 = createEO("SE1", 1, 10);
+        TransactionFunctionDTO tfDto2 = createEO("SE1", 1, 10);
         tfDto2.setProject(p1);
         tfDto2.setUserStory(us);
-        
-        tfDto3 = createEQ("CE1", 1, 10);
+
+        TransactionFunctionDTO tfDto3 = createEQ("CE1", 1, 10);
         tfDto3.setProject(p1);
         tfDto3.setUserStory(us);
-        
-        tfDto4 = createEO("SE2", 2, 15);
+
+        TransactionFunctionDTO tfDto4 = createEO("SE2", 2, 15);
         tfDto4.setProject(p1);
 
         tf1 = transService.save(tfDto1);
@@ -92,7 +89,7 @@ public class TransactionFunctionServiceTest extends AbstractServiceTest {
         transService.delete(tf4.getId());
         userStoryService.delete(us.getId());
         projectService.delete(p1.getId());
-        userRepository.delete(manager);
+        userService.delete(manager.getId());
         p1 = null;
         tf1 = null;
         tf2 = null;
@@ -126,7 +123,7 @@ public class TransactionFunctionServiceTest extends AbstractServiceTest {
 
         softAssert.assertAll();
     }
-    
+
     @Test
     public void createDtoTransaction() {
         Long id = tf1.getId();
@@ -212,16 +209,16 @@ public class TransactionFunctionServiceTest extends AbstractServiceTest {
 
         softAssert.assertNotNull(tfs, "T03 - NotNull:");
         softAssert.assertEquals(tfs.size(), 5, "T04 - Equals:");
-        
+
         p1 = projectService.findOne(p1.getId());
-        
-        Boolean t = p1.getTransactionFunctions().contains(found);
+
+        boolean t = p1.getTransactionFunctions().contains(found);
         softAssert.assertTrue(t, "T04 - Equals:");
-        
+
         p1.getTransactionFunctions().remove(found);
         found.setProject(null);
         projectService.save(p1, manager);
-        
+
         //transService.delete(id4);
 
         found = transService.findOne(id6);
@@ -234,7 +231,7 @@ public class TransactionFunctionServiceTest extends AbstractServiceTest {
 
         softAssert.assertAll();
     }
-    
+
     @Test
     public void createTransactionFunction() throws BusinessRuleException {
         TransactionFunctionDTO dfDto = createEI("DTO", 1, 8);
@@ -253,21 +250,21 @@ public class TransactionFunctionServiceTest extends AbstractServiceTest {
 
         softAssert.assertNotNull(dfs, "T03 - NotNull:");
         softAssert.assertEquals(dfs.size(), 5, "T04 - Equals:");
-        
+
         UserStory usFound = userStoryService.findOne(us.getId());
-        
-        Boolean usB = usFound.getTransactionFunctions().contains(found);
+
+        boolean usB = usFound.getTransactionFunctions().contains(found);
         softAssert.assertTrue(usB, "T05 - Equals:");
-        
+
         p1 = projectService.findOne(p1.getId());
-        
-        Boolean t = p1.getTransactionFunctions().contains(found);
+
+        boolean t = p1.getTransactionFunctions().contains(found);
         softAssert.assertTrue(t, "T06 - Equals:");
-        
+
         p1.getTransactionFunctions().remove(found);
         found.setProject(null);
         projectService.save(p1, manager);
-        
+
         //transService.delete(id4);
 
         found = transService.findOne(id);
@@ -280,7 +277,7 @@ public class TransactionFunctionServiceTest extends AbstractServiceTest {
 
         softAssert.assertAll();
     }
-    
+
     @Test
     public void equalsAndHashcode() throws BusinessRuleException {
         TransactionFunction tf1 = new TransactionFunction();
@@ -304,7 +301,7 @@ public class TransactionFunctionServiceTest extends AbstractServiceTest {
         tf1.setType(TransactionFunction.TYPE_EI);
         tf2.setProject(p1);
         tf2.setUserStory(us);
-        
+
         TransactionFunction tf3 = new TransactionFunction();
 
         tf3.setId(55L);
@@ -315,7 +312,7 @@ public class TransactionFunctionServiceTest extends AbstractServiceTest {
         tf1.setType(TransactionFunction.TYPE_EI);
         tf3.setProject(p1);
         tf3.setUserStory(us);
-        
+
         UserStory us = new UserStory("Test Project", "TestNG Project");
         us.setId(55L);
 
@@ -327,35 +324,35 @@ public class TransactionFunctionServiceTest extends AbstractServiceTest {
         softAssert.assertEquals(tf1, tf3, "T06 - Equals:TestTransitive");
         softAssert.assertFalse(tf1.equals(null), "T07 - Equals:TestNonNullity");
         softAssert.assertFalse(tf1.equals(us), "T08 - Equals:TestNonNullity");
-        
+
         softAssert.assertEquals(tf1.hashCode(), tf1.hashCode(), "T08 - Equals:TestHashCodeConsistency");
         softAssert.assertEquals(tf1.hashCode(), tf2.hashCode(), "T09 - Equals:TestHashCodeEquality");
-        
+
         tf1.setId(null);
         tf1.setName(null);
-        
+
         softAssert.assertFalse(tf1.equals(tf2), "T10 - Equals:TestDifferent");
         softAssert.assertFalse(tf1.equals(tf3), "T11 - Equals:TestDifferent");
-        
+
         tf1.setId(55L);
         tf1.setName("Test Project");
         tf2.setId(56L);
         tf3.setName("Test Project 3");
-        
+
         softAssert.assertFalse(tf1.equals(tf2), "T12 - Equals:TestDifferent");
         softAssert.assertFalse(tf1.equals(tf3), "T13 - Equals:TestDifferent");
-        
+
         tf2.setId(null);
         tf3.setName(null);
-        
+
         softAssert.assertNotEquals(tf1.hashCode(), tf2.hashCode(), "T08 - Equals:TestHashCodeConsistency");
         softAssert.assertNotEquals(tf1.hashCode(), tf3.hashCode(), "T09 - Equals:TestHashCodeEquality");
-        
+
         softAssert.assertFalse(tf1.equals(tf2), "T14 - Equals:TestDifferent");
         softAssert.assertFalse(tf1.equals(tf3), "T15 - Equals:TestDifferent");
 
         softAssert.assertFalse(tf3.equals(tf1), "T16 - Equals:TestDifferent");
-        
+
         softAssert.assertEquals(tf1.getDataElementTypes(),  Integer.valueOf(10), "T17 - Equals:TestDifferent");
         softAssert.assertEquals(tf1.getFileTypeReferenced(), Integer.valueOf(1), "T18 - Equals:TestDifferent");
 

@@ -4,8 +4,10 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Set;
 
+import br.ufrn.dct.apf.dto.UserDTO;
 import br.ufrn.dct.apf.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
@@ -16,7 +18,6 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 import br.ufrn.dct.apf.repository.AttributionRepository;
-import br.ufrn.dct.apf.repository.UserRepository;
 
 @ContextConfiguration("/spring-test-beans.xml")
 @DataJpaTest
@@ -28,14 +29,15 @@ public class ProjectServiceTest extends AbstractTestNGSpringContextTests {
     private ProjectService service;
 
     @Autowired
-    private UserRepository userRepository;
+    private UserService userService;
 
+    @Qualifier("attributionRepository")
     @Autowired
     private AttributionRepository attribRepository;
 
     private Project p1, p2;
 
-    private User user1, user2, user3;
+    private UserDTO user1, user2, user3;
 
     @BeforeMethod
     public void startTest() throws BusinessRuleException {
@@ -45,9 +47,9 @@ public class ProjectServiceTest extends AbstractTestNGSpringContextTests {
         user2 = createUser("Zé", "Costa", "zecosta@gmail.com");
         user3 = createUser("User", "3", "user3@gmail.com");
 
-        userRepository.save(user1);
-        userRepository.save(user2);
-        userRepository.save(user3);
+        userService.save(user1);
+        userService.save(user2);
+        userService.save(user3);
 
         p1 = new Project();
 
@@ -73,9 +75,9 @@ public class ProjectServiceTest extends AbstractTestNGSpringContextTests {
         softAssert = null;
         service.delete(p1.getId());
         service.delete(p2.getId());
-        userRepository.deleteById(user1.getId());
-        userRepository.deleteById(user2.getId());
-        userRepository.deleteById(user3.getId());
+        userService.delete(user1.getId());
+        userService.delete(user2.getId());
+        userService.delete(user3.getId());
         p1 = null;
         p2 = null;
         user1 = null;
@@ -144,7 +146,7 @@ public class ProjectServiceTest extends AbstractTestNGSpringContextTests {
         p2.setActive(1);
 
         Member m1 = new Member();
-        m1.setUser(user1);
+        m1.setUser(user1.convertToEntity());
         m1.setProject(p2);
         m1.setAttribution(attribRepository.findByName(Attribution.PROJECT_MANAGER));
         m1.setCreatedOn(GregorianCalendar.getInstance().getTime());
@@ -286,7 +288,7 @@ public class ProjectServiceTest extends AbstractTestNGSpringContextTests {
         p2.setActive(1);
 
         Member m1 = new Member();
-        m1.setUser(user1);
+        m1.setUser(user1.convertToEntity());
         m1.setProject(p2);
         m1.setAttribution(attribRepository.findByName(Attribution.PROJECT_MANAGER));
         m1.setCreatedOn(GregorianCalendar.getInstance().getTime());
@@ -318,25 +320,16 @@ public class ProjectServiceTest extends AbstractTestNGSpringContextTests {
         softAssert.assertAll();
     }
 
-    private User createUser(String name, String lastName, String email) {
-        User user = new User();
-
-        user.setName(name);
-        user.setLastName(lastName);
-        user.setEmail(email);
-        user.setPassword("12345");
-        user.setActive(1);
-
-        return user;
+    private UserDTO createUser(String name, String lastName, String email) {
+        return new UserDTO(name, lastName, email,"12345", 1);
     }
 
     /**
      * Teste baseado na discussão no link:
      * https://codereview.stackexchange.com/questions/129358/unit-testing-equals-hashcode-and-comparator-asserting-contracts
-     * @throws BusinessRuleException
      */
     @Test
-    public void equalsAndHashcode() throws BusinessRuleException {
+    public void equalsAndHashcode() {
         Project project1 = new Project();
 
         project1.setId(55L);

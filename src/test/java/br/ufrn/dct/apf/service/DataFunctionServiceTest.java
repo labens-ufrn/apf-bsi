@@ -2,6 +2,7 @@ package br.ufrn.dct.apf.service;
 
 import java.util.List;
 
+import br.ufrn.dct.apf.dto.UserDTO;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -14,17 +15,15 @@ import org.testng.asserts.SoftAssert;
 import br.ufrn.dct.apf.dto.DataFunctionDTO;
 import br.ufrn.dct.apf.model.DataFunction;
 import br.ufrn.dct.apf.model.Project;
-import br.ufrn.dct.apf.model.User;
 import br.ufrn.dct.apf.model.UserStory;
-import br.ufrn.dct.apf.repository.UserRepository;
 
 @ContextConfiguration("/spring-test-beans.xml")
 @DataJpaTest
 public class DataFunctionServiceTest extends AbstractServiceTest {
 
     private SoftAssert softAssert;
-    
-    private ModelMapper modelMapper = new ModelMapper();
+
+    private final ModelMapper modelMapper = new ModelMapper();
 
     @Autowired
     private ProjectService projectService;
@@ -33,7 +32,7 @@ public class DataFunctionServiceTest extends AbstractServiceTest {
     private UserStoryService userStoryService;
 
     @Autowired
-    private UserRepository userRepository;
+    private UserService userService;
 
     @Autowired
     private DataFunctionService dataService;
@@ -42,9 +41,7 @@ public class DataFunctionServiceTest extends AbstractServiceTest {
 
     private DataFunction df1, df2;
 
-    private DataFunctionDTO dfDto1, dfDto2;
-
-    private User manager;
+    private UserDTO manager;
 
     private UserStory us;
 
@@ -57,7 +54,7 @@ public class DataFunctionServiceTest extends AbstractServiceTest {
         p1 = createProject("DF Project Example", "Data Function Project Example");
 
         manager = createUser("User", "DF");
-        userRepository.save(manager);
+        userService.save(manager);
 
         projectService.save(p1, manager);
 
@@ -65,13 +62,13 @@ public class DataFunctionServiceTest extends AbstractServiceTest {
         us.setProject(p1);
         userStoryService.save(us);
 
-        dfDto1 = createILF("DF1", 1L, 10L);
+        DataFunctionDTO dfDto1 = createILF("DF1", 1L, 10L);
         dfDto1.setProject(p1);
         dfDto1.setUserStory(us);
 
-        dfDto2 = createEIF("DF2", 1L, 10L);
+        DataFunctionDTO dfDto2 = createEIF("DF2", 1L, 10L);
         dfDto2.setProject(p1);
-        
+
         DataFunction newdf1 = modelMapper.map(dfDto1, DataFunction.class);
         DataFunction newdf2 = modelMapper.map(dfDto2, DataFunction.class);
 
@@ -86,7 +83,7 @@ public class DataFunctionServiceTest extends AbstractServiceTest {
         dataService.delete(df2.getId());
         userStoryService.delete(us.getId());
         projectService.delete(p1.getId());
-        userRepository.deleteById(manager.getId());
+        userService.delete(manager.getId());
         p1 = null;
         df1 = null;
         df2 = null;
@@ -126,7 +123,7 @@ public class DataFunctionServiceTest extends AbstractServiceTest {
         dfDto3.setUserStory(us);
 
         DataFunction newdf3 = modelMapper.map(dfDto3, DataFunction.class);
-        
+
         DataFunction df3 = dataService.save(newdf3);
 
         Long id3 = df3.getId();
@@ -179,7 +176,7 @@ public class DataFunctionServiceTest extends AbstractServiceTest {
         dfDto4.setProject(p1);
 
         DataFunction newdf4 = modelMapper.map(dfDto4, DataFunction.class);
-        
+
         DataFunction df4 = dataService.save(newdf4);
 
         Long id4 = df4.getId();
@@ -195,7 +192,7 @@ public class DataFunctionServiceTest extends AbstractServiceTest {
 
         p1 = projectService.findOne(p1.getId());
 
-        Boolean t = p1.getDataFunctions().contains(found);
+        boolean t = p1.getDataFunctions().contains(found);
         softAssert.assertTrue(t, "T04 - Equals:");
 
         p1.getDataFunctions().remove(found);
@@ -222,7 +219,7 @@ public class DataFunctionServiceTest extends AbstractServiceTest {
         dfDto.setUserStory(us);
 
         DataFunction newdf = modelMapper.map(dfDto, DataFunction.class);
-        
+
         DataFunction df = dataService.save(newdf);
 
         Long id = df.getId();
@@ -238,12 +235,12 @@ public class DataFunctionServiceTest extends AbstractServiceTest {
 
         UserStory usFound = userStoryService.findOne(us.getId());
 
-        Boolean usB = usFound.getDataFunctions().contains(found);
+        boolean usB = usFound.getDataFunctions().contains(found);
         softAssert.assertTrue(usB, "T05 - Equals:");
 
         p1 = projectService.findOne(p1.getId());
 
-        Boolean t = p1.getDataFunctions().contains(found);
+        boolean t = p1.getDataFunctions().contains(found);
         softAssert.assertTrue(t, "T06 - Equals:");
 
         p1.getDataFunctions().remove(found);
@@ -264,7 +261,7 @@ public class DataFunctionServiceTest extends AbstractServiceTest {
     }
 
     @Test
-    public void equalsAndHashcode() throws BusinessRuleException {
+    public void equalsAndHashcode() {
         DataFunction df1 = new DataFunction();
 
         df1.setId(55L);
@@ -337,7 +334,7 @@ public class DataFunctionServiceTest extends AbstractServiceTest {
         softAssert.assertFalse(df1.equals(df3), "T15 - Equals:TestDifferent");
 
         softAssert.assertFalse(df3.equals(df1), "T16 - Equals:TestDifferent");
- 
+
         softAssert.assertEquals(df1.getDataElementTypes(), Long.valueOf(10L), "T17 - Equals:TestDifferent");
         softAssert.assertEquals(df1.getRecordElementTypes(), Long.valueOf(1L), "T18 - Equals:TestDifferent");
 

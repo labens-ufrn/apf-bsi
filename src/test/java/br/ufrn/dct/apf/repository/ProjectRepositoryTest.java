@@ -4,6 +4,7 @@ import java.util.GregorianCalendar;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
@@ -23,12 +24,15 @@ public class ProjectRepositoryTest extends AbstractTestNGSpringContextTests {
 
     private SoftAssert softAssert;
 
+    @Qualifier("projectRepository")
     @Autowired
     private ProjectRepository repository;
 
+    @Qualifier("userRepository")
     @Autowired
     private UserRepository userRepository;
 
+    @Qualifier("attributionRepository")
     @Autowired
     private AttributionRepository attribRepository;
 

@@ -1,6 +1,7 @@
 package br.ufrn.dct.apf.controller;
 
 import br.ufrn.dct.apf.dto.DataFunctionDTO;
+import br.ufrn.dct.apf.dto.UserDTO;
 import br.ufrn.dct.apf.model.DataFunction;
 import br.ufrn.dct.apf.model.Project;
 import br.ufrn.dct.apf.model.User;
@@ -104,7 +105,7 @@ public class DataFunctionController extends AbstractController {
             return add(dfDto);
         }
 
-        User current = getCurrentUser();
+        UserDTO current = getCurrentUser();
 
         List<Project> projects = projectService.findByName(current.getId(), dfDto.getProject().getName());
         Project p = null;

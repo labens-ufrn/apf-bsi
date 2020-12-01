@@ -3,6 +3,7 @@ package br.ufrn.dct.apf.repository;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
@@ -19,6 +20,7 @@ public class AttributionRepositoryTest extends AbstractTestNGSpringContextTests 
 
     private SoftAssert softAssert;
 
+    @Qualifier("attributionRepository")
     @Autowired
     private AttributionRepository attribRepository;
 

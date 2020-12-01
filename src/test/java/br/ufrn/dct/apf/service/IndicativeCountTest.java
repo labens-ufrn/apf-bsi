@@ -2,7 +2,9 @@ package br.ufrn.dct.apf.service;
 
 import java.util.Set;
 
+import br.ufrn.dct.apf.dto.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.ContextConfiguration;
 import org.testng.annotations.AfterMethod;
@@ -29,11 +31,11 @@ public class IndicativeCountTest extends AbstractServiceTest {
     private ProjectService projectService;
 
     @Autowired
-    private UserRepository userRepository;
+    private UserService userService;
 
     private Project apf;
 
-    private User manager;
+    private UserDTO manager;
 
     @BeforeMethod
     public void startTest() throws BusinessRuleException {
@@ -45,7 +47,7 @@ public class IndicativeCountTest extends AbstractServiceTest {
 
         //Create User Manager
         manager = createUser("Taciano","Silva");
-        userRepository.save(manager);
+        userService.save(manager);
 
         //Save Project with Manager
         projectService.save(apf, manager);
@@ -65,7 +67,7 @@ public class IndicativeCountTest extends AbstractServiceTest {
         //userStoryService.delete(us1.getId());
         //userStoryService.delete(us2.getId());
         projectService.delete(apf.getId());
-        userRepository.deleteById(manager.getId());
+        userService.delete(manager.getId());
         apf = null;
         manager = null;
     }
