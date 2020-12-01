@@ -127,9 +127,7 @@ public class User implements Serializable {
             roles = new HashSet<>(0);
         }
 
-        if (!roles.contains(role)) {
-            roles.add(role);
-        }
+        roles.add(role);
     }
 
     @Override
