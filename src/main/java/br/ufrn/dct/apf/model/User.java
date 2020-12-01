@@ -35,7 +35,7 @@ public class User implements Serializable {
     @Column(name = "user_id")
     private Long id;
 
-    @Column(name = "email")
+    @Column(name = "email", unique = true)
     @Email(message = "Email inválido!")
     @NotEmpty(message = "Digite seu email!")
     private String email;
