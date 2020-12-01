@@ -31,7 +31,7 @@ import javax.persistence.Table;
  *
  */
 @Entity
-@Table(name = "transactionFunction")
+@Table(name = "transaction_function")
 public class TransactionFunction implements Serializable {
 
     /**
