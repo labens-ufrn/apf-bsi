@@ -2,6 +2,8 @@ package br.ufrn.dct.apf.controller;
 
 import javax.validation.Valid;
 
+import br.ufrn.dct.apf.dto.UserDTO;
+import br.ufrn.dct.apf.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
@@ -14,7 +16,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import br.ufrn.dct.apf.count.EstimativeCount;
 import br.ufrn.dct.apf.count.IndicativeCount;
-import br.ufrn.dct.apf.model.User;
 import br.ufrn.dct.apf.service.ProjectService;
 import br.ufrn.dct.apf.service.UserService;
 
@@ -51,9 +52,9 @@ public class LoginController extends AbstractController {
     }
 
     @PostMapping(path = "/registration")
-    public ModelAndView createNewUser(@Valid User user, BindingResult bindingResult) {
+    public ModelAndView createNewUser(@Valid UserDTO user, BindingResult bindingResult) {
         ModelAndView modelAndView = new ModelAndView();
-        User userExists = userService.findUserByEmail(user.getEmail());
+        UserDTO userExists = userService.findUserByEmail(user.getEmail());
 
         if (userExists != null) {
             bindingResult.rejectValue("email", "error.user", "Este email já está cadastrado.");
@@ -77,7 +78,7 @@ public class LoginController extends AbstractController {
         SecurityContext context = SecurityContextHolder.getContext();
         Authentication auth = context.getAuthentication();
 
-        User user = userService.findUserByEmail(auth.getName());
+        UserDTO user = userService.findUserByEmail(auth.getName());
 
         modelAndView.addObject("userName", user.getName() + " " + user.getLastName() + " (" + user.getEmail() + ")");
         modelAndView.addObject("authorities", getRoles(user));
@@ -91,7 +92,7 @@ public class LoginController extends AbstractController {
     public ModelAndView home() {
         ModelAndView mv = new ModelAndView("home");
         setUserAuth(mv);
-        User user = getCurrentUser();
+        UserDTO user = getCurrentUser();
 
         mv.addObject("projects", projectService.findByUserId(user.getId()));
 
@@ -114,7 +115,7 @@ public class LoginController extends AbstractController {
     @GetMapping(path = "/access-denied")
     public ModelAndView accesssDenied() {
         ModelAndView model = new ModelAndView();
-        User user = getCurrentUser();
+        UserDTO user = getCurrentUser();
 
         if (user != null) {
             model.addObject("msg", "Hi " + user.getName() + ", you do not have permission to access this page!");

@@ -1,6 +1,5 @@
 package br.ufrn.dct.apf.model;
 
-import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -18,12 +17,15 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.persistence.JoinColumn;
 
+import br.ufrn.dct.apf.dto.UserDTO;
+import br.ufrn.dct.apf.interfaces.IEntity;
+import br.ufrn.dct.apf.utils.Mapper;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.data.annotation.Transient;
 
 @Entity
 @Table(name = "user")
-public class User implements Serializable {
+public class User implements IEntity {
 
     /**
      * Serial number.
@@ -157,5 +159,10 @@ public class User implements Serializable {
     @Override
     public String toString() {
         return "User@" + this.id + "[" + this.name + "]";
+    }
+
+    @Override
+    public UserDTO convertToDTO() {
+        return Mapper.EntityToDTO(this, UserDTO.class);
     }
 }

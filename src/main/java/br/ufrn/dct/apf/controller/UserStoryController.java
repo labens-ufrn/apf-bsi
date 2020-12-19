@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import br.ufrn.dct.apf.dto.UserDTO;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,7 +63,7 @@ public class UserStoryController extends AbstractController {
     @GetMapping("/us/list")
     public ModelAndView list() {
         ModelAndView mv = new ModelAndView("us/list");
-        User current = getCurrentUser();
+        UserDTO current = getCurrentUser();
 
         List<Project> projects = projectService.findByUserId(current.getId());
 
@@ -81,7 +82,7 @@ public class UserStoryController extends AbstractController {
             return add(us);
         }
 
-        User current = getCurrentUser();
+        UserDTO current = getCurrentUser();
 
         Project project;
 

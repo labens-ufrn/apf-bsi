@@ -2,6 +2,7 @@ package br.ufrn.dct.apf.controller;
 
 import java.util.Set;
 
+import br.ufrn.dct.apf.dto.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -12,12 +13,11 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.servlet.ModelAndView;
 
 import br.ufrn.dct.apf.model.Role;
-import br.ufrn.dct.apf.model.User;
 import br.ufrn.dct.apf.service.UserService;
 
 public abstract class AbstractController {
 
-    private User overridenCurrentUser;
+    private UserDTO overridenCurrentUser;
 
     @Autowired
     private UserService userService;
@@ -27,14 +27,14 @@ public abstract class AbstractController {
 
     protected void setUserAuth(ModelAndView modelAndView) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        User user = userService.findUserByEmail(auth.getName());
+        UserDTO user = userService.findUserByEmail(auth.getName());
 
         modelAndView.addObject("userName", user.getName() + " " + user.getLastName() + " (" + user.getEmail() + ")");
         modelAndView.addObject("authorities", getRoles(user));
     }
 
     protected void loadUserAuth(String email, String password) {
-        UsernamePasswordAuthenticationToken authReq = 
+        UsernamePasswordAuthenticationToken authReq =
             new UsernamePasswordAuthenticationToken(email, password);
 	    Authentication auth = authManager.authenticate(authReq);
 	    SecurityContext sc = SecurityContextHolder.getContext();
@@ -56,7 +56,7 @@ public abstract class AbstractController {
         }
     }
 
-    protected User getCurrentUser() {
+    protected UserDTO getCurrentUser() {
         if (overridenCurrentUser != null) {
             return overridenCurrentUser;
         }
@@ -67,7 +67,7 @@ public abstract class AbstractController {
         return userService.findUserByEmail(auth.getName());
     }
 
-    protected String getRoles(User user) {
+    protected String getRoles(UserDTO user) {
         Set<Role> roles = user.getRoles();
 
         StringBuilder bld = new StringBuilder();

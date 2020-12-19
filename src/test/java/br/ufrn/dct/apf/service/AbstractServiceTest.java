@@ -2,7 +2,9 @@ package br.ufrn.dct.apf.service;
 
 import java.util.GregorianCalendar;
 
+import br.ufrn.dct.apf.dto.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 
 import br.ufrn.dct.apf.dto.DataFunctionDTO;
@@ -11,12 +13,12 @@ import br.ufrn.dct.apf.model.DataFunction;
 import br.ufrn.dct.apf.model.Project;
 import br.ufrn.dct.apf.model.Role;
 import br.ufrn.dct.apf.model.TransactionFunction;
-import br.ufrn.dct.apf.model.User;
 import br.ufrn.dct.apf.model.UserStory;
 import br.ufrn.dct.apf.repository.RoleRepository;
 
 public abstract class AbstractServiceTest extends AbstractTestNGSpringContextTests {
 
+    @Qualifier("roleRepository")
     @Autowired
     private RoleRepository roleRepository;
 
@@ -29,14 +31,9 @@ public abstract class AbstractServiceTest extends AbstractTestNGSpringContextTes
     @Autowired
     private TransactionFunctionService transService;
 
-    protected User createUser(String name, String lastName) {
-        User user = new User();
+    protected UserDTO createUser(String name, String lastName) {
+        UserDTO user = new UserDTO(name, lastName, name+lastName+"@gmail.com", "12345", 1);
 
-        user.setName(name);
-        user.setLastName(lastName);
-        user.setEmail(name+lastName+"@gmail.com");
-        user.setPassword("12345");
-        user.setActive(1);
         user.setNewRole(roleRepository.findByRoleName(Role.USER_ROLE));
 
         return user;
@@ -54,9 +51,6 @@ public abstract class AbstractServiceTest extends AbstractTestNGSpringContextTes
 
     /**
      * Create a project object.
-     * @param name
-     * @param description
-     * @return
      */
     protected Project createProject(String name, String description) {
         Project p = new Project();
@@ -67,7 +61,7 @@ public abstract class AbstractServiceTest extends AbstractTestNGSpringContextTes
         return p;
     }
 
-    protected Project addUserStoriesInAPF(Project apf) {
+    protected void addUserStoriesInAPF(Project apf) {
         UserStory us1 = new UserStory("US01", "Manter Projeto");
         us1.setProject(apf);
 
@@ -115,7 +109,6 @@ public abstract class AbstractServiceTest extends AbstractTestNGSpringContextTes
         userStoryService.save(us3);
         userStoryService.save(us4);
 
-        return apf;
     }
 
     protected DataFunction createProjectILF() {

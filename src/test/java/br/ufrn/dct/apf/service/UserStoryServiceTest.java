@@ -4,6 +4,7 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Set;
 
+import br.ufrn.dct.apf.dto.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.ContextConfiguration;
@@ -17,7 +18,6 @@ import br.ufrn.dct.apf.model.DataFunction;
 import br.ufrn.dct.apf.model.Project;
 import br.ufrn.dct.apf.model.User;
 import br.ufrn.dct.apf.model.UserStory;
-import br.ufrn.dct.apf.repository.UserRepository;
 
 @ContextConfiguration("/spring-test-beans.xml")
 @DataJpaTest
@@ -26,10 +26,10 @@ public class UserStoryServiceTest extends AbstractTestNGSpringContextTests {
     private SoftAssert softAssert;
 
     @Autowired
-    private ProjectService service;
+    private ProjectService projectService;
 
     @Autowired
-    private UserRepository userRepository;
+    private UserService userService;
 
     @Autowired
     private UserStoryService userStoryService;
@@ -38,7 +38,7 @@ public class UserStoryServiceTest extends AbstractTestNGSpringContextTests {
 
     private UserStory us1, us2;
 
-    private User manager;
+    private UserDTO manager;
 
     @BeforeMethod
     public void startTest() throws BusinessRuleException {
@@ -53,7 +53,7 @@ public class UserStoryServiceTest extends AbstractTestNGSpringContextTests {
 
         manager = createUser();
 
-        service.save(p1, manager);
+        projectService.save(p1, manager);
 
         us1 = new UserStory("US01", "Manter Projeto");
         us1.setProject(p1);
@@ -70,8 +70,8 @@ public class UserStoryServiceTest extends AbstractTestNGSpringContextTests {
         softAssert = null;
         userStoryService.delete(us1.getId());
         userStoryService.delete(us2.getId());
-        service.delete(p1.getId());
-        userRepository.deleteById(manager.getId());
+        projectService.delete(p1.getId());
+        userService.delete(manager.getId());
         p1 = null;
         us1 = null;
         us2 = null;
@@ -192,11 +192,11 @@ public class UserStoryServiceTest extends AbstractTestNGSpringContextTests {
         softAssert.assertNotNull(uss, "T03 - NotNull:");
         softAssert.assertEquals(uss.size(), 3, "T04.1 - Equals:");
 
-        p1 = service.findOne(p1.getId());
-        Boolean t = p1.getUserStories().contains(found);
+        p1 = projectService.findOne(p1.getId());
+        boolean t = p1.getUserStories().contains(found);
         softAssert.assertTrue(t, "T04.2 - Equals");
         p1.getUserStories().remove(found);
-        service.save(p1, manager);
+        projectService.save(p1, manager);
 
         //userStoryService.delete(id4);
 
@@ -211,20 +211,16 @@ public class UserStoryServiceTest extends AbstractTestNGSpringContextTests {
         softAssert.assertAll();
     }
 
-    private User createUser() {
-        User user = new User();
+    private UserDTO createUser() {
+        UserDTO user = new UserDTO("Taciano Silva", "Silva", "tacianosilva@gmail.com", "12345", 1);
 
-        user.setName("Taciano Silva");
-        user.setLastName("Silva");
-        user.setEmail("tacianosilva@gmail.com");
-        user.setPassword("12345");
-        user.setActive(1);
+        userService.save(user);
 
-        return userRepository.save(user);
+        return user;
     }
 
     @Test
-    public void equalsAndHashcode() throws BusinessRuleException {
+    public void equalsAndHashcode() {
         DataFunction aliProject = DataFunction.createILF("ALI Projeto");
         aliProject.setRecordElementTypes(2L);
         aliProject.setDataElementTypes(11L);
