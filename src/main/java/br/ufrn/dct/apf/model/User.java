@@ -37,7 +37,7 @@ public class User implements IEntity {
     @Column(name = "user_id")
     private Long id;
 
-    @Column(name = "email")
+    @Column(name = "email", unique = true)
     @Email(message = "Email inválido!")
     @NotEmpty(message = "Digite seu email!")
     private String email;
@@ -129,9 +129,7 @@ public class User implements IEntity {
             roles = new HashSet<>(0);
         }
 
-        if (!roles.contains(role)) {
-            roles.add(role);
-        }
+        roles.add(role);
     }
 
     @Override

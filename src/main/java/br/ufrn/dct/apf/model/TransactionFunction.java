@@ -19,19 +19,19 @@ import javax.persistence.Table;
  *  External Inputs
  *  External Outputs
  *  External Inquiries
- *  
+ *
  * Transaction functions are made up of the processes that are exchanged
  * between the user, the external applications and the application being measured.
- * 
+ *
  * https://www.tutorialspoint.com/estimation_techniques/estimation_techniques_function_points.htm
- * 
+ *
  * @author Taciano Morais Silva
  * @version 1.0
  * @since 23/05/2019, 14h11m
  *
  */
 @Entity
-@Table(name = "transactionFunction")
+@Table(name = "transaction_function")
 public class TransactionFunction implements Serializable {
 
     /**
@@ -40,19 +40,19 @@ public class TransactionFunction implements Serializable {
     private static final long serialVersionUID = 1L;
 
     /**
-     * External Input (EI) is a transaction function in which Data goes “into” 
-     * the application from outside the boundary to inside. This data is coming 
+     * External Input (EI) is a transaction function in which Data goes “into”
+     * the application from outside the boundary to inside. This data is coming
      * external to the application.
      */
     public static final String TYPE_EI = "TYPE_EI";
-    
+
     /**
      * External Output (EO) is a transaction function in which data comes “out”
      * of the system. Additionally, an EO may update an ILF. The data creates reports
      * or output files sent to other applications.
      */
     public static final String TYPE_EO = "TYPE_EO";
-    
+
     /**
      * External Inquiry (EQ) is a transaction function
      * with both input and output components that result in data retrieval.
@@ -72,8 +72,8 @@ public class TransactionFunction implements Serializable {
 
     /**
      * number of File Type Referenced (FTR).
-     * 
-     * File Type Referenced (FTR) is the largest user identifiable subgroup 
+     *
+     * File Type Referenced (FTR) is the largest user identifiable subgroup
      * within the EI, EO, or EQ that is referenced to.
      */
     @Column(name = "ftr")
@@ -81,36 +81,36 @@ public class TransactionFunction implements Serializable {
 
     /**
      * number of Data Element Types (DET).
-     * 
-     * Data Element Type (DET) is the data subgroup within an FTR. 
+     *
+     * Data Element Type (DET) is the data subgroup within an FTR.
      * They are unique and user identifiable.
      */
     @Column(name = "det")
     private Integer dataElementTypes;
-    
+
     @Column(name = "description")
     private String description;
 
     @ManyToOne
-    @JoinColumn(name = "user_story_id", nullable = true)
+    @JoinColumn(name = "user_story_id")
     private UserStory userStory;
-    
+
     @ManyToOne
-    @JoinColumn(name = "project_id", nullable = true)
+    @JoinColumn(name = "project_id")
     private Project project;
 
     public static TransactionFunction createEI(String name) {
         return new TransactionFunction(name, TYPE_EI);
     }
-    
+
     public static TransactionFunction createEO(String name) {
         return new TransactionFunction(name, TYPE_EO);
     }
-    
+
     public static TransactionFunction createEQ(String name) {
         return new TransactionFunction(name, TYPE_EQ);
     }
-    
+
     public TransactionFunction() {}
 
     private TransactionFunction(String name, String type) {
@@ -141,7 +141,7 @@ public class TransactionFunction implements Serializable {
     public void setType(String type) {
         this.type = type;
     }
-    
+
     public String getDescription() {
         return description;
     }
@@ -185,11 +185,11 @@ public class TransactionFunction implements Serializable {
     public boolean isEI() {
         return getType().equals(TYPE_EI);
     }
-    
+
     public boolean isEO() {
         return getType().equals(TYPE_EO);
     }
-    
+
     public boolean isEQ() {
         return getType().equals(TYPE_EQ);
     }
@@ -218,13 +218,10 @@ public class TransactionFunction implements Serializable {
         } else if (!id.equals(other.id))
             return false;
         if (name == null) {
-            if (other.name != null)
-                return false;
-        } else if (!name.equals(other.name))
-            return false;
-        return true;
+            return other.name == null;
+        } else return name.equals(other.name);
     }
-    
+
     @Override
     public String toString() {
         return "TransactionFunction@" + this.id + "@"+ this.type +"[" + this.name + "]";
