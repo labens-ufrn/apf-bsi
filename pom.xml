@@ -97,11 +97,11 @@
             <optional>true</optional>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/org.postgresql/postgresql -->
         <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <version>[8.0.16,)</version>
-            <scope>runtime</scope>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>42.5.0</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -262,7 +262,7 @@
                 <configuration>
                     <dependencyDetailsEnabled>true</dependencyDetailsEnabled>
                 </configuration>
-                <!-- <reportSets> <reportSet> <reports> <report>dependencies</report> 
+                <!-- <reportSets> <reportSet> <reports> <report>dependencies</report>
                     <report>scm</report> </reports> </reportSet> </reportSets> -->
             </plugin>
             <plugin>
