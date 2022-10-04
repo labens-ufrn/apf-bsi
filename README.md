@@ -63,15 +63,31 @@ Para executar o projeto, será necessário instalar os seguintes programas:
 Código abaixo:
 
 1. Criação das bases de dados e usuário
+
 ```sql
-    CREATE DATABASE apf_db;
-    CREATE DATABASE apf_db_test;
-
-    CREATE USER 'apf_user'@'localhost' IDENTIFIED BY '12345';
-
-    GRANT ALL ON apf_db.* TO 'apf_user'@'localhost';
-    GRANT ALL ON apf_db_test.* TO 'apf_user'@'localhost';
+CREATE ROLE apf_user WITH
+	LOGIN
+	NOSUPERUSER
+	NOCREATEDB
+	NOCREATEROLE
+	NOINHERIT
+	NOREPLICATION
+	CONNECTION LIMIT -1
+	PASSWORD 'xxxxxx';
+COMMENT ON ROLE apf_user IS 'Usuário do Sistema APF de Contagem de Pontos de Função.';
 ```
+
+```sql
+CREATE DATABASE apf_db
+    WITH 
+    OWNER = apf_user
+    ENCODING = 'UTF8'
+    CONNECTION LIMIT = -1;
+
+CREATE SCHEMA IF NOT EXISTS apf
+    AUTHORIZATION apf_user;
+```
+
 
 2. Povoamento do Banco de Dados
 ```sql
