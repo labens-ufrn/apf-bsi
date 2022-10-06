@@ -47,6 +47,7 @@
         <java.version>11</java.version>
         <sonar.organization>tacianosilva-github</sonar.organization>
         <sonar.language>java</sonar.language>
+        <sonar.java.source>java</sonar.java.source>
         <sonar.exclusions>**/*.properties,**/*.xml</sonar.exclusions>
         <!-- The main class to start by executing "java -jar" -->
         <start-class>br.ufrn.dct.apf.APFApplication</start-class>
@@ -154,8 +155,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.8.0</version>
                 <configuration>
-                    <source>11</source>
-                    <target>11</target>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
                 </configuration>
             </plugin>
             <plugin>
@@ -283,11 +284,13 @@
                 <artifactId>maven-pmd-plugin</artifactId>
                 <version>3.10.0</version>
             </plugin>
+            <!--
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>findbugs-maven-plugin</artifactId>
                 <version>3.0.5</version>
             </plugin>
+            -->
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
