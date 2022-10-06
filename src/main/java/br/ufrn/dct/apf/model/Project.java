@@ -46,7 +46,7 @@ public class Project implements Serializable {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date createdOn;
 
-    @Column(name = "isPrivate", columnDefinition = "BIT", length = 1)
+    @Column(name = "isPrivate")
     @NotNull
     private Boolean isPrivate;
 
@@ -61,7 +61,7 @@ public class Project implements Serializable {
 
     @OneToMany(mappedBy = "project", targetEntity = DataFunction.class, orphanRemoval = true, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<DataFunction> dataFunctions = new HashSet<>();
-    
+
     @OneToMany(mappedBy = "project", targetEntity = TransactionFunction.class, orphanRemoval = true, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<TransactionFunction> transactions = new HashSet<>();
 
@@ -134,11 +134,11 @@ public class Project implements Serializable {
     public void setDataFunctions(Set<DataFunction> dataFunctions) {
         this.dataFunctions = dataFunctions;
     }
-    
+
     public Set<TransactionFunction> getTransactionFunctions() {
         return transactions;
     }
-    
+
     public void setTransactionFunctions(Set<TransactionFunction> transactions) {
         this.transactions = transactions;
     }
@@ -178,7 +178,7 @@ public class Project implements Serializable {
             return other.name == null;
         } else return name.equals(other.name);
     }
-    
+
     @Override
     public String toString() {
         return "Project@" + this.id + "[" + this.name + "]";
