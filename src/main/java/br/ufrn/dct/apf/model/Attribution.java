@@ -22,11 +22,11 @@ public class Attribution implements Serializable {
      * Regra para definir permissões membros de um projeto.
      */
     public static final String PROJECT_MANAGER = "PROJECT MANAGER";
-    
+
     public static final String PROJECT_MEMBER = "PROJECT MEMBER";
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "attrib_id")
     private int id;
 

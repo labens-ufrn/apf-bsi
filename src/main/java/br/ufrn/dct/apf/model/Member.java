@@ -26,7 +26,7 @@ public class Member implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "member_id")
     private Long id;
 
@@ -37,7 +37,7 @@ public class Member implements Serializable {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "project_id", nullable = false)
     private Project project;
-    
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "attrib_id", nullable = false)
     private Attribution attribution;
@@ -70,7 +70,7 @@ public class Member implements Serializable {
     public void setProject(Project project) {
         this.project = project;
     }
-    
+
     public Attribution getAttribution() {
         return attribution;
     }
