@@ -82,7 +82,11 @@ CREATE DATABASE apf_db
     WITH 
     OWNER = apf_user
     ENCODING = 'UTF8'
-    CONNECTION LIMIT = -1;
+    LC_COLLATE = 'pt_BR.utf8'
+    LC_CTYPE = 'pt_BR.utf8'
+    TABLESPACE = pg_default
+    CONNECTION LIMIT = -1
+    IS_TEMPLATE = False;
 
 CREATE SCHEMA IF NOT EXISTS apf
     AUTHORIZATION apf_user;
