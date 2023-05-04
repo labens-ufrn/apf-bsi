@@ -18,7 +18,7 @@ public interface ProjectRepository extends JpaRepository<Project, Long> {
     List<Project> findByNameContaining(String name);
 
     List<Project> findByTeamUserIdAndNameContaining(Long userId, String name);
-    
+
     List<Project> findByIsPrivateFalse();
 
 }

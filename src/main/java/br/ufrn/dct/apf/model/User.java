@@ -22,7 +22,7 @@ import org.hibernate.validator.constraints.Length;
 import org.springframework.data.annotation.Transient;
 
 @Entity
-@Table(name = "user")
+@Table(name = "users")
 public class User implements Serializable {
 
     /**
@@ -31,7 +31,7 @@ public class User implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
     private Long id;
 

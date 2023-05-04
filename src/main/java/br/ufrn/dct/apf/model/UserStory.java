@@ -26,7 +26,7 @@ public class UserStory implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_story_id")
     private Long id;
 
@@ -44,7 +44,7 @@ public class UserStory implements Serializable {
 
     @OneToMany(mappedBy = "userStory", targetEntity = DataFunction.class, fetch = FetchType.EAGER)
     private Set<DataFunction> dataFunctions = new HashSet<>();
-    
+
     @OneToMany(mappedBy = "userStory", targetEntity = TransactionFunction.class, fetch = FetchType.EAGER)
     private Set<TransactionFunction> transactions = new HashSet<>();
 
@@ -105,15 +105,15 @@ public class UserStory implements Serializable {
             dataFunctions.add(data);
         }
     }
-    
+
     public Set<TransactionFunction> getTransactionFunctions() {
         return transactions;
     }
-    
+
     public void setTransactionFunctions(Set<TransactionFunction> transactions) {
         this.transactions = transactions;
     }
-    
+
     public void addTransaction(TransactionFunction transaction) {
         if (transaction != null) {
             transaction.setUserStory(this);

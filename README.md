@@ -63,14 +63,46 @@ Para executar o projeto, será necessário instalar os seguintes programas:
 Código abaixo:
 
 1. Criação das bases de dados e usuário
+
 ```sql
-    CREATE DATABASE apf_db;
-    CREATE DATABASE apf_db_test;
+CREATE ROLE apf_user WITH
+	LOGIN
+	NOSUPERUSER
+	NOCREATEDB
+	NOCREATEROLE
+	NOINHERIT
+	NOREPLICATION
+	CONNECTION LIMIT -1
+	PASSWORD 'xxxxxx';
+COMMENT ON ROLE apf_user IS 'Usuário do Sistema APF de Contagem de Pontos de Função.';
+```
 
-    CREATE USER 'apf_user'@'localhost' IDENTIFIED BY '12345';
+```sql
+CREATE DATABASE apf_db
+    WITH 
+    OWNER = apf_user
+    ENCODING = 'UTF8'
+    LC_COLLATE = 'pt_BR.utf8'
+    LC_CTYPE = 'pt_BR.utf8'
+    TABLESPACE = pg_default
+    CONNECTION LIMIT = -1
+    IS_TEMPLATE = False;
+```
 
-    GRANT ALL ON apf_db.* TO 'apf_user'@'localhost';
-    GRANT ALL ON apf_db_test.* TO 'apf_user'@'localhost';
+Por algum motivo, o JPA não está criando o banco de dados automaticamente. Desta forma, gerei o esquema relacional em `create.sql` e executei manualmente via PgAdmin. Desta forma, foi necessário executar comandos de permissões para o usuário `apf_user` do banco de dados `apf_db`.
+```sql
+GRANT ALL PRIVILEGES ON DATABASE apf_db TO apf_user;
+GRANT ALL PRIVILEGES ON SCHEMA public TO apf_user;
+
+GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public to apf_user;
+GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA public to apf_user;
+GRANT ALL PRIVILEGES ON ALL FUNCTIONS IN SCHEMA public to apf_user;
+```
+
+Como os testes não estavam executando com a criação do esquema, essa parte foi removida. Ajustamos o nome da tabela `user` para `users`, pois o nome `user` é uma *palavra reservada* do Postgres.
+```sql
+CREATE SCHEMA IF NOT EXISTS apf
+    AUTHORIZATION apf_user;
 ```
 
 2. Povoamento do Banco de Dados
