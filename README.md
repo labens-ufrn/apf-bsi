@@ -92,6 +92,7 @@ CREATE DATABASE apf_db
 Por algum motivo, o JPA não está criando o banco de dados automaticamente. Desta forma, gerei o esquema relacional em `create.sql` e executei manualmente via PgAdmin. Desta forma, foi necessário executar comandos de permissões para o usuário `apf_user` do banco de dados `apf_db`.
 ```sql
 GRANT ALL PRIVILEGES ON DATABASE apf_db TO apf_user;
+GRANT ALL PRIVILEGES ON SCHEMA public TO apf_user;
 
 GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public to apf_user;
 GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA public to apf_user;
