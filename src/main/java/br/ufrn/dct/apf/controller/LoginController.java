@@ -75,7 +75,7 @@ public class LoginController extends AbstractController {
         Authentication auth = context.getAuthentication();
 
         User user = userService.findUserByEmail(auth.getName());
-        modelAndView.addObject("userName", user.getName() + " " + user.getLastName() + " (" + user.getEmail() + ")");
+        modelAndView.addObject("userName", user.getFirstName() + " " + user.getLastName() + " (" + user.getEmail() + ")");
         modelAndView.addObject("authorities", getRoles(user));
         modelAndView.addObject("adminMessage", "Content Available Only for Users with Admin Role");
         modelAndView.setViewName("admin/home");
@@ -114,7 +114,7 @@ public class LoginController extends AbstractController {
         User user = getCurrentUser();
 
         if (user != null) {
-            model.addObject("msg", "Hi " + user.getName() + ", you do not have permission to access this page!");
+            model.addObject("msg", "Hi " + user.getFirstName() + ", you do not have permission to access this page!");
         } else {
             model.addObject("msg", "You do not have permission to access this page!");
         }

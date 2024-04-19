@@ -86,7 +86,7 @@ public class ProjectRepositoryTest extends AbstractTestNGSpringContextTests {
     private User createUser() {
         user1 = new User();
 
-        user1.setName("Taciano Silva");
+        user1.setFirstName("Taciano");
         user1.setLastName("Silva");
         user1.setEmail("tacianosilva@gmail.com");
         user1.setPassword("12345");

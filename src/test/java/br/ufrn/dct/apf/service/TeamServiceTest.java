@@ -48,19 +48,19 @@ public class TeamServiceTest extends AbstractTestNGSpringContextTests {
         softAssert = new SoftAssert();
 
         analista = new User();
-        analista.setName("Taciano");
+        analista.setFirstName("Taciano");
         analista.setLastName("Morais Silva");
         analista.setEmail("tacianosilva@gmai.com");
         analista.setPassword("12345");
 
         desenvolvedor = new User();
-        desenvolvedor.setName("Zé");
+        desenvolvedor.setFirstName("Zé");
         desenvolvedor.setLastName("Silva");
         desenvolvedor.setEmail("zesilva@gmai.com");
         desenvolvedor.setPassword("12345");
 
         dev2 = new User();
-        dev2.setName("dev2");
+        dev2.setFirstName("dev2");
         dev2.setLastName("Silva");
         dev2.setEmail("dev2@gmai.com");
         dev2.setPassword("12345");
@@ -179,7 +179,7 @@ public class TeamServiceTest extends AbstractTestNGSpringContextTests {
         softAssert.assertFalse(team1.contains(m2), "T02.4 - False:");
 
         for (Member member : team1) {
-            System.out.println(member.getUser().getName());
+            System.out.println(member.getUser().getFirstName());
             System.out.println(member.getProject().getName());
         }
         System.out.println("Team 1 contais m1: " + team1.contains(m1));
@@ -212,7 +212,7 @@ public class TeamServiceTest extends AbstractTestNGSpringContextTests {
         System.out.println("Team contais m1: " + team2.contains(m1));
         System.out.println("Team contais m2: " + team2.contains(m2));
         for (Member member : team2) {
-            System.out.println(member.getUser().getName());
+            System.out.println(member.getUser().getFirstName());
             System.out.println(member.getProject().getName());
         }
 
@@ -265,7 +265,7 @@ public class TeamServiceTest extends AbstractTestNGSpringContextTests {
         softAssert.assertFalse(team1.contains(m2), "T02.4 - False:");
 
         for (Member member : team1) {
-            System.out.println(member.getUser().getName());
+            System.out.println(member.getUser().getFirstName());
             System.out.println(member.getProject().getName());
         }
         System.out.println("Team 1 contais m1: " + team1.contains(m1));

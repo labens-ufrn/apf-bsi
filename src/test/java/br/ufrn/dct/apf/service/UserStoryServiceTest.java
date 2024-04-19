@@ -214,7 +214,7 @@ public class UserStoryServiceTest extends AbstractTestNGSpringContextTests {
     private User createUser() {
         User user = new User();
 
-        user.setName("Taciano Silva");
+        user.setFirstName("Taciano");
         user.setLastName("Silva");
         user.setEmail("tacianosilva@gmail.com");
         user.setPassword("12345");

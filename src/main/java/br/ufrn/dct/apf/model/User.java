@@ -46,9 +46,9 @@ public class User implements Serializable {
     @Transient
     private String password;
 
-    @Column(name = "name")
+    @Column(name = "first_name")
     @NotEmpty(message = "*Please provide your name")
-    private String name;
+    private String firstName;
 
     @Column(name = "last_name")
     @NotEmpty(message = "*Please provide your last name")
@@ -83,12 +83,12 @@ public class User implements Serializable {
         this.password = password;
     }
 
-    public String getName() {
-        return name;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFirstName(String name) {
+        this.firstName = name;
     }
 
     public String getLastName() {
