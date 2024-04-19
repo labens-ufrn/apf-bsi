@@ -6,10 +6,10 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.7.11</version>
+        <version>2.7.18</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    
+
     <groupId>br.ufrn.dct</groupId>
     <artifactId>apf-bsi</artifactId>
     <version>0.0.1-SNAPSHOT</version>
@@ -151,7 +151,6 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.11.0</version>
                 <configuration>
                     <source>${java.version}</source>
                     <target>${java.version}</target>
@@ -172,6 +171,15 @@
                     <mainClass>${start-class}</mainClass>
                     <layout>JAR</layout>
                 </configuration>
+            </plugin>
+            <plugin>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-resources-plugin</artifactId>
+              <configuration>
+                <propertiesEncoding>
+                  UTF-8
+                </propertiesEncoding>
+              </configuration>
             </plugin>
             <plugin>
                 <groupId>org.jacoco</groupId>
