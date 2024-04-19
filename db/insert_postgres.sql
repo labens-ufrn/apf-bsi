@@ -6,11 +6,11 @@ INSERT INTO apf.attribution VALUES (2,'PROJECT MEMBER');
 
 /* password = 123456 */
 INSERT INTO apf.user (active,email,last_name,name,password) VALUES (
-1,'admin@apf.ceres.ufrn.br','APF Owner','Admin',
-'$2a$10$RPOEaqsA96T624umYNHMOe3ucdphFSOL1XYmWZckqmQoiSBAzV9ba');
+1,'admin@apf.labens.dct.ufrn.br','APF Owner','Admin',
+'$2a$10$nx44XCHE.4LNfFCU/O0oBOVQk2Flb7MvhlQjMmnw/T8vOxc2KwM82');
 
-INSERT INTO apf.user_role(user_id, role_id) VALUES ((select user_id from apf.user where email = 'admin@apf.ceres.ufrn.br'), 1);
-INSERT INTO apf.user_role(user_id, role_id) VALUES ((select user_id from apf.user where email = 'admin@apf.ceres.ufrn.br'), 2);
+INSERT INTO apf.user_role(user_id, role_id) VALUES ((select user_id from apf.user where email = 'admin@apf.labens.dct.ufrn.br'), 1);
+INSERT INTO apf.user_role(user_id, role_id) VALUES ((select user_id from apf.user where email = 'admin@apf.labens.dct.ufrn.br'), 2);
 
 INSERT INTO apf.project (active,created_on,description,name,is_private) VALUES (
 1,'2019-04-30','Analisador de Pontos de Função','APF Oficial', '0');
