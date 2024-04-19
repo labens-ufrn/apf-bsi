@@ -12,7 +12,7 @@ import br.ufrn.dct.apf.model.Project;
 @Repository("projectRepository")
 public interface ProjectRepository extends JpaRepository<Project, Long> {
 
-    @Query(value = "SELECT * FROM project p, member m where p.project_id = m.project_id and m.user_id = :userId", nativeQuery=true)
+    @Query(value = "SELECT p.project_id, p.name, p.description, p.created_on, p.is_private, p.active FROM apf.project p, apf.member m where p.project_id = m.project_id and m.user_id = :userId", nativeQuery=true)
     List<Project> findByUserId(@Param("userId") Long userId);
 
     List<Project> findByNameContaining(String name);

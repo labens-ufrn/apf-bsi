@@ -43,7 +43,6 @@ public class UserService extends AbstractService {
     }
 
     public void edit(User user) {
-
         User oldUser = findOne(user.getId());
 
         if (user.getPassword() == null || user.getPassword().equals("")) {

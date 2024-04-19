@@ -18,7 +18,7 @@ public abstract class AbstractController {
     private User overridenCurrentUser;
 
     @Autowired
-    private UserService userService;
+    protected UserService userService;
 
     protected void setUserAuth(ModelAndView modelAndView) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();

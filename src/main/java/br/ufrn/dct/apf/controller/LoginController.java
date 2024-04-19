@@ -1,6 +1,6 @@
 package br.ufrn.dct.apf.controller;
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -23,7 +23,7 @@ public class LoginController extends AbstractController {
 
     @Autowired
     private UserService userService;
-    
+
     @Autowired
     private ProjectService projectService;
 
@@ -89,10 +89,10 @@ public class LoginController extends AbstractController {
         User user = getCurrentUser();
 
         mv.addObject("projects", projectService.findByUserId(user.getId()));
-        
+
         return mv;
     }
-    
+
     @GetMapping(path = "/dashboard")
     public ModelAndView dashboard() {
         ModelAndView mv = new ModelAndView("dashboard");
@@ -101,7 +101,7 @@ public class LoginController extends AbstractController {
         mv.addObject("projects", projectService.findByIsPrivateFalse());
         mv.addObject("icounter", new IndicativeCount());
         mv.addObject("ecounter", new EstimativeCount());
-        
+
         return mv;
     }
 
