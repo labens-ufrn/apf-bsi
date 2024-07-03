@@ -2,14 +2,14 @@ package br.ufrn.dct.apf.model;
 
 import java.io.Serializable;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 
 /**
  * Transaction Functions
@@ -19,12 +19,12 @@ import javax.persistence.Table;
  *  External Inputs
  *  External Outputs
  *  External Inquiries
- *  
+ *
  * Transaction functions are made up of the processes that are exchanged
  * between the user, the external applications and the application being measured.
- * 
+ *
  * https://www.tutorialspoint.com/estimation_techniques/estimation_techniques_function_points.htm
- * 
+ *
  * @author Taciano Morais Silva
  * @version 1.0
  * @since 23/05/2019, 14h11m
@@ -40,19 +40,19 @@ public class TransactionFunction implements Serializable {
     private static final long serialVersionUID = 1L;
 
     /**
-     * External Input (EI) is a transaction function in which Data goes “into” 
-     * the application from outside the boundary to inside. This data is coming 
+     * External Input (EI) is a transaction function in which Data goes “into”
+     * the application from outside the boundary to inside. This data is coming
      * external to the application.
      */
     public static final String TYPE_EI = "TYPE_EI";
-    
+
     /**
      * External Output (EO) is a transaction function in which data comes “out”
      * of the system. Additionally, an EO may update an ILF. The data creates reports
      * or output files sent to other applications.
      */
     public static final String TYPE_EO = "TYPE_EO";
-    
+
     /**
      * External Inquiry (EQ) is a transaction function
      * with both input and output components that result in data retrieval.
@@ -60,7 +60,7 @@ public class TransactionFunction implements Serializable {
     public static final String TYPE_EQ = "TYPE_EQ";
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "trans_id")
     private Long id;
 
@@ -72,8 +72,8 @@ public class TransactionFunction implements Serializable {
 
     /**
      * number of File Type Referenced (FTR).
-     * 
-     * File Type Referenced (FTR) is the largest user identifiable subgroup 
+     *
+     * File Type Referenced (FTR) is the largest user identifiable subgroup
      * within the EI, EO, or EQ that is referenced to.
      */
     @Column(name = "ftr")
@@ -81,20 +81,20 @@ public class TransactionFunction implements Serializable {
 
     /**
      * number of Data Element Types (DET).
-     * 
-     * Data Element Type (DET) is the data subgroup within an FTR. 
+     *
+     * Data Element Type (DET) is the data subgroup within an FTR.
      * They are unique and user identifiable.
      */
     @Column(name = "det")
     private Integer dataElementTypes;
-    
+
     @Column(name = "description")
     private String description;
 
     @ManyToOne
     @JoinColumn(name = "user_story_id", nullable = true)
     private UserStory userStory;
-    
+
     @ManyToOne
     @JoinColumn(name = "project_id", nullable = true)
     private Project project;
@@ -102,15 +102,15 @@ public class TransactionFunction implements Serializable {
     public static TransactionFunction createEI(String name) {
         return new TransactionFunction(name, TYPE_EI);
     }
-    
+
     public static TransactionFunction createEO(String name) {
         return new TransactionFunction(name, TYPE_EO);
     }
-    
+
     public static TransactionFunction createEQ(String name) {
         return new TransactionFunction(name, TYPE_EQ);
     }
-    
+
     public TransactionFunction() {}
 
     private TransactionFunction(String name, String type) {
@@ -141,7 +141,7 @@ public class TransactionFunction implements Serializable {
     public void setType(String type) {
         this.type = type;
     }
-    
+
     public String getDescription() {
         return description;
     }
@@ -185,11 +185,11 @@ public class TransactionFunction implements Serializable {
     public boolean isEI() {
         return getType().equals(TYPE_EI);
     }
-    
+
     public boolean isEO() {
         return getType().equals(TYPE_EO);
     }
-    
+
     public boolean isEQ() {
         return getType().equals(TYPE_EQ);
     }
@@ -224,7 +224,7 @@ public class TransactionFunction implements Serializable {
             return false;
         return true;
     }
-    
+
     @Override
     public String toString() {
         return "TransactionFunction@" + this.id + "@"+ this.type +"[" + this.name + "]";

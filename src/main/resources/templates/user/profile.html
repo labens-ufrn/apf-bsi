@@ -34,7 +34,7 @@
                     <thead>
                         <tr>
                             <th>ID</th>
-                            <th>Name</th>
+                            <th>First Name</th>
                             <th>Last Name</th>
                             <th>Email</th>
                             <th>Role</th>
@@ -44,7 +44,7 @@
                     <tbody>
                         <tr th:each="usuario : ${user}">
                             <td th:text="${usuario.id}"></td>
-                            <td th:text="${usuario.name}"></td>
+                            <td th:text="${usuario.firstName}"></td>
                             <td th:text="${usuario.lastName}"></td>
                             <td th:text="${usuario.email}"></td>
                             <td th:text="${usuario.roles}"></td>

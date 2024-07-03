@@ -51,3 +51,5 @@ nbdist/
 /test-output/
 /.externalToolBuilders/
 /.vscode/
+.scannerwork/
+/bin/

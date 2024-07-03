@@ -55,7 +55,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <strong>Data Functions</strong>
@@ -149,7 +149,7 @@
                         <tbody>
                             <tr th:each="member : ${project.team}">
                                 <td th:text="${member.user.id}"></td>
-                                <td th:text="${member.user.name}"></td>
+                                <td th:text="${member.user.firstName}"></td>
                                 <td th:text="${member.user.roles}"></td>
                                 <td th:text="${member.attribution.name}"></td>
                                 <td>

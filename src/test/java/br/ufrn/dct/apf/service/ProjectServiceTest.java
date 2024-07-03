@@ -325,7 +325,7 @@ public class ProjectServiceTest extends AbstractTestNGSpringContextTests {
     private User createUser(String name, String lastName, String email) {
         User user = new User();
 
-        user.setName(name);
+        user.setFirstName(name);
         user.setLastName(lastName);
         user.setEmail(email);
         user.setPassword("12345");

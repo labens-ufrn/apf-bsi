@@ -39,18 +39,18 @@ public class RoleRepositoryTest extends AbstractTestNGSpringContextTests {
         String adminRole = Role.ADMIN_ROLE;
 
         List<Role> regras = repository.findAll();
-        
+
         for (Role role : regras) {
             System.out.println("Role Name: " + role.getRoleName());
         }
-        
+
         softAssert.assertEquals(regras.size(), 2, "T00 - Equals:");
-        
+
         Role regra = repository.findByRoleName(adminRole);
 
         softAssert.assertNotNull(regra, "T01 - NotNull:");
         softAssert.assertEquals(regra.getRoleName(), "ADMIN", "T02 - Equals:");
-        
+
         String userRole = Role.USER_ROLE;
 
         Role user = repository.findByRoleName(userRole);
@@ -60,7 +60,7 @@ public class RoleRepositoryTest extends AbstractTestNGSpringContextTests {
 
         softAssert.assertAll();
     }
-    
+
     /**
      * Teste baseado na discussão no link:
      * https://codereview.stackexchange.com/questions/129358/unit-testing-equals-hashcode-and-comparator-asserting-contracts
@@ -69,7 +69,7 @@ public class RoleRepositoryTest extends AbstractTestNGSpringContextTests {
     @Test
     public void equalsAndHashcode() throws BusinessRuleException {
         Role r1, r2, r3;
-        
+
         r1 = new Role();
         r1.setId(10);
         r1.setRoleName("role1");
@@ -77,11 +77,11 @@ public class RoleRepositoryTest extends AbstractTestNGSpringContextTests {
         r2 = new Role();
         r2.setId(10);
         r2.setRoleName("role1");
-        
+
         r3 = new Role();
         r3.setId(10);
         r3.setRoleName("role1");
-        
+
         UserStory us = new UserStory("Test Project", "TestNG Project");
         us.setId(55L);
 
@@ -93,40 +93,40 @@ public class RoleRepositoryTest extends AbstractTestNGSpringContextTests {
         softAssert.assertEquals(r1, r3, "T06 - Equals:TestTransitive");
         softAssert.assertFalse(r1.equals(null), "T07 - Equals:TestNonNullity");
         softAssert.assertFalse(r1.equals(us), "T08 - Equals:TestNonNullity");
-        
+
         softAssert.assertEquals(r1.hashCode(), r1.hashCode(), "T09 - Equals:TestHashCodeConsistency");
         softAssert.assertEquals(r1.hashCode(), r2.hashCode(), "T10 - Equals:TestHashCodeEquality");
-        
+
         r1.setId(0);
         r1.setRoleName(null);
-        
+
         softAssert.assertFalse(r1.equals(r2), "T11 - Equals:TestDifferent");
         softAssert.assertFalse(r1.equals(r3), "T12 - Equals:TestDifferent");
-        
+
         r1.setId(11);
         r1.setRoleName("role1");
-        
+
         r2.setId(12);
         r2.setRoleName("role2");
-        
+
         r3.setId(11);
         r3.setRoleName("role3");
-        
+
         softAssert.assertFalse(r1.equals(r2), "T13 - Equals:TestDifferent");
         softAssert.assertFalse(r1.equals(r3), "T14 - Equals:TestDifferent");
-        
+
         r2.setId(0);
         r3.setRoleName(null);
-        
+
         softAssert.assertFalse(r2.equals(r1), "T15 - Equals:TestDifferent");
         softAssert.assertFalse(r3.equals(r1), "T16 - Equals:TestDifferent");
-        
+
         softAssert.assertNotEquals(r1.hashCode(), r2.hashCode(), "T17 - Equals:TestHashCodeConsistency");
         softAssert.assertNotEquals(r1.hashCode(), r3.hashCode(), "T18 - Equals:TestHashCodeEquality");
-        
+
         softAssert.assertFalse(r1.equals(r2), "T19 - Equals:TestDifferent");
         softAssert.assertFalse(r1.equals(r3), "T20 - Equals:TestDifferent");
-        
+
         r1.setRoleName(null);
         r3.setRoleName(null);
 

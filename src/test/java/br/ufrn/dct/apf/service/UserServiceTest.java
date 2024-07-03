@@ -30,7 +30,7 @@ public class UserServiceTest extends AbstractTestNGSpringContextTests {
 
         user1 = new User();
 
-        user1.setName("Taciano Silva");
+        user1.setFirstName("Taciano Silva");
         user1.setLastName("Silva");
         user1.setEmail("tacianosilva@gmail.com");
         user1.setPassword("12345");
@@ -64,7 +64,7 @@ public class UserServiceTest extends AbstractTestNGSpringContextTests {
 
         softAssert.assertNotNull(found, "T01 - NotNull:");
 
-        softAssert.assertEquals(found.getName(), user1.getName(), "T03 - Equals:");
+        softAssert.assertEquals(found.getFirstName(), user1.getFirstName(), "T03 - Equals:");
         softAssert.assertEquals(found.getLastName(), user1.getLastName(), "T04 - Equals:");
         softAssert.assertEquals(found.getEmail(), user1.getEmail(), "T05 - Equals:");
 
@@ -82,7 +82,7 @@ public class UserServiceTest extends AbstractTestNGSpringContextTests {
 
         softAssert.assertNotNull(found, "T01 - NotNull:");
 
-        softAssert.assertEquals(found.getName(), user1.getName(), "T03 - Equals:");
+        softAssert.assertEquals(found.getFirstName(), user1.getFirstName(), "T03 - Equals:");
         softAssert.assertEquals(found.getLastName(), user1.getLastName(), "T04 - Equals:");
         softAssert.assertEquals(found.getEmail(), user1.getEmail(), "T05 - Equals:");
         softAssert.assertNotNull(found.getActive(), "T06 - NotNull:");
@@ -95,7 +95,7 @@ public class UserServiceTest extends AbstractTestNGSpringContextTests {
     public void save() {
         User user2 = new User();
 
-        user2.setName("Zé");
+        user2.setFirstName("Zé");
         user2.setLastName("Brasil");
         user2.setEmail("zebrasil@gmail.com");
         user2.setPassword("345");
@@ -114,7 +114,7 @@ public class UserServiceTest extends AbstractTestNGSpringContextTests {
         softAssert.assertNotNull(usuarios, "T03 - NotNull:");
         softAssert.assertEquals(usuarios.size(), 2, "T04 - Equals:");
 
-        softAssert.assertEquals(found.getName(), user2.getName(), "T05 - Equals:");
+        softAssert.assertEquals(found.getFirstName(), user2.getFirstName(), "T05 - Equals:");
         softAssert.assertEquals(found.getLastName(), user2.getLastName(), "T06 - Equals:");
         softAssert.assertEquals(found.getEmail(), user2.getEmail(), "T07 - Equals:");
 
@@ -132,7 +132,7 @@ public class UserServiceTest extends AbstractTestNGSpringContextTests {
 
         User update = service.findOne(id);
 
-        update.setName("Marcos");
+        update.setFirstName("Marcos");
         update.setLastName("Morais");
         update.setEmail("marcosmorais@gmail.com");
         // Simular o não preenchimento da senha
@@ -143,8 +143,8 @@ public class UserServiceTest extends AbstractTestNGSpringContextTests {
         User found = service.findOne(id);
 
         softAssert.assertNotNull(found, "T01 - NotNull:");
-        softAssert.assertEquals(found.getName(), "Marcos", "T02 - Equals:");
-        softAssert.assertNotEquals(found.getName(), "Taciano", "T03 - Equals:");
+        softAssert.assertEquals(found.getFirstName(), "Marcos", "T02 - Equals:");
+        softAssert.assertNotEquals(found.getFirstName(), "Taciano", "T03 - Equals:");
         softAssert.assertEquals(found.getLastName(), "Morais", "T04 - Equals:");
         softAssert.assertNotEquals(found.getLastName(), "Silva", "T05 - Equals:");
         softAssert.assertEquals(found.getEmail(), "marcosmorais@gmail.com", "T06 - Equals:");
@@ -170,7 +170,7 @@ public class UserServiceTest extends AbstractTestNGSpringContextTests {
         User found2 = service.findOne(id);
 
         softAssert.assertNotNull(found2, "T10 - NotNull:");
-        softAssert.assertEquals(found2.getName(), "Marcos", "T11 - Equals:");
+        softAssert.assertEquals(found2.getFirstName(), "Marcos", "T11 - Equals:");
         softAssert.assertEquals(found2.getLastName(), "Morais", "T12 - Equals:");
         softAssert.assertEquals(found2.getEmail(), "marcosmorais@gmail.com", "T13 - Equals:");
         softAssert.assertEquals(found2.getActive(), 1, "T14 - Equals:");
@@ -184,7 +184,7 @@ public class UserServiceTest extends AbstractTestNGSpringContextTests {
     public void delete() {
         User user3 = new User();
 
-        user3.setName("Test Project");
+        user3.setFirstName("Test Project");
         user3.setLastName("TestNG Project");
         user3.setEmail("test@gmail.com");
         user3.setPassword("123");

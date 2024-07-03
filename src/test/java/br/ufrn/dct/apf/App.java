@@ -25,14 +25,14 @@ public class App {
 
         User analista = new User();
         analista.setId(1L);
-        analista.setName("Taciano");
+        analista.setFirstName("Taciano");
         analista.setLastName("Morais Silva");
         analista.setEmail("tacianosilva@gmai.com");
         analista.setPassword("12345");
 
         User desenvolvedor = new User();
         desenvolvedor.setId(2L);
-        desenvolvedor.setName("Zé");
+        desenvolvedor.setFirstName("Zé");
         desenvolvedor.setLastName("Silva");
         desenvolvedor.setEmail("zesilva@gmai.com");
         desenvolvedor.setPassword("12345");

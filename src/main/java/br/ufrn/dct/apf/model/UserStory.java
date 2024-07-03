@@ -4,17 +4,17 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.validation.constraints.NotEmpty;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotEmpty;
 
 @Entity
 @Table(name = "user_story")
@@ -26,7 +26,7 @@ public class UserStory implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_story_id")
     private Long id;
 
@@ -44,7 +44,7 @@ public class UserStory implements Serializable {
 
     @OneToMany(mappedBy = "userStory", targetEntity = DataFunction.class, fetch = FetchType.EAGER)
     private Set<DataFunction> dataFunctions = new HashSet<>();
-    
+
     @OneToMany(mappedBy = "userStory", targetEntity = TransactionFunction.class, fetch = FetchType.EAGER)
     private Set<TransactionFunction> transactions = new HashSet<>();
 
@@ -105,15 +105,15 @@ public class UserStory implements Serializable {
             dataFunctions.add(data);
         }
     }
-    
+
     public Set<TransactionFunction> getTransactionFunctions() {
         return transactions;
     }
-    
+
     public void setTransactionFunctions(Set<TransactionFunction> transactions) {
         this.transactions = transactions;
     }
-    
+
     public void addTransaction(TransactionFunction transaction) {
         if (transaction != null) {
             transaction.setUserStory(this);

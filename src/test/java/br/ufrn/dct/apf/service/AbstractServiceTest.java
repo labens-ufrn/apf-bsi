@@ -32,7 +32,7 @@ public abstract class AbstractServiceTest extends AbstractTestNGSpringContextTes
     protected User createUser(String name, String lastName) {
         User user = new User();
 
-        user.setName(name);
+        user.setFirstName(name);
         user.setLastName(lastName);
         user.setEmail(name+lastName+"@gmail.com");
         user.setPassword("12345");

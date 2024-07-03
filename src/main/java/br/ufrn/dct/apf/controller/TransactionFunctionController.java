@@ -4,7 +4,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -40,7 +40,7 @@ public class TransactionFunctionController extends AbstractController {
     @GetMapping("/tf/add/{projectId}")
     public ModelAndView add(TransactionFunctionDTO tf, @PathVariable("projectId") Long id) {
         ModelAndView mv = new ModelAndView("tf/add");
-        
+
         Project project = projectService.findOne(id);
         tf.setProject(project);
         Set<UserStory> userStories = project.getUserStories();

@@ -2,7 +2,7 @@ package br.ufrn.dct.apf.controller;
 
 import java.util.List;
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -53,7 +53,7 @@ public class UserStoryController extends AbstractController {
 
         return mv;
     }
-    
+
     @GetMapping("/us/edit/{id}")
     public ModelAndView edit(@PathVariable("id") Long id) {
 
@@ -82,9 +82,9 @@ public class UserStoryController extends AbstractController {
         }
 
         User current = getCurrentUser();
-        
+
         Project project = null;
-        
+
         if (us.getProject() != null && us.getProject().getId() != null) {
             project = projectService.findOne(us.getProject().getId());
         } else {

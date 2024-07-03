@@ -54,21 +54,21 @@ public class ConceitosTest extends AbstractTestNGSpringContextTests {
         System.out.println("Criando o usuário ...");
 
         User analista = new User();
-        analista.setName("Taciano");
+        analista.setFirstName("Taciano");
         analista.setLastName("Silva");
         analista.setEmail("tacianosilva@gmai.com");
         analista.setPassword("12345");
         analista.setActive(1);
 
         User developer = new User();
-        developer.setName("Zé");
+        developer.setFirstName("Zé");
         developer.setLastName("Silva");
         developer.setEmail("zesilva@gmai.com");
         developer.setPassword("12345");
         developer.setActive(1);
 
         User developerMaria = new User();
-        developerMaria.setName("Maria");
+        developerMaria.setFirstName("Maria");
         developerMaria.setLastName("Silva");
         developerMaria.setEmail("mariasilva@gmai.com");
         developerMaria.setPassword("12345");
@@ -181,7 +181,7 @@ public class ConceitosTest extends AbstractTestNGSpringContextTests {
         Set<Member> team = project.getTeam();
 
         for (Member member : team) {
-            System.out.println("Membro ID = " + member.getId() + ", Name = " + member.getUser().getName());
+            System.out.println("Membro ID = " + member.getId() + ", Name = " + member.getUser().getFirstName());
         }
 
         System.out.println("Listar os User Stories do Projeto ID = " + project.getId());

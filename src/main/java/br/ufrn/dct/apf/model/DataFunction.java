@@ -2,14 +2,14 @@ package br.ufrn.dct.apf.model;
 
 import java.io.Serializable;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 
 /**
  * There are two types of data functions −
@@ -17,9 +17,9 @@ import javax.persistence.Table;
  *   Internal Logical Files
  *   External Interface Files
  *
- * Data Functions are made up of internal and external resources 
+ * Data Functions are made up of internal and external resources
  * that affect the system.
- * 
+ *
  * @author Taciano Morais Silva
  * @since 04/04/2019
  */
@@ -33,11 +33,11 @@ public class DataFunction implements Serializable {
     private static final long serialVersionUID = 1L;
 
     public static final String TYPE_ILF = "TYPE_ILF";
-    
+
     public static final String TYPE_EIF = "TYPE_EIF";
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "data_id")
     private Long id;
 
@@ -49,9 +49,9 @@ public class DataFunction implements Serializable {
 
     /**
      * number of Record Element Types (RET).
-     * 
+     *
      * A Record Element Type (RET) is the largest user identifiable subgroup
-     * of elements within an ILF or an EIF. It is best to look at logical 
+     * of elements within an ILF or an EIF. It is best to look at logical
      * groupings of data to help identify them.
      */
     @Column(name = "ret")
@@ -59,20 +59,20 @@ public class DataFunction implements Serializable {
 
     /**
      * number of Data Element Types (DET).
-     * 
-     * Data Element Type (DET) is the data subgroup within an FTR. 
+     *
+     * Data Element Type (DET) is the data subgroup within an FTR.
      * They are unique and user identifiable.
      */
     @Column(name = "det")
     private Long dataElementTypes;
-    
+
     @Column(name = "description")
     private String description;
 
     @ManyToOne
     @JoinColumn(name = "user_story_id", nullable = true)
     private UserStory userStory;
-    
+
     @ManyToOne
     @JoinColumn(name = "project_id", nullable = true)
     private Project project;
@@ -91,7 +91,7 @@ public class DataFunction implements Serializable {
     public static DataFunction createILF(String name) {
         return new DataFunction(name, TYPE_ILF);
     }
-    
+
     /**
      * External Interface Files (EIF’s, in Portuguese, Arquivos Interface Externa - AIE's).
      *
@@ -109,7 +109,7 @@ public class DataFunction implements Serializable {
     public static DataFunction createEIF(String name) {
         return new DataFunction(name, TYPE_EIF);
     }
-    
+
     public DataFunction() {}
 
     private DataFunction(String name, String type) {
@@ -140,7 +140,7 @@ public class DataFunction implements Serializable {
     public void setType(String type) {
         this.type = type;
     }
-    
+
     public String getDescription() {
         return description;
     }
@@ -184,7 +184,7 @@ public class DataFunction implements Serializable {
     public boolean isILF() {
         return getType().equals(TYPE_ILF);
     }
-    
+
     public boolean isEIF() {
         return getType().equals(TYPE_EIF);
     }
@@ -216,7 +216,7 @@ public class DataFunction implements Serializable {
             return other.name == null;
         } else return name.equals(other.name);
     }
-    
+
     @Override
     public String toString() {
         return "DataFunction@" + this.id + "@"+ this.type +"[" + this.name + "]";

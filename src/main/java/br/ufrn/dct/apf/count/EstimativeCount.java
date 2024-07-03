@@ -10,10 +10,9 @@ import br.ufrn.dct.apf.model.Project;
 import br.ufrn.dct.apf.model.TransactionFunction;
 import br.ufrn.dct.apf.model.UserStory;
 import br.ufrn.dct.apf.service.BusinessRuleException;
-import br.ufrn.dct.apf.service.ProjectService;
 
 public class EstimativeCount extends AbstractFunctionPointCount {
-    
+
     /**
      * Logger.
      */
@@ -25,7 +24,7 @@ public class EstimativeCount extends AbstractFunctionPointCount {
         int funcitionalSize = 0;
         int dfSize = 0;
         int tfSize = 0;
-        
+
         if (!dfs.isEmpty()) {
             for (DataFunction dataFunction : dfs) {
                 int size = calculeFunctionPoint(dataFunction);
@@ -34,11 +33,11 @@ public class EstimativeCount extends AbstractFunctionPointCount {
             }
             funcitionalSize += dfSize;
         }
-        
+
         if (!tfs.isEmpty()) {
             for (TransactionFunction transFunction : tfs) {
-                int size = calculeFunctionPoint(transFunction); 
-                tfSize += size; 
+                int size = calculeFunctionPoint(transFunction);
+                tfSize += size;
                 logger.debug(project + " - " + transFunction + ": " + size + " PF");
             }
             funcitionalSize += tfSize;
@@ -55,7 +54,7 @@ public class EstimativeCount extends AbstractFunctionPointCount {
         }
         return i;
     }
-    
+
     public int calculeFunctionPoint(DataFunction df) throws BusinessRuleException {
         if (df != null && df.isILF()) {
             return calculeFunctionPointILF(df);
@@ -65,7 +64,7 @@ public class EstimativeCount extends AbstractFunctionPointCount {
             throw new BusinessRuleException("error.count.indicative.datafunction.not.exists");
         }
     }
-    
+
     public int calculeFunctionPoint(TransactionFunction tf) throws BusinessRuleException {
         if (tf != null && tf.isEI()) {
             return calculeFunctionPointEI(tf);
@@ -77,23 +76,23 @@ public class EstimativeCount extends AbstractFunctionPointCount {
             throw new BusinessRuleException("error.count.indicative.datafunction.not.exists");
         }
     }
-    
+
     public int calculeFunctionPointILF(DataFunction df) {
         return FunctionalSize.FUNCTION_POINT_ILF_LOW;
     }
-    
+
     public int calculeFunctionPointEIF(DataFunction df) {
         return FunctionalSize.FUNCTION_POINT_EIF_LOW;
     }
-    
+
     public int calculeFunctionPointEI(TransactionFunction tf) {
         return FunctionalSize.FUNCTION_POINT_EI_AVERAGE;
     }
-    
+
     public int calculeFunctionPointEO(TransactionFunction tf) {
         return FunctionalSize.FUNCTION_POINT_EO_AVERAGE;
     }
-    
+
     public int calculeFunctionPointEQ(TransactionFunction tf) {
         return FunctionalSize.FUNCTION_POINT_EQ_AVERAGE;
     }
